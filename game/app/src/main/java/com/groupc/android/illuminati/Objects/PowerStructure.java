@@ -5,10 +5,10 @@ package com.groupc.android.illuminati.Objects;
  */
 
 public class PowerStructure {
+    private IlluminatiCard illuminatiCard;
 
-    private IlluminatiCard card;
-    public PowerStructure(IlluminatiCard card) {
-        this.card = card;
+    public PowerStructure(IlluminatiCard illuminatiCard) {
+        this.illuminatiCard = illuminatiCard;
     }
 
     public IlluminatiCard getIlluminatiCard()

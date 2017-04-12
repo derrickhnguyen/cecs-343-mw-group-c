@@ -21,4 +21,13 @@ public class DiceRoll {
     public int getDiceSum() {
         return diceSum;
     }
+
+    public boolean lost() {
+        if(diceSum > 10) return true;
+        else return false;
+    }
+
+    public void setDiceSum(int diceSum) {
+        this.diceSum = diceSum;
+    }
 }

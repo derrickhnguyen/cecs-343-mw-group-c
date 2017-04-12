@@ -14,11 +14,13 @@ public class Player implements Serializable {
     private String          username;
     private PowerStructure powerStructure;
     private ArrayList<SpecialCard> hand;
+    private boolean ownsSurvivalists;
 
     public Player(String username, IlluminatiCard illuminatiCard) {
         this.username       = username;
         powerStructure = new PowerStructure(illuminatiCard);
         hand = new ArrayList<SpecialCard>();
+        ownsSurvivalists = false;
     }
 
     public IlluminatiCard getIlluminatiCard() {
@@ -58,5 +60,13 @@ public class Player implements Serializable {
     public boolean handContains(SpecialCard sc)
     {
         return hand.contains(sc);
+    }
+
+    public boolean ownsSurvivalists() {
+      return ownsSurvivalists;
+    }
+
+    public void setOwnsSurvivalists(boolean ownsSurvivalists) {
+      this.ownsSurvivalists = ownsSurvivalists;
     }
 }

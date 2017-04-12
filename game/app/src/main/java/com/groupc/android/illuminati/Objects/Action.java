@@ -12,13 +12,15 @@ public class Action {
 
     public Action(Player player) {
         this.player = player;
+        int choice = displayActions();
+        takeAction(choice);
     }
 
     public int getActionsTaken() {
         return actionsTaken;
     }
 
-    public int displayActionsTaken() {
+    public int displayActions() {
         System.out.println("Choose an action:\n" +
                 "Regular Actions:\n" +
                 "1. Attack a Group\n" +
@@ -34,8 +36,39 @@ public class Action {
                 "9. Special Power Action\n" +
                 "\n" +
                 "10. Pass");
-        Scanner in = new Scanner(System.in);
-        int choice = in.nextInt();
+        //int choice = number from user choice
         return choice;
+    }
+
+    public void takeAction(int choice) {
+      switch(choice) {
+        case 1: Attack attack = new Attack(player);
+                //find a way to reset chinese campaign donors alignment (rule enforcement)
+                //find a way to reset defending groups resistance if defender owns survivalists (rule enforcement)
+                actionsTaken++;
+                break;
+        case 2: TransferMoney transferMoney = new TransferMoney();
+                actionsTaken++;
+                break;
+        case 3: MoveAGroup moveAGroup = new MoveAGroup();
+                actionsTaken++;
+                break;
+        case 4: GiveAGroupAway giveAGroupAway = new GiveAGroupAway();
+                actionsTaken++;
+                break;
+        case 5: DropAGroup dropAGroup = new DropAGroup();
+                break;
+        case 6: GiveAwayMoney giveAwayMoney = new GiveAwayMoney();
+                break;
+        case 7: GiveAwaySpecial giveAwaySpecial = new GiveAwaySpecial();
+                break;
+        case 8: UseASpecial useASpecial = new UseASpecial();
+                break;
+        case 9: SpecialPowerAction specialPowerAction = new SpecialPowerAction();
+                break;
+        case 10: Pass pass = new Pass();
+                break;
+        default:
+      }
     }
 }
