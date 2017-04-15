@@ -25,7 +25,7 @@ public class Deck {
       while(!cards.isEmpty()) {
           int x = (int) (Math.random()*cards.size());
           temp.add(cards.get(x));
-          cards.remove(x;
+          cards.remove(x);
       }
       cards = temp;
     }

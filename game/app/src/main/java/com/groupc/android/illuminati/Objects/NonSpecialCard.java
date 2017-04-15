@@ -1,13 +1,8 @@
 package com.groupc.android.illuminati.Objects;
 
-import android.util.Pair; //mike - idk what this is for
-
-import java.security.acl.Group; //mike - idk what this is for
-
-import com.groupc.android.illuminati.Objects.Table.SpecialAbilityEnum;
-import com.groupc.android.illuminati.Objects.Table.CardTypeEnum;
 import com.groupc.android.illuminati.Objects.Table.AlignmentEnum;
-import com.groupc.android.illuminati.Objects.Table.bank;
+import com.groupc.android.illuminati.Objects.Table.CardTypeEnum;
+import com.groupc.android.illuminati.Objects.Table.SpecialAbilityEnum;
 
 /**
  * Created by cman4_000 on 4/10/2017.
@@ -23,6 +18,7 @@ public class NonSpecialCard extends Card {
     private SpecialAbilityEnum specialAbility;
     private NonSpecialCard[] connectedCards;
     private boolean[] isConnected;
+    private Bank bank;
     //index 0: north
     //index 1: east
     //index 2: south
@@ -35,9 +31,9 @@ public class NonSpecialCard extends Card {
                             int resistance,
                             int income,
                             AlignmentEnum alignment,
-                            SpecialAbilityEnum specialAbility) {
-      super.cardName = cardName;
-      super.type = type;
+                            SpecialAbilityEnum specialAbility,
+                            Bank bank) {
+        super(cardName, type);
 
       this.power = power;
       this.transferablePower = transferablePower;
@@ -45,6 +41,7 @@ public class NonSpecialCard extends Card {
       this.income = income;
       this.alignment = alignment;
       this.specialAbility = specialAbility;
+        this.bank = bank;
 
       groupTreasury = 0;
       connectedCards = new NonSpecialCard[4];
@@ -60,9 +57,18 @@ public class NonSpecialCard extends Card {
 
     }
 
+    public int spendMoney() {
+        int spentMoney = 0;
+
+        return spentMoney;
+    }
+
 
 
     //getters and setters
+    public String getCardName() {
+        return super.getCardName();
+    }
 
     public int getPower() {
       return power;
@@ -97,7 +103,7 @@ public class NonSpecialCard extends Card {
     }
 
     public int getGroupTreasury() {
-      return getGroupTreasury;
+      return getGroupTreasury();
     }
 
     public void setGroupTreasury(int groupTreasury) {
@@ -112,8 +118,8 @@ public class NonSpecialCard extends Card {
       this.alignment = alignment;
     }
 
-    public SpecialAbilityEnum getSpecialAbility() {
-      return specialAbility.getName();
+    public SpecialAbilityEnum getSpecialAbilityEnum() {
+      return specialAbility;
     }
 
     public void setSpecialAbility(SpecialAbilityEnum specialAbility) {

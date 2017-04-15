@@ -8,10 +8,12 @@ import java.util.Scanner;
 
 public class Action {
     private Player  player;
+    private Table   table;
     private int     actionsTaken;
 
-    public Action(Player player) {
+    public Action(Player player, Table table) {
         this.player = player;
+        this.table = table;
         int choice = displayActions();
         takeAction(choice);
     }
@@ -21,6 +23,7 @@ public class Action {
     }
 
     public int displayActions() {
+        int choice = 0;
         System.out.println("Choose an action:\n" +
                 "Regular Actions:\n" +
                 "1. Attack a Group\n" +
@@ -42,7 +45,8 @@ public class Action {
 
     public void takeAction(int choice) {
       switch(choice) {
-        case 1: Attack attack = new Attack(player);
+        case 1: Table.AttackEnum attackType = chooseAttackType();
+                Attack attack = new Attack(player, attackType, table);
                 //find a way to reset chinese campaign donors alignment (rule enforcement)
                 //find a way to reset defending groups resistance if defender owns survivalists (rule enforcement)
                 actionsTaken++;
@@ -70,5 +74,10 @@ public class Action {
                 break;
         default:
       }
+    }
+
+    private Table.AttackEnum chooseAttackType() {
+        Table.AttackEnum attackType = null;
+        return attackType;
     }
 }

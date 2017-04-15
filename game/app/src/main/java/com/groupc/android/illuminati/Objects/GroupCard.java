@@ -6,29 +6,22 @@ package com.groupc.android.illuminati.Objects;
 import com.groupc.android.illuminati.Objects.Table.CardTypeEnum;
 import com.groupc.android.illuminati.Objects.Table.AlignmentEnum;
 
-public class GroupCard {
+public class GroupCard extends NonSpecialCard {
     private GroupCard puppetMaster;
     private boolean puppetFlag;
     private boolean isAttackable;
 
-    public GroupCard extends NonSpecialCard (
+    public GroupCard(
                             String cardName,
-                            AlignmentEnum alignment,
+                            CardTypeEnum type,
                             int power,
                             int transferablePower,
                             int resistance,
                             int income,
                             AlignmentEnum alignment,
-                            SpecialAbilityEnum specialAbility) {
-        super.super.cardName = cardName;
-        super.super.type = type;
-
-        super.power = power;
-        super.transferablePower = transferablePower;
-        super.resistance = resistance;
-        super.income = income;
-        super.alignment = alignment;
-        super.specialAbility = specialAbility;
+                            Table.SpecialAbilityEnum specialAbility,
+                            Bank bank) {
+        super(cardName, type, power, transferablePower, resistance, income, alignment, specialAbility, bank);
 
         puppetMaster = null;
         puppetFlag = false;
@@ -37,6 +30,9 @@ public class GroupCard {
         else isAttackable = true;
     }
 
+    public String getCardName() {
+        return super.getCardName();
+    }
     public GroupCard getPuppetMaster() {
         return puppetMaster;
     }
@@ -59,5 +55,9 @@ public class GroupCard {
 
     public void setAttackable(boolean isAttackable) {
         this.isAttackable = isAttackable;
+    }
+
+    public void removePuppet(NonSpecialCard nonSpecialCard) {
+
     }
 }

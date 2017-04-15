@@ -15,18 +15,19 @@ import com.groupc.android.illuminati.Objects.Table.AlignmentEnum;
    }
 
    public int getAlignmentBonus() {
-     if(attackerAlignment == defenderAlignment) return 4;
-     else if(
-        attackerAlignment == AlignmentEnum.GOVERNMENT && defenderAlignment == AlignmentEnum.COMMUNIST ||
-        attackerAlignment == AlignmentEnum.COMMUNIST && defenderAlignment == AlignmentEnum.GOVERNMENT ||
-        attackerAlignment == AlignmentEnum.LIBERAL && defenderAlignment == AlignmentEnum.CONSERVATIVE ||
-        attackerAlignment == AlignmentEnum.CONSERVATIVE && defenderAlignment == AlignmentEnum.LIBERAL ||
-        attackerAlignment == AlignmentEnum.PEACEFUL && defenderAlignment == AlignmentEnum.VIOLENT ||
-        attackerAlignment == AlignmentEnum.VIOLENT && defenderAlignment == AlignmentEnum.PEACEFUL ||
-        attackerAlignment == AlignmentEnum.STRAIGHT && defenderAlignment == AlignmentEnum.WEIRD ||
-        attackerAlignment == AlignmentEnum.WEIRD && defenderAlignment == AlignmentEnum.STRAIGHT ||
-        attackerAlignment == AlignmentEnum.FANATIC && defenderAlignment == AlignmentEnum.FANATIC)
-        return -4;
-     )
+       if (attackerAlignment == defenderAlignment) return 4;
+       else if (
+               attackerAlignment == AlignmentEnum.GOVERNMENT && defenderAlignment == AlignmentEnum.COMMUNIST ||
+                       attackerAlignment == AlignmentEnum.COMMUNIST && defenderAlignment == AlignmentEnum.GOVERNMENT ||
+                       attackerAlignment == AlignmentEnum.LIBERAL && defenderAlignment == AlignmentEnum.CONSERVATIVE ||
+                       attackerAlignment == AlignmentEnum.CONSERVATIVE && defenderAlignment == AlignmentEnum.LIBERAL ||
+                       attackerAlignment == AlignmentEnum.PEACEFULL && defenderAlignment == AlignmentEnum.VIOLENT ||
+                       attackerAlignment == AlignmentEnum.VIOLENT && defenderAlignment == AlignmentEnum.PEACEFULL ||
+                       attackerAlignment == AlignmentEnum.STRAIGHT && defenderAlignment == AlignmentEnum.WEIRD ||
+                       attackerAlignment == AlignmentEnum.WEIRD && defenderAlignment == AlignmentEnum.STRAIGHT ||
+                       attackerAlignment == AlignmentEnum.FANATIC && defenderAlignment == AlignmentEnum.FANATIC) {
+           return -4;
+       }
+       return 0;
    }
  }

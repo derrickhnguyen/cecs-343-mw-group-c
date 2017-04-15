@@ -9,8 +9,7 @@ public class SpecialCard extends Card {
     String description;
 
     public SpecialCard(String cardName, CardTypeEnum type, String description) {
-      super.cardName = cardName;
-      super.type = type;
+        super(cardName, type);
 
       this.description = description;
     }

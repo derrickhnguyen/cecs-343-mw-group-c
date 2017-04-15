@@ -26,6 +26,7 @@ public class Center {
           count--;
           return groupCard;
         }
+        else return null;
     }
 
     public ArrayList<GroupCard> getAllGroupCards() {

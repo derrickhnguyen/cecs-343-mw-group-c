@@ -69,4 +69,5 @@ public class Player implements Serializable {
     public void setOwnsSurvivalists(boolean ownsSurvivalists) {
       this.ownsSurvivalists = ownsSurvivalists;
     }
+
 }

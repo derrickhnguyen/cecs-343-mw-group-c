@@ -3,34 +3,27 @@ package com.groupc.android.illuminati.Objects;
 import com.groupc.android.illuminati.Objects.Table.CardTypeEnum;
 import com.groupc.android.illuminati.Objects.Table.AlignmentEnum;
 import com.groupc.android.illuminati.Objects.Table.IlluminatiCardEnum;
+import com.groupc.android.illuminati.Objects.Table.SpecialAbilityEnum;
 
 /**
  * Created by micha on 4/9/2017.
  */
 
-public class IlluminatiCard extends Card {
+public class IlluminatiCard extends NonSpecialCard {
     IlluminatiCardEnum illuminati;
 
-    public IlluminatiCard extends NonSpecialCard (
+    public IlluminatiCard (
                                   String cardName,
-                                  AlignmentEnum alignment,
+                                  CardTypeEnum type,
                                   int power,
                                   int transferablePower,
                                   int resistance,
                                   int income,
                                   AlignmentEnum alignment,
                                   SpecialAbilityEnum specialAbility,
-                                  IlluminatiCardEnum illuminati) {
-        super.super.cardName = cardName;
-        super.super.type = type;
-
-        super.power = power;
-        super.transferablePower = transferablePower;
-        super.resistance = resistance;
-        super.income = income;
-        super.alignment = alignment;
-        super.specialAbility = specialAbility;
-
+                                  IlluminatiCardEnum illuminati,
+                                  Bank bank) {
+        super(cardName, type, power, transferablePower, resistance, income, alignment, specialAbility, bank);
         this.illuminati = illuminati;
     }
 

@@ -10,9 +10,10 @@ import java.util.Random;
  */
 
 public class Table {
-    private Bank    bank;
-    private Center  center;
-    private Deck    deck;
+    private Bank            bank;
+    private Center          center;
+    private Deck            deck;
+    private DestroyedCards  destroyedCards;
 
     private int                         numberOfPlayers;
     private Queue<Player>               players;
@@ -151,9 +152,10 @@ public class Table {
     private boolean[] isTaken;
 
     public Table() {
-        bank    = new Bank();
-        center  = new Center();
-        deck    = new Deck();
+        bank            = new Bank();
+        center          = new Center();
+        deck            = new Deck();
+        destroyedCards  = new DestroyedCards();
 
         players         = new LinkedList<>();
         powerStructures = new ArrayList<PowerStructure>();
@@ -171,7 +173,7 @@ public class Table {
 
         //numberOfPlayers = get from user
 
-        String          username;
+        String          username = "";
         Player          player;
         IlluminatiCard  illuminatiCard;
         for(int i = 0; i < numberOfPlayers; i++) {
@@ -184,13 +186,31 @@ public class Table {
 
     private IlluminatiCard chooseIlluminatiCard() {
         int randInt;
+        int power = 0; //get power from database
+        int transferablePower = 0; //get transferable power from database
+        int resistance = 0; //get resistance from database
+        int income = 0; //get income from database;
+        AlignmentEnum alignment = null; //get alignment from database
+        SpecialAbilityEnum special = null; //get special ability from database
+
         do {
             Random rand = new Random();
             randInt = rand.nextInt(numberOfIlluminatiCards);
         } while(isTaken[randInt]);
 
         IlluminatiCardEnum illuminati = IlluminatiCardEnum.values()[randInt];
-        IlluminatiCard illuminatiCard = new IlluminatiCard(illuminati);
+        IlluminatiCard illuminatiCard = new IlluminatiCard(
+                illuminati.getName(),
+                CardTypeEnum.ILLUMINATI,
+                power,
+                transferablePower,
+                resistance,
+                income,
+                alignment,
+                special,
+                illuminati,
+                bank
+                );
         isTaken[randInt] = true;
 
         return illuminatiCard;
@@ -199,7 +219,9 @@ public class Table {
     private void addCardsToCenter() {
         int numberOfOriginalGroupCards = 4;
         for(int i = 0; i < numberOfOriginalGroupCards; i++) {
-            center.addGroupToCenter(deck.drawGroupCard());
+            Card card = deck.draw();
+            if(card.getType() == CardTypeEnum.GROUP) center.addGroupToCenter((GroupCard) card);
+            else deck.returnToDeck(card);
         }
     }
 
@@ -232,7 +254,7 @@ public class Table {
             int maxActionsTaken = 2;
             int actionsTaken = 0;
             while(actionsTaken < maxActionsTaken) {
-                Action action = new Action(currentPlayer);
+                Action action = new Action(currentPlayer, this);
                 actionsTaken += action.getActionsTaken();
             }
 
@@ -247,6 +269,14 @@ public class Table {
         if(player.getIlluminatiCard().checkGenericGoal()) return true;
         if(player.getIlluminatiCard().checkSpecialGoal()) return true;
         return false;
+    }
+
+    public Center getCenter() {
+        return center;
+    }
+
+    public DestroyedCards getDestroyedCards() {
+        return destroyedCards;
     }
 
     public static void main(String[] args) {

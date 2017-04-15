@@ -13,13 +13,20 @@ public class PowerStructure {
 
     public IlluminatiCard getIlluminatiCard()
     {
-        return card;
+        return illuminatiCard;
     }
 
-    public void setIlluminatiCard(IlluminatiCard card)
+    public void setIlluminatiCard(IlluminatiCard illuminatiCard)
     {
-        this.card = card;
+        this.illuminatiCard = illuminatiCard;
     }
 
 
+    public boolean hasRoom(GroupCard defendingGroup) {
+        return false;
+    }
+
+    public void addToPowerStructure(GroupCard defendingGroup) {
+
+    }
 }
