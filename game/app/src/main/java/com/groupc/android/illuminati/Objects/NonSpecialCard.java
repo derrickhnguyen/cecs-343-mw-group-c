@@ -31,8 +31,8 @@ public class NonSpecialCard extends Card {
                             int resistance,
                             int income,
                             AlignmentEnum alignment,
-                            SpecialAbilityEnum specialAbility,
-                            Bank bank) {
+                            SpecialAbilityEnum specialAbility
+                            ) {
         super(cardName, type);
 
       this.power = power;
@@ -41,7 +41,6 @@ public class NonSpecialCard extends Card {
       this.income = income;
       this.alignment = alignment;
       this.specialAbility = specialAbility;
-        this.bank = bank;
 
       groupTreasury = 0;
       connectedCards = new NonSpecialCard[4];

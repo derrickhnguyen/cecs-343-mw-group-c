@@ -21,11 +21,12 @@ public class IlluminatiCard extends NonSpecialCard {
                                   int income,
                                   AlignmentEnum alignment,
                                   SpecialAbilityEnum specialAbility,
-                                  IlluminatiCardEnum illuminati,
-                                  Bank bank) {
-        super(cardName, type, power, transferablePower, resistance, income, alignment, specialAbility, bank);
+                                  IlluminatiCardEnum illuminati
+                                  ) {
+        super(cardName, type, power, transferablePower, resistance, income, alignment, specialAbility);
         this.illuminati = illuminati;
     }
+
 
     public boolean checkGenericGoal() {
         return false;

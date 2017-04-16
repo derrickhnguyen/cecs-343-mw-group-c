@@ -208,8 +208,7 @@ public class Table {
                 income,
                 alignment,
                 special,
-                illuminati,
-                bank
+                illuminati
                 );
         isTaken[randInt] = true;
 

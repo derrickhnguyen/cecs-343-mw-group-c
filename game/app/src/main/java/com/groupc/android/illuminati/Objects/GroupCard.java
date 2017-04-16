@@ -19,9 +19,9 @@ public class GroupCard extends NonSpecialCard {
                             int resistance,
                             int income,
                             AlignmentEnum alignment,
-                            Table.SpecialAbilityEnum specialAbility,
-                            Bank bank) {
-        super(cardName, type, power, transferablePower, resistance, income, alignment, specialAbility, bank);
+                            Table.SpecialAbilityEnum specialAbility
+                            ) {
+        super(cardName, type, power, transferablePower, resistance, income, alignment, specialAbility);
 
         puppetMaster = null;
         puppetFlag = false;

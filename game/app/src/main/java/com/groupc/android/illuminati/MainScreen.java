@@ -16,9 +16,14 @@ import com.groupc.android.illuminati.Objects.Table;
 public class MainScreen extends AppCompatActivity {
 
     FragmentManager fm;
-    Player[] players = {new Player("Christian", new IlluminatiCard(Table.IlluminatiCardEnum.BAVARIANILLUMINATI)),
-            new Player("Mike", new IlluminatiCard(Table.IlluminatiCardEnum.DISCORDIANSOCIETY)),
-            new Player("Derrick", new IlluminatiCard(Table.IlluminatiCardEnum.SOCIETYOFASSASSINS))};
+    Player player = new Player("Christian",
+                    new IlluminatiCard("The Bavarian Illuminati",
+                    Table.CardTypeEnum.ILLUMINATI, 10, 0, 10, 9, Table.AlignmentEnum.COMMUNIST,
+                    Table.SpecialAbilityEnum.MAYMAKEONEPRIVILEGEDATTACKEACHTURNATACOSTOFFIVEMEGABUCKS,
+                    Table.IlluminatiCardEnum.BAVARIANILLUMINATI));
+
+    Player[] players = {player, player, player};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
