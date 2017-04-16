@@ -1,5 +1,10 @@
 package com.groupc.android.illuminati.Objects;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.text.InputType;
+import android.widget.EditText;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -16,6 +21,7 @@ public class Table {
     private DestroyedCards  destroyedCards;
 
     private int                         numberOfPlayers;
+    private int                         playerCount;
     private Queue<Player>               players;
     private ArrayList<PowerStructure>   powerStructures;
 
@@ -159,29 +165,25 @@ public class Table {
 
         players         = new LinkedList<>();
         powerStructures = new ArrayList<PowerStructure>();
+        playerCount     = 0;
 
         gameIsActive = true;
         isTaken = new boolean[numberOfIlluminatiCards];
 
-        initializePlayers();
-        addCardsToCenter();
-        seeWhoGoesFirst();
-        turn();
     }
 
-    private void initializePlayers() {
-
-        //numberOfPlayers = get from user
-
-        String          username = "";
+    public void addPlayer() {
+        playerCount++;
+        String          username = "Player " + playerCount;
         Player          player;
         IlluminatiCard  illuminatiCard;
-        for(int i = 0; i < numberOfPlayers; i++) {
-            //username = get from user
-            illuminatiCard = chooseIlluminatiCard();
-            player = new Player(username, illuminatiCard);
-            players.add(player);
-        }
+        illuminatiCard = chooseIlluminatiCard();
+        player = new Player(username, illuminatiCard);
+        players.add(player);
+    }
+
+    public LinkedList<Player> getPlayers() {
+        return (LinkedList<Player>) players;
     }
 
     private IlluminatiCard chooseIlluminatiCard() {
@@ -215,13 +217,21 @@ public class Table {
         return illuminatiCard;
     }
 
-    private void addCardsToCenter() {
+    public void addCardsToCenter() {
         int numberOfOriginalGroupCards = 4;
         for(int i = 0; i < numberOfOriginalGroupCards; i++) {
             Card card = deck.draw();
             if(card.getType() == CardTypeEnum.GROUP) center.addGroupToCenter((GroupCard) card);
             else deck.returnToDeck(card);
         }
+    }
+
+    public void setNumberOfPlayers(String numberOfPlayers) {
+        this.numberOfPlayers = Integer.parseInt(numberOfPlayers);
+    }
+
+    public int getNumberOfPlayers() {
+        return numberOfPlayers;
     }
 
     private void seeWhoGoesFirst() {
@@ -276,9 +286,5 @@ public class Table {
 
     public DestroyedCards getDestroyedCards() {
         return destroyedCards;
-    }
-
-    public static void main(String[] args) {
-        Table table = new Table();
     }
 }

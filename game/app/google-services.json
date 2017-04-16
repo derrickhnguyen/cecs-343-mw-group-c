@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "973335149173",
+    "firebase_url": "https://illuminice-9de19.firebaseio.com",
+    "project_id": "illuminice-9de19",
+    "storage_bucket": "illuminice-9de19.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:973335149173:android:12de92009f45c7e1",
+        "android_client_info": {
+          "package_name": "com.groupc.android.illuminati"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "973335149173-9i2rtamrj809pgk5rl3tg5r2ombjkol9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.groupc.android.illuminati",
+            "certificate_hash": "7960ebd0793e018a4e6bca8a97a09c9189727547"
+          }
+        },
+        {
+          "client_id": "973335149173-a86qan6ifc4b20teedttdspf2nd8vjtu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBotXnsjixRfiu7VxLaAuFsvd_kTtMxp9M"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "973335149173-a86qan6ifc4b20teedttdspf2nd8vjtu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

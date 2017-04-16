@@ -1,28 +1,32 @@
 package com.groupc.android.illuminati;
 
+import android.app.Dialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.app.Fragment;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.groupc.android.illuminati.Objects.IlluminatiCard;
 import com.groupc.android.illuminati.Objects.Player;
 import com.groupc.android.illuminati.Objects.Table;
 
+import java.util.ArrayList;
+
 public class MainScreen extends AppCompatActivity {
 
     FragmentManager fm;
-    Player player = new Player("Christian",
-                    new IlluminatiCard("The Bavarian Illuminati",
-                    Table.CardTypeEnum.ILLUMINATI, 10, 0, 10, 9, Table.AlignmentEnum.COMMUNIST,
-                    Table.SpecialAbilityEnum.MAYMAKEONEPRIVILEGEDATTACKEACHTURNATACOSTOFFIVEMEGABUCKS,
-                    Table.IlluminatiCardEnum.BAVARIANILLUMINATI));
-
-    Player[] players = {player, player, player};
+    Player[] players;
+    private String numberOfPlayers;
+    Table table;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,10 +34,30 @@ public class MainScreen extends AppCompatActivity {
         setContentView(R.layout.activity_main_screen);
         fm = getFragmentManager();
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("How many players?");
+
+        final EditText input = new EditText(this);
+
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        builder.setView(input);
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                numberOfPlayers = input.getText().toString();
+                beginGame();
+            }
+        });
+
+        builder.show();
+
+
         Button home = (Button) findViewById(R.id.homebutton);
         Button otherPlayers = (Button) findViewById(R.id.otherplayersbutton);
         Button playerProfile = (Button) findViewById(R.id.profilebutton);
         Button displaySkillCards = (Button) findViewById(R.id.skillbutton);
+        Button centerPile = (Button) findViewById(R.id.centerpilebutton);
 
         otherPlayers.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,18 +66,10 @@ public class MainScreen extends AppCompatActivity {
                 names.putSerializable("names", players);
 
                 FragmentTransaction ft = fm.beginTransaction();
-                //ListFragment playerListFrag = new ListFragment();
                 ListFragment playerListFrag = new PlayerListFragment();
                 playerListFrag.setArguments(names);
                 ft.replace(R.id.contentframe, playerListFrag);
                 ft.commit();
-//                Fragment playerListFrag = new PlayerListFragment();
-//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-//
-//                transaction.replace(R.id.contentfragment, playerListFrag);
-//                transaction.addToBackStack(null);
-//
-//                transaction.commit();
             }
         });
 
@@ -64,7 +80,6 @@ public class MainScreen extends AppCompatActivity {
                 player.putString("name", "My Player Name");
 
                 FragmentTransaction ft = fm.beginTransaction();
-                //ListFragment playerListFrag = new ListFragment();
                 Fragment playerProfileFragment = new PlayerProfileFragment();
                 playerProfileFragment.setArguments(player);
                 ft.replace(R.id.contentframe, playerProfileFragment);
@@ -76,11 +91,10 @@ public class MainScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Bundle cardIDs = new Bundle();
-                int[]IDs = new int[]{R.drawable.card, R.drawable.card, R.drawable.card};
+                int[] IDs = new int[]{R.drawable.card, R.drawable.card, R.drawable.card};
                 cardIDs.putIntArray("cardNames", IDs);
 
                 FragmentTransaction ft = fm.beginTransaction();
-                //ListFragment playerListFrag = new ListFragment();
                 Fragment CardListFragment = new CardListFragment();
                 CardListFragment.setArguments(cardIDs);
                 ft.replace(R.id.contentframe, CardListFragment);
@@ -88,6 +102,37 @@ public class MainScreen extends AppCompatActivity {
             }
         });
 
+        centerPile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle centerCardIDs = new Bundle();
+                int[] IDs = new int[]{R.drawable.card, R.drawable.card, R.drawable.card};
+                centerCardIDs.putIntArray("cardNames", IDs);
 
+                FragmentTransaction ft = fm.beginTransaction();
+                Fragment CardListFragment = new CardListFragment();
+                CardListFragment.setArguments(centerCardIDs);
+                ft.replace(R.id.contentframe, CardListFragment);
+                ft.commit();
+            }
+        });
+    }
+
+    private void beginGame() {
+        table = new Table();
+        if(numberOfPlayers != null) table.setNumberOfPlayers(numberOfPlayers);
+
+        for(int i = 0; i < table.getNumberOfPlayers(); i++) {
+            table.addPlayer();
+            System.out.println(i);
+        }
+
+        players = new Player[table.getNumberOfPlayers()];
+
+        for(int i = 0; i < table.getNumberOfPlayers(); i++) {
+            players[i] = table.getPlayers().get(i);
+        }
+
+        table.addCardsToCenter();
     }
 }
