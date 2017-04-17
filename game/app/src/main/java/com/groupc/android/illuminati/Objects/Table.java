@@ -208,7 +208,6 @@ public class Table {
                 transferablePower,
                 resistance,
                 income,
-                alignment,
                 special,
                 illuminati
                 );

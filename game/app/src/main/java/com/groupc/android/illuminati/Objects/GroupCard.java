@@ -10,6 +10,7 @@ public class GroupCard extends NonSpecialCard {
     private GroupCard puppetMaster;
     private boolean puppetFlag;
     private boolean isAttackable;
+    private AlignmentEnum alignment;
 
     public GroupCard(
                             String cardName,
@@ -21,10 +22,11 @@ public class GroupCard extends NonSpecialCard {
                             AlignmentEnum alignment,
                             Table.SpecialAbilityEnum specialAbility
                             ) {
-        super(cardName, type, power, transferablePower, resistance, income, alignment, specialAbility);
+        super(cardName, type, power, transferablePower, resistance, income, specialAbility);
 
         puppetMaster = null;
         puppetFlag = false;
+        this.alignment = alignment;
 
         if(resistance == 0) isAttackable = false;
         else isAttackable = true;

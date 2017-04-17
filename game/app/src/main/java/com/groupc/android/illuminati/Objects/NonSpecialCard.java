@@ -30,7 +30,6 @@ public class NonSpecialCard extends Card {
                             int transferablePower,
                             int resistance,
                             int income,
-                            AlignmentEnum alignment,
                             SpecialAbilityEnum specialAbility
                             ) {
         super(cardName, type);

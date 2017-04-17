@@ -19,11 +19,10 @@ public class IlluminatiCard extends NonSpecialCard {
                                   int transferablePower,
                                   int resistance,
                                   int income,
-                                  AlignmentEnum alignment,
                                   SpecialAbilityEnum specialAbility,
                                   IlluminatiCardEnum illuminati
                                   ) {
-        super(cardName, type, power, transferablePower, resistance, income, alignment, specialAbility);
+        super(cardName, type, power, transferablePower, resistance, income, specialAbility);
         this.illuminati = illuminati;
     }
 
