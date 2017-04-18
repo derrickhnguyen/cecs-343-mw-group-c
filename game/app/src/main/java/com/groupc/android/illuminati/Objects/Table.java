@@ -60,7 +60,8 @@ public class Table {
       STRAIGHT("Straight"),
       WEIRD("Weird"),
       CRIMINAL("Criminal"),
-      FANATIC("Fanatic");
+      FANATIC("Fanatic"),
+      NONE("none");
 
       private final String name;
 
@@ -82,7 +83,7 @@ public class Table {
       MAYMOVEMONEYFREELYATENDOFTURN("May Move Money Freely At End Of Turn"), //notinattack
       MAYMAKEONEPRIVILEGEDATTACKEACHTURNATACOSTOFFIVEMEGABUCKS("May Make One Privileged Attack Each Turn At A Cost Of Five Mega Bucks"), //notinattack
       MAYREORGANIZEGROUPSFREELYATENDOFTURN("May Reorganize Groups Freely At End Of Turn"), //notinattack
-      PLUS2ONANYATTEMPTTODESTROYNUCLEARPOWERCOMPANIE("Plus Two On Attempt To Destroy Nuclear Power Companies"),
+      PLUSTWOONANYATTEMPTTODESTROYNUCLEARPOWERCOMPANIES("Plus Two On Attempt To Destroy Nuclear Power Companies"),
       TREATTHISGROUPASGOVERNMENTWHENITATTEMPTSTOCONTROLAGOVERNMENTGROUP("Treat This Group As Government When It Attempts To Control A Government Group"),
       PLUSTHREEONANYATTEMPTTODESTROYANYGROUP("Plus Three On Any Attempt To Destroy Any Group"),
       PLUS2ONANYATTEMPTTODESTROYANYGROUP("Plus Two On Any Attempt To Destroy Any Group"),
@@ -90,7 +91,7 @@ public class Table {
       WHENITTRANSFERSMONEYTHATMONEYCANGOTOANYGROUPINTHESAMEPOWERSTRUCTURE("When It Transfers Money That Money Can Go To Any Group In The Same Power Strucutre"), //notinattack
       PLUSTHREEONANYATTEMPTTOCONTROLANYLIBERALGROUP("Plus Three On Any Attempt To Control Any Liberal Group"),
       NORMALRESISTANCETHREEAGAINSTANYLIBERALCOMMUNISTORWEIRDGROUPRESISTANCETEN("Normal Resitance Three Against Any Liberal Communist Or Weird Group Resistance Ten"), //takencareofinattackbutnotaddresseddirectly
-      PLUSTHREEEONANYATTEMPTTONEUTRALIZEANYGROUP("Plus Three On Any Attempt To Neutralize Any Group"),
+      PLUSTHREEONANYATTEMPTTONEUTRALIZEANYGROUP("Plus Three On Any Attempt To Neutralize Any Group"),
       PLUSTWOONANYATTEMPTTOCONTROLANTINUCLEARACTIVISTS("Plus Two On Any Attempt To Control Anti Neuclear Activists"),
       PLUSFOURONANYATTEMPTTOCONTROLPUNKROCKERSCYCLEGANGSORHOLLYWOOD("Plus Four On Any Attempt To Control Punk Rockers Cycle Gangs Or Hollywood"),
       PLUSTHREEONANYATTEMPTTOCONTROLANYCOMMUNISTGROUP("Plus Three On Any Attempt To Control Any Communist Group"),
@@ -108,7 +109,8 @@ public class Table {
       PLUSFIVEFORDIRECTCONTROLOFSFFANSPLUSTWOFORDIRECTCONTROLOFTREKKIES("Plus Five For Direct Control Of SF Fans Plus Two For Direct Control Of Trekkies"),
       PLUSTWORESISTANCETOALLOWNERSOTHERGROUPS("Plus Two Resistance To All Owners Other Groups"), //takencareofinattackbutnotaddresseddirectly
       PLUSTHREEFORDIRECTCONTROLOFCONVENIENCESTORES("Plus Three For Direct Control Of Convenience Stores"),
-      PLUSTHREEFORDIRECTCONTROLOFTHEMORALMINORITY("Plus Three For Direct Control Of The Moral Minority");
+      PLUSTHREEFORDIRECTCONTROLOFTHEMORALMINORITY("Plus Three For Direct Control Of The Moral Minority"),
+      NONE("None");
 
 
       private final String name;

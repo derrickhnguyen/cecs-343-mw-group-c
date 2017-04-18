@@ -1,5 +1,8 @@
 package com.groupc.android.illuminati.Objects;
 
+import android.transition.Slide;
+
+import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -18,7 +21,7 @@ public class Deck {
 
     private void initializeCards() {
       initializeIlluminatiCards();
-
+      initializeGroupCards();
       initializeSpecialCards();
     }
 
@@ -114,6 +117,757 @@ public class Deck {
         );
         cards.add(bermudaTriangle);
 
+    }
+
+    private void initializeGroupCards() {
+        Table.CardTypeEnum group = Table.CardTypeEnum.GROUP;
+        GroupCard americanAutoduelAssociation = new GroupCard(
+                "American Autoduel Association",
+                group,
+                1, 0, 5, 1,
+                new Table.AlignmentEnum[]{Table.AlignmentEnum.WEIRD},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(americanAutoduelAssociation);
+
+        GroupCard antiNuclearActivists = new GroupCard(
+                "Anti-Nuclear Activists",
+                group,
+                2, 0, 5, 1,
+                new Table.AlignmentEnum[]{Table.AlignmentEnum.LIBERAL},
+                Table.SpecialAbilityEnum.PLUSTWOONANYATTEMPTTODESTROYNUCLEARPOWERCOMPANIES
+        );
+        cards.add(antiNuclearActivists);
+
+        GroupCard antiwarActivists = new GroupCard(
+                "Antiwar Activists",
+                group,
+                0, 0, 3, 1,
+                new Table.AlignmentEnum[]{Table.AlignmentEnum.PEACEFULL, Table.AlignmentEnum.LIBERAL},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(antiNuclearActivists);
+
+        GroupCard bigMedia = new GroupCard(
+                "Big Media",
+                group,
+                4, 3, 6, 3,
+                new Table.AlignmentEnum[]{Table.AlignmentEnum.LIBERAL, Table.AlignmentEnum.STRAIGHT},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(bigMedia);
+
+        GroupCard boySprouts = new GroupCard(
+                "Boy Sprouts",
+                group,
+                0, 0, 3, 1,
+                new Table.AlignmentEnum[]{Table.AlignmentEnum.STRAIGHT, Table.AlignmentEnum.PEACEFULL},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(boySprouts);
+
+        GroupCard california = new GroupCard(
+                "Califonria",
+                group,
+                5, 0, 4, 5,
+                new Table.AlignmentEnum[]{Table.AlignmentEnum.LIBERAL, Table.AlignmentEnum.WEIRD, Table.AlignmentEnum.GOVERNMENT},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(california);
+
+        GroupCard cflAio = new GroupCard(
+                "CFL-AIO",
+                group,
+                6, 0, 5, 3,
+                new Table.AlignmentEnum[]{Table.AlignmentEnum.LIBERAL},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(cflAio);
+
+        GroupCard chineseCampaignDonors = new GroupCard(
+                "Chinese Campaign Donors",
+                group,
+                3, 0, 2, 2,
+                new Table.AlignmentEnum[]{Table.AlignmentEnum.COMMUNIST},
+                Table.SpecialAbilityEnum.TREATTHISGROUPASGOVERNMENTWHENITATTEMPTSTOCONTROLAGOVERNMENTGROUP
+        );
+        cards.add(chineseCampaignDonors);
+
+        GroupCard cia = new GroupCard(
+                "C.I.A.",
+                group,
+                6, 4, 5, 0,
+                new Table.AlignmentEnum[]{Table.AlignmentEnum.GOVERNMENT, Table.AlignmentEnum.VIOLENT},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(cia);
+
+        GroupCard cloneArrangers = new GroupCard(
+                "Clone Arrangers",
+                group,
+                6, 2, 6, 1,
+                new Table.AlignmentEnum[]{Table.AlignmentEnum.VIOLENT, Table.AlignmentEnum.COMMUNIST, Table.AlignmentEnum.CRIMINAL},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(cloneArrangers);
+
+        GroupCard comicBooks =  new GroupCard(
+                "Comic Books",
+                group,
+                1, 0, 1, 2,
+                new Table.AlignmentEnum[]{Table.AlignmentEnum.WEIRD, Table.AlignmentEnum.VIOLENT},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(comicBooks);
+
+        GroupCard congressionalWives = new GroupCard(
+                "Congressional Wives",
+                group,
+                1, 0, 4, 1,
+                new Table.AlignmentEnum[]{Table.AlignmentEnum.CONSERVATIVE, Table.AlignmentEnum.STRAIGHT},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(congressionalWives);
+
+        GroupCard convenienceStores = new GroupCard(
+                "Convenience Stores",
+                group,
+                1, 0, 4, 3,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.STRAIGHT},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(convenienceStores);
+
+        GroupCard copyShops = new GroupCard(
+                "Copy Shops",
+                group,
+                1, 0, 3, 4,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.PEACEFULL},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(copyShops);
+
+        GroupCard cycleGangs = new GroupCard(
+                "Cycle Gangs",
+                group,
+                0, 0, 4, 0,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.VIOLENT, Table.AlignmentEnum.WEIRD},
+                Table.SpecialAbilityEnum.PLUSTWOONANYATTEMPTTODESTROYANYGROUP
+        );
+        cards.add(cycleGangs);
+
+        GroupCard democrats = new GroupCard(
+                "Democrats",
+                group,
+                5, 0, 4, 3,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.LIBERAL},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(democrats);
+
+
+        GroupCard ecoGuerrillas = new GroupCard(
+                "Eco-Guerrillas",
+                group,
+                0, 0, 6, 1,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.LIBERAL, Table.AlignmentEnum.VIOLENT, Table.AlignmentEnum.WEIRD},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(ecoGuerrillas);
+
+        GroupCard emptyVee = new GroupCard(
+                "Empty Vee",
+                group,
+                0, 0, 6, 1,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.NONE},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(emptyVee);
+
+        GroupCard evilGeniusesForABetterTomorrow = new GroupCard(
+                "Evil Geniuses for a Better Tomorrow",
+                group,
+                0, 2, 6, 3,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.VIOLENT, Table.AlignmentEnum.WEIRD},
+                Table.SpecialAbilityEnum.PLUSFOURFORANYATTEMPTTOCONTROLNEUTRALIZEORDESTROYTHEORBITALMINDCONTROLLASERS
+        );
+        cards.add(evilGeniusesForABetterTomorrow);
+
+        GroupCard fastFoodChains = new GroupCard(
+                "Fast Food Chains",
+                group,
+                2, 0, 4, 3,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.STRAIGHT},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(fastFoodChains);
+
+        GroupCard fbi = new GroupCard(
+                "F.B.I.",
+                group,
+                4, 2, 6, 0,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.GOVERNMENT, Table.AlignmentEnum.STRAIGHT},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(fbi);
+
+        GroupCard federalReserve = new GroupCard(
+                "Federal Reserve",
+                group,
+                5, 3, 7, 6,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.GOVERNMENT},
+                Table.SpecialAbilityEnum.WHENITTRANSFERSMONEYTHATMONEYCANGOTOANYGROUPINTHESAMEPOWERSTRUCTURE
+        );
+        cards.add(federalReserve);
+
+        GroupCard feminists = new GroupCard(
+                "Feminists",
+                group,
+                2, 0, 2, 1,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.LIBERAL},
+                Table.SpecialAbilityEnum.PLUSTHREEONANYATTEMPTTOCONTROLANYLIBERALGROUP
+        );
+        cards.add(feminists);
+
+        GroupCard fiendishFluoridators = new GroupCard(
+                "Fiendish Flouridators",
+                group,
+                3, 0, 5, 1,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.COMMUNIST, Table.AlignmentEnum.FANATIC},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(fiendishFluoridators);
+
+        GroupCard flatEarthers = new GroupCard(
+                "Flat Earthers",
+                group,
+                1, 0, 2, 1,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.WEIRD, Table.AlignmentEnum.CONSERVATIVE},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(flatEarthers);
+
+        GroupCard fnordMotorCompany = new GroupCard(
+                "Fnord Motor Company",
+                group,
+                2, 0, 4, 2,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.PEACEFULL},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(fnordMotorCompany);
+
+        GroupCard fraternalOrders = new GroupCard(
+                "Fraternal Orders",
+                group,
+                3, 0, 5, 2,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.CONSERVATIVE},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(fraternalOrders);
+
+        GroupCard girlieMagazines = new GroupCard(
+                "Girly Magazines",
+                group,
+                2, 0, 2, 3,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.LIBERAL},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(girlieMagazines);
+
+        GroupCard goldfishFanciers = new GroupCard(
+                "Goldfish Fanciers",
+                group,
+                0, 0, 4, 1,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.PEACEFULL, Table.AlignmentEnum.FANATIC},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(goldfishFanciers);
+
+        GroupCard gunLobby = new GroupCard(
+                "Gun Lobby",
+                group,
+                1, 0, 0, 1,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.CONSERVATIVE, Table.AlignmentEnum.VIOLENT},
+                Table.SpecialAbilityEnum.NORMALRESISTANCETHREEAGAINSTANYLIBERALCOMMUNISTORWEIRDGROUPRESISTANCETEN
+        );
+        cards.add(gunLobby);
+
+        GroupCard hackers = new GroupCard(
+                "Hackers",
+                group,
+                1, 1, 4, 2,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.WEIRD, Table.AlignmentEnum.FANATIC},
+                Table.SpecialAbilityEnum.PLUSTHREEONANYATTEMPTTONEUTRALIZEANYGROUP
+        );
+        cards.add(hackers);
+
+        GroupCard healthFoodStores = new GroupCard(
+                "Health Food Stores",
+                group,
+                1, 0, 3, 2,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.LIBERAL},
+                Table.SpecialAbilityEnum.PLUSTWOONANYATTEMPTTOCONTROLANTINUCLEARACTIVISTS
+        );
+        cards.add(healthFoodStores);
+
+        GroupCard hollywood = new GroupCard(
+                "Hollywood",
+                group,
+                2, 0, 0, 5,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.LIBERAL},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(hollywood);
+
+        GroupCard intellectuals = new GroupCard(
+                "Intellectuals",
+                group,
+                0, 0, 3, 1,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.WEIRD, Table.AlignmentEnum.FANATIC},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(intellectuals);
+
+        GroupCard internationalCocaineSmugglers = new GroupCard(
+                "International Cocaine Smugglers",
+                group,
+                3, 0, 5, 5,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.CRIMINAL},
+                Table.SpecialAbilityEnum.PLUSFOURONANYATTEMPTTOCONTROLPUNKROCKERSCYCLEGANGSORHOLLYWOOD
+        );
+        cards.add(internationalCocaineSmugglers);
+
+        GroupCard internationalCommunistConspiracy = new GroupCard(
+                "International Communist Conspiracy",
+                group,
+                7, 0, 8, 6,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.COMMUNIST},
+                Table.SpecialAbilityEnum.PLUSTHREEONANYATTEMPTTOCONTROLANYCOMMUNISTGROUP
+        );
+        cards.add(internationalCommunistConspiracy);
+
+        GroupCard irs = new GroupCard(
+                "I.R.S",
+                group,
+                5, 3, 5, 0,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.CRIMINAL, Table.AlignmentEnum.GOVERNMENT},
+                Table.SpecialAbilityEnum.OWNINGPLAYERMAYTAXEACHOPPONENTTWOMEGABUCKSONHISOWNICOMEPHASETAXMAYCOMEFROMANYGROUPIFAPLAYERHASNOMONEYHEOWESNOTAX
+        );
+        cards.add(irs);
+
+        GroupCard junkMail = new GroupCard(
+                "Junk Mail",
+                group,
+                1, 0, 3, 2,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.CRIMINAL},
+                Table.SpecialAbilityEnum.PLUSFOURONANYATTEMPTTOCONTROLTHEPOSTOFFICE
+        );
+        cards.add(junkMail);
+
+        GroupCard kgb = new GroupCard(
+                "KGB",
+                group,
+                2, 2, 6, 0,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.COMMUNIST, Table.AlignmentEnum.VIOLENT},
+                Table.SpecialAbilityEnum.PLUSTWOONANYATTEMPTTODESTROYANYGROUP
+        );
+        cards.add(kgb);
+
+        GroupCard kkk = new GroupCard(
+                "KKK",
+                group,
+                2, 0, 5, 1,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.CONSERVATIVE, Table.AlignmentEnum.VIOLENT},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(kkk);
+
+        GroupCard l4Society = new GroupCard(
+                "L-4 Society",
+                group,
+                1, 0, 2, 0,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.WEIRD},
+                Table.SpecialAbilityEnum.PLUSFOURFORDIRECTCONTROLNEUTRALIZATIONORDESTRUCTIONOFORBITALMINDCONTROLLASERS
+        );
+        cards.add(l4Society);
+
+        GroupCard libertarians = new GroupCard(
+                "Libertarians",
+                group,
+                1, 0, 4, 1,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.FANATIC},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(libertarians);
+
+        GroupCard loanSharks = new GroupCard(
+                "Loan Sharks",
+                group,
+                5, 5, 0, 6,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.CRIMINAL, Table.AlignmentEnum.VIOLENT},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(loanSharks);
+
+        GroupCard localPoliceDepartments = new GroupCard(
+                "Local Police Departments",
+                group,
+                0, 0, 4, 1,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.CONSERVATIVE, Table.AlignmentEnum.STRAIGHT, Table.AlignmentEnum.VIOLENT},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(localPoliceDepartments);
+
+        GroupCard madisonAvenue = new GroupCard(
+                "Madison Avenue",
+                group,
+                3, 3, 3, 2,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.NONE},
+                Table.SpecialAbilityEnum.PLUSFIVEONANYATTEMPTTOCONTROLBIGMEDIAOREMPTYVEE
+        );
+        cards.add(madisonAvenue);
+
+        GroupCard theMafia = new GroupCard(
+                "The Mafia",
+                group,
+                7, 0, 7, 6,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.CRIMINAL, Table.AlignmentEnum.VIOLENT},
+                Table.SpecialAbilityEnum.PLUSTHREEFORDIRECTCONTROLFORANYCRIMINALGROUP
+        );
+        cards.add(theMafia);
+
+        GroupCard theMenInBlack = new GroupCard(
+                "The Men In Black",
+                group,
+                0, 2, 6, 1,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.CRIMINAL, Table.AlignmentEnum.WEIRD},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(theMenInBlack);
+
+        GroupCard militia = new GroupCard(
+                "Militia",
+                group,
+                2, 0, 4, 2,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.VIOLENT, Table.AlignmentEnum.CONSERVATIVE},
+                Table.SpecialAbilityEnum.PLUSSIXONANYATTEMPTTODESTROYANYCOMMUNISTGROUP
+        );
+        cards.add(militia);
+
+        GroupCard moonies = new GroupCard(
+                "Moonies",
+                group,
+                2, 0, 4, 3,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.PEACEFULL, Table.AlignmentEnum.FANATIC},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(moonies);
+
+        GroupCard moralMinority = new GroupCard(
+                "Moral Minority",
+                group,
+                2, 0, 1, 2,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.CONSERVATIVE, Table.AlignmentEnum.STRAIGHT, Table.AlignmentEnum.FANATIC},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(moralMinority);
+
+        GroupCard morticians = new GroupCard(
+                "Morticians",
+                group,
+                0, 0, 4, 1,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.STRAIGHT, Table.AlignmentEnum.PEACEFULL},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(morticians);
+
+        GroupCard multinationalOilCompanies = new GroupCard(
+                "Multinational Oil Companies",
+                group,
+                6, 0, 4, 8,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.NONE},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(multinationalOilCompanies);
+
+        GroupCard nephewsOfGod = new GroupCard(
+                "Nephews of God",
+                group,
+                0, 0, 4, 2,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.CONSERVATIVE, Table.AlignmentEnum.FANATIC},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(nephewsOfGod);
+
+        GroupCard newYork = new GroupCard(
+                "New York",
+                group,
+                7, 0, 8, 3,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.VIOLENT, Table.AlignmentEnum.CRIMINAL, Table.AlignmentEnum.GOVERNMENT},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(newYork);
+
+        GroupCard nuclearPowerCompanies = new GroupCard(
+                "Nuclear Power Companies",
+                group,
+                4, 0, 4, 3,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.CONSERVATIVE},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(nuclearPowerCompanies);
+
+        GroupCard orbitalMindControlLasers = new GroupCard(
+                "Orbital Mind Control Lasers",
+                group,
+                4, 2, 5, 0,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.COMMUNIST},
+                Table.SpecialAbilityEnum.ONHISTURNOWNERCANADDREMOVEORREVERSEANALIGNMENTOFANYONEOTHERGROUPINPLAYCHANGELASTSFORTHATTURNONLY
+        );
+        cards.add(orbitalMindControlLasers);
+
+        GroupCard parentTeacherAgglomeration = new GroupCard(
+                "Parent/Teacher Agglomeration",
+                group,
+                0, 0, 5, 1,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.PEACEFULL, Table.AlignmentEnum.CONSERVATIVE, Table.AlignmentEnum.STRAIGHT},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(parentTeacherAgglomeration);
+
+        GroupCard pentagon = new GroupCard(
+                "Pentagon",
+                group,
+                6, 0, 6, 2,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.GOVERNMENT, Table.AlignmentEnum.VIOLENT, Table.AlignmentEnum.STRAIGHT},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(pentagon);
+
+        GroupCard thePhoneCompany = new GroupCard(
+                "The Phone Company",
+                group,
+                5, 2, 6, 3,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.NONE},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(thePhoneCompany);
+
+        GroupCard phonePhreaks = new GroupCard(
+                "Phone Phreaks",
+                group,
+                0, 1, 1, 1,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.CRIMINAL, Table.AlignmentEnum.LIBERAL},
+                Table.SpecialAbilityEnum.PLUSTHREEONANYATTEMPTTOCONTROLNEUTRALIZEORDESTORYTHEPHONECOMPANY
+        );
+        cards.add(phonePhreaks);
+
+        GroupCard postOffice = new GroupCard(
+                "Post Office",
+                group,
+                4, 3, 3, 1,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.GOVERNMENT},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(postOffice);
+
+        GroupCard professionalSports = new GroupCard(
+                "Professional Sports",
+                group,
+                2, 0, 4, 3,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.VIOLENT, Table.AlignmentEnum.FANATIC},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(professionalSports);
+
+        GroupCard psychiatrists = new GroupCard(
+                "Psychiatrists",
+                group,
+                0, 0, 6, 2,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.WEIRD},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(psychiatrists);
+
+        GroupCard punkRockers = new GroupCard(
+                "Punk Rockers",
+                group,
+                0, 0, 4, 1,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.WEIRD},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(punkRockers);
+
+        GroupCard recyclers = new GroupCard(
+                "Recyclers",
+                group,
+                2, 0, 2, 3,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.LIBERAL},
+                Table.SpecialAbilityEnum.PAYFIVEMEGABUCKSFORTHISGROUPTODRAWANEXTRACARDONYOURTURNTHISTURNISNOTANACTION
+        );
+        cards.add(recyclers);
+
+        GroupCard republicans = new GroupCard(
+                "Republicans",
+                group,
+                4, 0, 4, 4,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.CONSERVATIVE},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(republicans);
+
+        GroupCard robotSeaMonsters = new GroupCard(
+                "Robot Sea Monsters",
+                group,
+                0, 0, 6, 2,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.VIOLENT, Table.AlignmentEnum.COMMUNIST},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(robotSeaMonsters);
+
+        GroupCard scienceFictionFans = new GroupCard(
+                "Science Fiction Fans",
+                group,
+                0, 0, 5, 1,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.WEIRD},
+                Table.SpecialAbilityEnum.PLUSTWOONANYATTEMPTTOCONTROLANYWEIRDGROUP
+        );
+        cards.add(scienceFictionFans);
+
+        GroupCard semiconsciousLiberationArmy = new GroupCard(
+                "Semiconscious Liberation Army",
+                group,
+                0, 0, 8, 0,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.CRIMINAL, Table.AlignmentEnum.VIOLENT, Table.AlignmentEnum.LIBERAL, Table.AlignmentEnum.WEIRD, Table.AlignmentEnum.COMMUNIST},
+                Table.SpecialAbilityEnum.PLUSONEONANYATTEMPTTODESTROYANYGROUP
+        );
+        cards.add(semiconsciousLiberationArmy);
+
+        GroupCard smof = new GroupCard(
+                "S.M.O.F.",
+                group,
+                1, 0, 1, 0,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.WEIRD},
+                Table.SpecialAbilityEnum.PLUSFIVEFORDIRECTCONTROLOFSFFANSPLUSTWOFORDIRECTCONTROLOFTREKKIES
+        );
+        cards.add(smof);
+
+        GroupCard societyForCreativeAnarchism = new GroupCard(
+                "Society for Creative Anarchism",
+                group,
+                0, 0, 4, 1,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.VIOLENT, Table.AlignmentEnum.WEIRD},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(societyForCreativeAnarchism);
+
+        GroupCard southAmericanNazis = new GroupCard(
+                "South American Nazis",
+                group,
+                4, 0, 6, 2,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.CONSERVATIVE, Table.AlignmentEnum.VIOLENT},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(southAmericanNazis);
+
+        GroupCard survivalists = new GroupCard(
+                "Survivalists",
+                group,
+                0, 0, 6, 2,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.CONSERVATIVE, Table.AlignmentEnum.VIOLENT, Table.AlignmentEnum.FANATIC},
+                Table.SpecialAbilityEnum.PLUSTWORESISTANCETOALLOWNERSOTHERGROUPS
+        );
+        cards.add(survivalists);
+
+        GroupCard tabloids = new GroupCard(
+                "Tabloids",
+                group,
+                2, 0, 3, 3,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.WEIRD},
+                Table.SpecialAbilityEnum.PLUSTHREEFORDIRECTCONTROLOFCONVENIENCESTORES
+        );
+        cards.add(tabloids);
+
+        GroupCard texas = new GroupCard(
+                "Texas",
+                group,
+                6, 0, 6, 4,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.VIOLENT, Table.AlignmentEnum.CONSERVATIVE, Table.AlignmentEnum.GOVERNMENT},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(texas);
+
+        GroupCard tobaccoAndLiquorCompanies = new GroupCard(
+                "Tobacco & Liquor Companies",
+                group,
+                4, 0, 3, 3,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.STRAIGHT},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(tobaccoAndLiquorCompanies);
+
+        GroupCard trekkies = new GroupCard(
+                "Trekkies",
+                group,
+                0, 0, 4, 3,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.WEIRD, Table.AlignmentEnum.FANATIC},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(trekkies);
+
+        GroupCard triliberalCommission = new GroupCard(
+                "Triliberal Commission",
+                group,
+                5, 0, 6, 3,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.LIBERAL, Table.AlignmentEnum.STRAIGHT},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(triliberalCommission);
+
+        GroupCard tvPreachers = new GroupCard(
+                "TV Preachers",
+                group,
+                3, 0, 6, 4,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.STRAIGHT, Table.AlignmentEnum.FANATIC},
+                Table.SpecialAbilityEnum.PLUSTHREEFORDIRECTCONTROLOFTHEMORALMINORITY
+        );
+        cards.add(tvPreachers);
+
+        GroupCard undergroundNewsPapers = new GroupCard(
+                "Underground Newspapers",
+                group,
+                1, 1, 5, 0,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.COMMUNIST, Table.AlignmentEnum.LIBERAL},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(undergroundNewsPapers);
+
+        GroupCard theUnitedNations = new GroupCard(
+                "The United Nations",
+                group,
+                1, 0, 3, 3,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.LIBERAL},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(theUnitedNations);
+
+        GroupCard videoGames = new GroupCard(
+                "Video Games",
+                group,
+                2, 0, 3, 7,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.NONE},
+                Table.SpecialAbilityEnum.PLUSTHREEFORDIRECTCONTROLOFCONVENIENCESTORES
+        );
+        cards.add(videoGames);
+
+        GroupCard yuppies = new GroupCard(
+                "Yuppies",
+                group,
+                1, 1, 4, 5,
+                new Table.AlignmentEnum[] {Table.AlignmentEnum.CONSERVATIVE},
+                Table.SpecialAbilityEnum.NONE
+        );
+        cards.add(yuppies);
     }
 
     private void initializeSpecialCards() {

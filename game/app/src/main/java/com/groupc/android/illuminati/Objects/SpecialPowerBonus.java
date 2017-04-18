@@ -30,7 +30,7 @@ import com.groupc.android.illuminati.Objects.Table.SpecialAbilityEnum;
           return 4;
          case PLUSTWOONANYATTEMPTTODESTROYANYGROUP:
         if(attack.getAttackType() == AttackEnum.DESTROY) return 2;
-         case PLUS2ONANYATTEMPTTODESTROYNUCLEARPOWERCOMPANIE:
+         case PLUSTWOONANYATTEMPTTODESTROYNUCLEARPOWERCOMPANIES:
         if(attack.getAttackType() == AttackEnum.DESTROY && defendingGroup.getCardName().equals("Nuclear Power Companies")) return 2;
          case TREATTHISGROUPASGOVERNMENTWHENITATTEMPTSTOCONTROLAGOVERNMENTGROUP:
         if(attack.getAttackType() == AttackEnum.CONTROL && defendingGroup.getAlignment() == AlignmentEnum.GOVERNMENT)

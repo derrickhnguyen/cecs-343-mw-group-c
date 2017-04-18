@@ -6,11 +6,13 @@ package com.groupc.android.illuminati.Objects;
 import com.groupc.android.illuminati.Objects.Table.CardTypeEnum;
 import com.groupc.android.illuminati.Objects.Table.AlignmentEnum;
 
+import java.util.ArrayList;
+
 public class GroupCard extends NonSpecialCard {
     private GroupCard puppetMaster;
     private boolean puppetFlag;
     private boolean isAttackable;
-    private AlignmentEnum alignment;
+    private AlignmentEnum[] alignments;
 
     public GroupCard(
                             String cardName,
@@ -19,14 +21,14 @@ public class GroupCard extends NonSpecialCard {
                             int transferablePower,
                             int resistance,
                             int income,
-                            AlignmentEnum alignment,
+                            AlignmentEnum[] alignments,
                             Table.SpecialAbilityEnum specialAbility
                             ) {
         super(cardName, type, power, transferablePower, resistance, income, specialAbility);
 
         puppetMaster = null;
         puppetFlag = false;
-        this.alignment = alignment;
+        this.alignments = alignments;
 
         if(resistance == 0) isAttackable = false;
         else isAttackable = true;
