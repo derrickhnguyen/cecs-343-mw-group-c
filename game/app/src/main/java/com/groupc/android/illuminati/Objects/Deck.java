@@ -73,7 +73,7 @@ public class Deck {
         cards.add(discordianSociety);
 
         IlluminatiCard ufos = new IlluminatiCard(
-                "The UFOs",
+                "The ufos",
                 Table.CardTypeEnum.ILLUMINATI,
                 6, 0, 6, 8,
                 chooseUFOsSpecialAbilityEnum(),
@@ -131,7 +131,7 @@ public class Deck {
         cards.add(americanAutoduelAssociation);
 
         GroupCard antiNuclearActivists = new GroupCard(
-                "Anti-Nuclear Activists",
+                "Anti Neuclear Activists",
                 group,
                 2, 0, 5, 1,
                 new Table.AlignmentEnum[]{Table.AlignmentEnum.LIBERAL},
@@ -176,7 +176,7 @@ public class Deck {
         cards.add(california);
 
         GroupCard cflAio = new GroupCard(
-                "CFL-AIO",
+                "CFL AIO",
                 group,
                 6, 0, 5, 3,
                 new Table.AlignmentEnum[]{Table.AlignmentEnum.LIBERAL},
@@ -194,7 +194,7 @@ public class Deck {
         cards.add(chineseCampaignDonors);
 
         GroupCard cia = new GroupCard(
-                "C.I.A.",
+                "CIA.",
                 group,
                 6, 4, 5, 0,
                 new Table.AlignmentEnum[]{Table.AlignmentEnum.GOVERNMENT, Table.AlignmentEnum.VIOLENT},
@@ -267,7 +267,7 @@ public class Deck {
 
 
         GroupCard ecoGuerrillas = new GroupCard(
-                "Eco-Guerrillas",
+                "Eco Guerillas",
                 group,
                 0, 0, 6, 1,
                 new Table.AlignmentEnum[] {Table.AlignmentEnum.LIBERAL, Table.AlignmentEnum.VIOLENT, Table.AlignmentEnum.WEIRD},
@@ -303,7 +303,7 @@ public class Deck {
         cards.add(fastFoodChains);
 
         GroupCard fbi = new GroupCard(
-                "F.B.I.",
+                "FBI.",
                 group,
                 4, 2, 6, 0,
                 new Table.AlignmentEnum[] {Table.AlignmentEnum.GOVERNMENT, Table.AlignmentEnum.STRAIGHT},
@@ -447,7 +447,7 @@ public class Deck {
         cards.add(internationalCommunistConspiracy);
 
         GroupCard irs = new GroupCard(
-                "I.R.S",
+                "IRS",
                 group,
                 5, 3, 5, 0,
                 new Table.AlignmentEnum[] {Table.AlignmentEnum.CRIMINAL, Table.AlignmentEnum.GOVERNMENT},
@@ -483,7 +483,7 @@ public class Deck {
         cards.add(kkk);
 
         GroupCard l4Society = new GroupCard(
-                "L-4 Society",
+                "L4 Society",
                 group,
                 1, 0, 2, 0,
                 new Table.AlignmentEnum[] {Table.AlignmentEnum.WEIRD},
@@ -609,7 +609,7 @@ public class Deck {
         cards.add(newYork);
 
         GroupCard nuclearPowerCompanies = new GroupCard(
-                "Nuclear Power Companies",
+                "Nuclear Power Plants",
                 group,
                 4, 0, 4, 3,
                 new Table.AlignmentEnum[] {Table.AlignmentEnum.CONSERVATIVE},
@@ -627,7 +627,7 @@ public class Deck {
         cards.add(orbitalMindControlLasers);
 
         GroupCard parentTeacherAgglomeration = new GroupCard(
-                "Parent/Teacher Agglomeration",
+                "Parent Teacher Agglomeration",
                 group,
                 0, 0, 5, 1,
                 new Table.AlignmentEnum[] {Table.AlignmentEnum.PEACEFULL, Table.AlignmentEnum.CONSERVATIVE, Table.AlignmentEnum.STRAIGHT},
@@ -744,7 +744,7 @@ public class Deck {
         cards.add(semiconsciousLiberationArmy);
 
         GroupCard smof = new GroupCard(
-                "S.M.O.F.",
+                "SMOF",
                 group,
                 1, 0, 1, 0,
                 new Table.AlignmentEnum[] {Table.AlignmentEnum.WEIRD},
@@ -798,7 +798,7 @@ public class Deck {
         cards.add(texas);
 
         GroupCard tobaccoAndLiquorCompanies = new GroupCard(
-                "Tobacco & Liquor Companies",
+                "Tobacco And Liquor Companies",
                 group,
                 4, 0, 3, 3,
                 new Table.AlignmentEnum[] {Table.AlignmentEnum.STRAIGHT},
@@ -900,14 +900,14 @@ public class Deck {
         cards.add(deepAgent);
 
         SpecialCard interference1 = new SpecialCard(
-                "Interference",
+                "Interference1",
                 Table.CardTypeEnum.SPECIAL,
                 "You may interfere with one privileged attack. No other players may interfere."
         );
         cards.add(interference1);
 
         SpecialCard interference2 = new SpecialCard(
-                "Interference",
+                "Interference2",
                 Table.CardTypeEnum.SPECIAL,
                 "You may interfere with one privileged attack. No other players may interfere."
         );
@@ -928,7 +928,7 @@ public class Deck {
         cards.add(mediaCampaign);
 
         SpecialCard murphysLaw = new SpecialCard(
-                "Murphy's Law",
+                "Murphys Law",
                 Table.CardTypeEnum.SPECIAL,
                 "Play this card immediately after the dice are rolled on any attempt (by any player) to destroy, control, or neutralize. That roll is immediately changed, retroactively to 12."
         );
@@ -942,7 +942,7 @@ public class Deck {
         cards.add(secretsManWasNotMeantToKnow);
 
         SpecialCard senateInvestigatingCommittee = new SpecialCard(
-                "Senate Investigating Commiteee",
+                "Senate Investigating Committee",
                 Table.CardTypeEnum.SPECIAL,
                 "Play this card at the beginning of any other player's turn. That player loses his turn completely."
         );
@@ -963,7 +963,7 @@ public class Deck {
         cards.add(swissBankAccount);
 
         SpecialCard whisperingCampaign = new SpecialCard(
-                "Whispering Campaing",
+                "Whispering Campaign",
                 Table.CardTypeEnum.SPECIAL,
                 "You may attempt to destroy a single group with Power 0. Roll attacking power vs. defending resistance, but a successful attack destroys the target. Playing this card is not an action, but the attack itself is an action"
         );

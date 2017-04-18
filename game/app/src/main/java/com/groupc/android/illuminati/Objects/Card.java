@@ -1,5 +1,7 @@
 package com.groupc.android.illuminati.Objects;
 
+import android.content.res.Resources;
+
 import com.groupc.android.illuminati.Objects.Table.CardTypeEnum;
 /**
  * Created by micha on 4/9/2017.

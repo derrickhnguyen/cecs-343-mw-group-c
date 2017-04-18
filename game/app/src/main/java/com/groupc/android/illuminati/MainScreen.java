@@ -106,7 +106,13 @@ public class MainScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Bundle centerCardIDs = new Bundle();
-                int[] IDs = new int[]{R.drawable.card, R.drawable.card, R.drawable.card};
+                int[] IDs = new int[table.getCenter().getCount()];
+                String name;
+                for(int i = 0; i < IDs.length; i++) {
+                    name = table.getCenter().getAllGroupCards().get(i).getCardName();
+                    name = name.replaceAll("\\s+","");
+                    IDs[i] = getResources().getIdentifier(name.toLowerCase(), "drawable", getPackageName());
+                }
                 centerCardIDs.putIntArray("cardNames", IDs);
 
                 FragmentTransaction ft = fm.beginTransaction();

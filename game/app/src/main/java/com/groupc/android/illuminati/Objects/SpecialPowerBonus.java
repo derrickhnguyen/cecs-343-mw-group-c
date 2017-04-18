@@ -44,7 +44,7 @@ import com.groupc.android.illuminati.Objects.Table.SpecialAbilityEnum;
         if(defendingGroup.getCardName().equals("Orbital Mind Control Lasers")) return 4;
          case PLUSTHREEONANYATTEMPTTOCONTROLANYLIBERALGROUP:
         if(attack.getAttackType() == AttackEnum.CONTROL && defendingGroup.getAlignment() == AlignmentEnum.LIBERAL) return 3;
-         case PLUSTHREEEONANYATTEMPTTONEUTRALIZEANYGROUP:
+         case PLUSTHREEONANYATTEMPTTONEUTRALIZEANYGROUP:
         if(attack.getAttackType() == AttackEnum.NEUTRALIZE) return 3;
          case PLUSTWOONANYATTEMPTTOCONTROLANTINUCLEARACTIVISTS:
         if(attack.getAttackType() == AttackEnum.CONTROL && defendingGroup.getCardName().equals("Anti-NuclearActivists")) return 2;

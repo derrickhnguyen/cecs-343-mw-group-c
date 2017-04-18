@@ -219,11 +219,15 @@ public class Table {
     }
 
     public void addCardsToCenter() {
-        int numberOfOriginalGroupCards = 4;
-        for(int i = 0; i < numberOfOriginalGroupCards; i++) {
+        int numberOfOriginalGroupCards = 3;
+        for(int i = 0; i <= numberOfOriginalGroupCards; i++) {
             Card card = deck.draw();
             if(card.getType() == CardTypeEnum.GROUP) center.addGroupToCenter((GroupCard) card);
-            else deck.returnToDeck(card);
+            else {
+                deck.returnToDeck(card);
+                i--;
+            }
+            System.out.println(card.getCardName());
         }
     }
 
