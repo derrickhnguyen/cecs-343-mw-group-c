@@ -91,14 +91,24 @@ public class MainScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Bundle cardIDs = new Bundle();
-                int[] IDs = new int[]{R.drawable.card, R.drawable.card, R.drawable.card};
-                cardIDs.putIntArray("cardNames", IDs);
 
-                FragmentTransaction ft = fm.beginTransaction();
-                Fragment CardListFragment = new CardListFragment();
-                CardListFragment.setArguments(cardIDs);
-                ft.replace(R.id.contentframe, CardListFragment);
-                ft.commit();
+                if(table.getCurrentPlayer().getHand() != null) {
+                    int[] IDs;
+                    IDs = new int[table.getCurrentPlayer().getHand().size()];
+                    String name;
+                    for (int i = 0; i < IDs.length; i++) {
+                        name = table.getCurrentPlayer().getHand().get(i).getCardName();
+                        name = name.replaceAll("\\s}", "");
+                        IDs[i] = getResources().getIdentifier(name.toLowerCase(), "drawable", getPackageCodePath());
+                    }
+                    cardIDs.putIntArray("cardNames", IDs);
+
+                    FragmentTransaction ft = fm.beginTransaction();
+                    Fragment CardListFragment = new CardListFragment();
+                    CardListFragment.setArguments(cardIDs);
+                    ft.replace(R.id.contentframe, CardListFragment);
+                    ft.commit();
+                }
             }
         });
 
@@ -130,7 +140,6 @@ public class MainScreen extends AppCompatActivity {
 
         for(int i = 0; i < table.getNumberOfPlayers(); i++) {
             table.addPlayer();
-            System.out.println(i);
         }
 
         players = new Player[table.getNumberOfPlayers()];
@@ -140,5 +149,7 @@ public class MainScreen extends AppCompatActivity {
         }
 
         table.addCardsToCenter();
+
+        table.seeWhoGoesFirst();
     }
 }

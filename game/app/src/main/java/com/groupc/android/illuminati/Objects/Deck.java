@@ -20,7 +20,6 @@ public class Deck {
     }
 
     private void initializeCards() {
-      initializeIlluminatiCards();
       initializeGroupCards();
       initializeSpecialCards();
     }
@@ -44,80 +43,7 @@ public class Deck {
         shuffle();
     }
 
-    public void initializeIlluminatiCards() {
-        IlluminatiCard societyOfAssins = new IlluminatiCard(
-                "The Society of Assassins",
-                Table.CardTypeEnum.ILLUMINATI,
-                8, 0, 8, 8,
-                Table.SpecialAbilityEnum.PLUSFOURONANYATTEMPTTONEUTRALIZEANYGROUP,
-                Table.IlluminatiCardEnum.SOCIETYOFASSASSINS
-                );
-        cards.add(societyOfAssins);
 
-        IlluminatiCard network = new IlluminatiCard(
-                "The Network",
-                Table.CardTypeEnum.ILLUMINATI,
-                7, 0, 7, 9,
-                Table.SpecialAbilityEnum.TURNSOVERTWOCARDSATBEGGININGOFGAME,
-                Table.IlluminatiCardEnum.NETWORK
-                );
-        cards.add(network);
-
-        IlluminatiCard discordianSociety = new IlluminatiCard(
-                "The Discordian Society",
-                Table.CardTypeEnum.ILLUMINATI,
-                8, 0, 8, 8,
-                Table.SpecialAbilityEnum.PLUSFOURONANYATTEMPTTOCONTROLWEIRDGROUPSIMMUNETOATTACKSFROMGOVERNMENTORSTRAIGHTGROUPS,
-                Table.IlluminatiCardEnum.DISCORDIANSOCIETY
-        );
-        cards.add(discordianSociety);
-
-        IlluminatiCard ufos = new IlluminatiCard(
-                "The ufos",
-                Table.CardTypeEnum.ILLUMINATI,
-                6, 0, 6, 8,
-                chooseUFOsSpecialAbilityEnum(),
-                Table.IlluminatiCardEnum.UFOS
-        );
-        cards.add(ufos);
-
-        IlluminatiCard servantsOfCthulhu = new IlluminatiCard(
-                "The Servants of Cthulhu",
-                Table.CardTypeEnum.ILLUMINATI,
-                9, 0, 9, 7,
-                Table.SpecialAbilityEnum.PLUSTWOONANYATTEMPTTODESTROYANYGROUP,
-                Table.IlluminatiCardEnum.SERVANTSOFCTHULHU
-        );
-        cards.add(servantsOfCthulhu);
-
-        IlluminatiCard gnomesOfZurich = new IlluminatiCard(
-                "The Gonomes of Zurich",
-                Table.CardTypeEnum.ILLUMINATI,
-                7, 0, 7, 12,
-                Table.SpecialAbilityEnum.MAYMOVEMONEYFREELYATENDOFTURN,
-                Table.IlluminatiCardEnum.GNOMESOFZURICH
-        );
-        cards.add(ufos);
-
-        IlluminatiCard baravianIlluminati = new IlluminatiCard(
-                "The Bavarian Illuminati",
-                Table.CardTypeEnum.ILLUMINATI,
-                10, 0, 10, 9,
-                Table.SpecialAbilityEnum.MAYMAKEONEPRIVILEGEDATTACKEACHTURNATACOSTOFFIVEMEGABUCKS,
-                Table.IlluminatiCardEnum.BAVARIANILLUMINATI
-        );
-        cards.add(baravianIlluminati);
-
-        IlluminatiCard bermudaTriangle = new IlluminatiCard(
-                "The Bermuda Triangle",
-                Table.CardTypeEnum.ILLUMINATI,
-                8, 0, 8, 9,
-                Table.SpecialAbilityEnum.MAYREORGANIZEGROUPSFREELYATENDOFTURN,
-                Table.IlluminatiCardEnum.BERMUTATRIANGE
-        );
-        cards.add(bermudaTriangle);
-
-    }
 
     private void initializeGroupCards() {
         Table.CardTypeEnum group = Table.CardTypeEnum.GROUP;
@@ -167,7 +93,7 @@ public class Deck {
         cards.add(boySprouts);
 
         GroupCard california = new GroupCard(
-                "Califonria",
+                "California",
                 group,
                 5, 0, 4, 5,
                 new Table.AlignmentEnum[]{Table.AlignmentEnum.LIBERAL, Table.AlignmentEnum.WEIRD, Table.AlignmentEnum.GOVERNMENT},
@@ -303,7 +229,7 @@ public class Deck {
         cards.add(fastFoodChains);
 
         GroupCard fbi = new GroupCard(
-                "FBI.",
+                "FBI",
                 group,
                 4, 2, 6, 0,
                 new Table.AlignmentEnum[] {Table.AlignmentEnum.GOVERNMENT, Table.AlignmentEnum.STRAIGHT},
@@ -975,9 +901,5 @@ public class Deck {
                 "Play this card at any time to reorganize all your money freely - that is, any amount(s) may be moved between any groups. You also get any extra 5MB which may be placed anywhere"
         );
         cards.add(whiteCollarCrime);
-    }
-
-    private Table.SpecialAbilityEnum chooseUFOsSpecialAbilityEnum() {
-        return Table.SpecialAbilityEnum.MAYMAKEONEPRIVILEGEDATTACKEACHTURNATACOSTOFFIVEMEGABUCKS;
     }
 }

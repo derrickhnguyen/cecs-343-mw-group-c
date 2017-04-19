@@ -14,6 +14,10 @@ public class SpecialCard extends Card {
       this.description = description;
     }
 
+    public String getCardName() {
+        return super.getCardName();
+    }
+
     public String getDescription() {
       return description;
     }
