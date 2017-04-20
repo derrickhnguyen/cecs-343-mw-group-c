@@ -1,0 +1,168 @@
+package com.groupc.android.illuminati;
+
+import android.app.Fragment;
+import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
+
+import com.groupc.android.illuminati.Objects.Card;
+import com.groupc.android.illuminati.Objects.IlluminatiCard;
+import com.groupc.android.illuminati.Objects.NonSpecialCard;
+import com.groupc.android.illuminati.Objects.Table;
+
+import org.xmlpull.v1.XmlPullParser;
+
+public class PlayerBoardFragment extends Fragment {
+    View view_a; //a view
+    IlluminatiCard illuminatiCard; //card in which the board is built from
+    RelativeLayout ll; //android layout
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        //illuminatiCard = (IlluminatiCard) getArguments().getSerializable("card");
+        //for when we get the input from an intent
+        NonSpecialCard aCard = new NonSpecialCard("name", Table.CardTypeEnum.GROUP,
+                5,
+                5,
+                5,
+                5,
+                Table.SpecialAbilityEnum.ILLUMINATIGROUPMAYPARTICIPATEINTWOATTACKSPERTURN); //created a random card
+
+        illuminatiCard = new IlluminatiCard("card",
+                Table.CardTypeEnum.ILLUMINATI,
+                4,
+                4,
+                4,
+                4,
+                Table.SpecialAbilityEnum.MAYMAKEONEPRIVILEGEDATTACKEACHTURNATACOSTOFFIVEMEGABUCKS,
+                Table.IlluminatiCardEnum.BAVARIANILLUMINATI); //created a random illuminati card
+
+        //manually connect the card to the right of the illuminati card
+        //uncomment illuminatiCard.setConnectedCards(new NonSpecialCard[]{null, aCard, null, null});
+        illuminatiCard.setIsConnected(new boolean[]{false, true, false, false});
+        //uncommenta Card.setConnectedCards(new NonSpecialCard[]{null, illuminatiCard, null, null});
+
+        //set up the layouts to fit their parents
+        ViewGroup.LayoutParams p = new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT);
+
+        ScrollView sc = new ScrollView(getActivity()); //let the activity scroll vertically
+
+        HorizontalScrollView sv = new HorizontalScrollView(getActivity()); //let the activity scroll horizontally
+
+        ll = new RelativeLayout(getActivity()); //instantiate main layout
+
+        sc.setLayoutParams(p); //make fill parent
+        sv.setLayoutParams(p); //make fill parent
+        ll.setLayoutParams(p); //make fill parent
+
+        //put cards onto the screen
+//        ImageView card1 = new ImageView(getActivity());
+//        card1.setImageResource(R.drawable.card);
+//        card1.setId(View.generateViewId());
+//
+        ImageView illCard = new ImageView(getActivity()); //create image for illuminati card
+        illCard.setImageResource(R.drawable.card); //set it to the feminist pic (only one we have so far)
+        illCard.setId(View.generateViewId()); //for the layout to work, each imageview needs an ID,
+        //this generates a random ID for the view and set it to it
+        //the actual ID doesn't matter since we'll always use the getID() method
+
+//        layout for center card
+        RelativeLayout.LayoutParams rp = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
+        rp.addRule(RelativeLayout.CENTER_VERTICAL); //put card in center (buggy)
+
+        illCard.setLayoutParams(rp); //picture for illuminati card
+        ll.addView(illCard); //add card to relative layout
+        attach(illuminatiCard, illCard); //run sequence to make board
+//
+//        card1.setLayoutParams(rp);
+//
+//        //layout for card being attached
+//        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
+//                RelativeLayout.LayoutParams.WRAP_CONTENT,
+//                RelativeLayout.LayoutParams.WRAP_CONTENT);
+//        lp.addRule(RelativeLayout.RIGHT_OF, card1.getId()); //put card right of the first card
+//
+//        card2.setLayoutParams(lp); //set the layout params to the card
+
+        //add cards to view
+
+
+        //finish creating other views
+        sv.addView(ll); //add layout to the scroll
+        sc.addView(sv); //add scrolls together
+        view_a = sc; //view to make view
+
+        return view_a; //send main view out
+    }
+
+    private void attach(NonSpecialCard c, ImageView cardImage)
+    {
+        boolean[] connected = c.getIsConnected(); //get boolean for cards connected to card
+        NonSpecialCard[] connectedCards = c.getConnectedCards(); //get cards connected to card
+        //set image to card's image, will implement later
+        cardImage.setImageResource(R.drawable.card); //use feminist card again (this might be wrong)
+        cardImage.setId(View.generateViewId()); //probably don't need to do this
+
+        for(int i = 0; i < 4; i++) { //checks each side of card
+            if(connected[i]) { //if connected card on that side
+                int attachedArrow = 0; //arrow which it's attached on
+                NonSpecialCard attachedCard = connectedCards[i]; //get the connected card
+                NonSpecialCard[] attachedCards = attachedCard.getConnectedCards(); //get the cards the the cards connects to
+                for(int j = 0; j < 4; j++) //check all sides
+                {
+                    if(attachedCards[j] != null && attachedCards[j].equals(c)) //if the new card's connected card equals main card
+                    {
+                        attachedArrow = j; //then that's the arrow that it's attached on
+                    }
+                }
+                attachedCard.setOrientation(attachedArrow); //set orientation based on arrow (might need adjustments)
+
+
+                ImageView newCardImage = new ImageView(getActivity()); //new image for card
+                newCardImage.setRotation(attachedCard.getOrientation()); //roate to match the orientation
+
+                RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
+                        RelativeLayout.LayoutParams.WRAP_CONTENT,
+                        RelativeLayout.LayoutParams.WRAP_CONTENT); //stock layout
+
+                //depending on orientation and arrow position, add the card on a certain side
+                if((i + c.getOrientation()) % 4 == 0){
+                    lp.addRule(RelativeLayout.ABOVE, cardImage.getId());
+                    //newCardImage.setRotation(attachedCard.getOrientation()*90);
+                } else if((i + c.getOrientation()) % 4 == 1){
+                    lp.addRule(RelativeLayout.RIGHT_OF, cardImage.getId());
+                    //newCardImage.setRotation(attachedCard.getOrientation()*90 + 90);
+                } else if((i + c.getOrientation()) % 4 == 2){
+                    lp.addRule(RelativeLayout.BELOW, cardImage.getId());
+                    //newCardImage.setRotation(attachedCard.getOrientation()*90 + 180);
+                } else if((i + c.getOrientation()) % 4 == 3){
+                    lp.addRule(RelativeLayout.LEFT_OF, cardImage.getId());
+                    //newCardImage.setRotation(attachedCard.getOrientation()*90 + 270);
+                } else {
+                    //some mistake
+                }
+
+                //add the layout params
+                newCardImage.setLayoutParams(lp);
+                //add card to view
+                ll.addView(newCardImage);
+                //recursively call the check
+                attach(attachedCard, newCardImage);
+
+            }
+         }
+    }
+}

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/attack_a_group"
+        android:title="Attack a Group"/>
+    <item
+        android:id="@+id/transfer_money"
+        android:title="Transfer Money"/>
+    <item
+        android:id="@+id/move_a_group"
+        android:title="Move A Group"/>
+    <item
+        android:id="@+id/give_a_group_away"
+        android:title="Give A Group Away"/>
+    <item
+        android:id="@+id/drop_a_group"
+        android:title="Drop A Group"/>
+    <item
+        android:id="@+id/give_away_money"
+        android:title="Give Away Money"/>
+    <item
+        android:id="@+id/give_away_special"
+        android:title="Give Away Special"/>
+    <item
+        android:id="@+id/use_a_special"
+        android:title="Use a Special"/>
+    <item
+        android:id="@+id/special_power_action"
+        android:title="Special Power Action"/>
+    <item
+        android:id="@+id/pass"
+        android:title="Pass"/>
+
+</menu>

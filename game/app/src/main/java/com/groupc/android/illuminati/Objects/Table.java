@@ -135,7 +135,7 @@ public class Table {
         return currentPlayer;
     }
 
-    enum AlignmentEnum {
+    public enum AlignmentEnum {
 
         GOVERNMENT("Government"),
         COMMUNIST("Communist"),
@@ -156,7 +156,7 @@ public class Table {
         public String getName() { return name; }
     }
 
-    enum AttackEnum {
+    public enum AttackEnum {
 
         CONTROL("Control"),
         NEUTRALIZE("Neutralize"),
@@ -169,7 +169,7 @@ public class Table {
         public String getName() {return name; }
     }
 
-    enum CardTypeEnum {
+    public enum CardTypeEnum {
 
         GROUP("Group"),
         ILLUMINATI("Illuminati"),
@@ -182,7 +182,7 @@ public class Table {
         public String getName() { return name; }
     }
 
-    enum IlluminatiCardEnum {
+    public enum IlluminatiCardEnum {
 
         BAVARIANILLUMINATI("The Bavarian Illuminati"),
         BERMUTATRIANGE("The Bermuta Triangle"),
@@ -200,7 +200,7 @@ public class Table {
         public String getName() { return name; }
     }
 
-    enum SpecialAbilityEnum {
+    public enum SpecialAbilityEnum {
 
         PLUSFOURONANYATTEMPTTONEUTRALIZEANYGROUP("Plus Four For Any Attempt To Neutralize Any Group"),
         TURNSOVERTWOCARDSATBEGGININGOFGAME("Turns Over Two Cards At Beggining Of Turn"), //notinattack
@@ -236,6 +236,7 @@ public class Table {
         PLUSTWORESISTANCETOALLOWNERSOTHERGROUPS("Plus Two Resistance To All Owners Other Groups"), //takencareofinattackbutnotaddresseddirectly
         PLUSTHREEFORDIRECTCONTROLOFCONVENIENCESTORES("Plus Three For Direct Control Of Convenience Stores"),
         PLUSTHREEFORDIRECTCONTROLOFTHEMORALMINORITY("Plus Three For Direct Control Of The Moral Minority"),
+        ILLUMINATIGROUPMAYPARTICIPATEINTWOATTACKSPERTURN("Illuminati Group May Participate In Two Attacks Per Turn"),
         NONE("None");
 
         private final String name;
@@ -292,7 +293,7 @@ public class Table {
         cards.add(servantsOfCthulhu);
 
         IlluminatiCard gnomesOfZurich = new IlluminatiCard(
-                "The Gonomes of Zurich",
+                "The Gnomes of Zurich",
                 Table.CardTypeEnum.ILLUMINATI,
                 7, 0, 7, 12,
                 Table.SpecialAbilityEnum.MAYMOVEMONEYFREELYATENDOFTURN,

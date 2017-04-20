@@ -120,7 +120,7 @@ public class Deck {
         cards.add(chineseCampaignDonors);
 
         GroupCard cia = new GroupCard(
-                "CIA.",
+                "CIA",
                 group,
                 6, 4, 5, 0,
                 new Table.AlignmentEnum[]{Table.AlignmentEnum.GOVERNMENT, Table.AlignmentEnum.VIOLENT},
@@ -742,7 +742,7 @@ public class Deck {
         cards.add(trekkies);
 
         GroupCard triliberalCommission = new GroupCard(
-                "Triliberal Commission",
+                "Trileberal Commission",
                 group,
                 5, 0, 6, 3,
                 new Table.AlignmentEnum[] {Table.AlignmentEnum.LIBERAL, Table.AlignmentEnum.STRAIGHT},

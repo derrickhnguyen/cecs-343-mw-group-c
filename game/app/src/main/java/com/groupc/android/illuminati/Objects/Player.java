@@ -15,9 +15,11 @@ public class Player implements Serializable {
     private PowerStructure powerStructure;
     private ArrayList<SpecialCard> hand;
     private boolean ownsSurvivalists;
+    private IlluminatiCard illuminatiCard;
 
     public Player(String username, IlluminatiCard illuminatiCard) {
         this.username       = username;
+        this.illuminatiCard = illuminatiCard;
         powerStructure = new PowerStructure(illuminatiCard);
         hand = new ArrayList<SpecialCard>();
         ownsSurvivalists = false;
@@ -25,7 +27,7 @@ public class Player implements Serializable {
 
     public IlluminatiCard getIlluminatiCard() {
 
-        return powerStructure.getIlluminatiCard();
+        return illuminatiCard;
     }
 
     public PowerStructure getPowerStructure()

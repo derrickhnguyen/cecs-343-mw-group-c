@@ -14,13 +14,13 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:text="Skill cards"/>
+        android:text="spcls"/>
     <Button
         android:id="@+id/centerpilebutton"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:text="Center Pile"/>
+        android:text="cntr"/>
     <Button
         android:id="@+id/homebutton"
         android:layout_width="0dp"
@@ -32,12 +32,12 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:text="Profile"/>
+        android:text="chat"/>
     <Button
         android:id="@+id/otherplayersbutton"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:text="Other Players"/>
+        android:text="plyrs"/>
 
 </LinearLayout>

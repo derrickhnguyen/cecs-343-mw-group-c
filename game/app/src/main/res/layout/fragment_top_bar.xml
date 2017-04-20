@@ -12,9 +12,10 @@
         android:text="Settings"
         android:layout_weight="1"/>
     <Button
+        android:id="@+id/take_action"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:text="Player"
+        android:text="Take Action"
         android:layout_weight="1"/>
     <Button
         android:layout_width="0dp"

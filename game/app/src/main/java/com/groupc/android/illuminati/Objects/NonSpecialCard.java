@@ -24,6 +24,8 @@ public class NonSpecialCard extends Card {
     //index 2: south
     //index 3: west
 
+    private int orientation;
+
     public NonSpecialCard(  String cardName,
                             CardTypeEnum type,
                             int power,
@@ -38,7 +40,6 @@ public class NonSpecialCard extends Card {
       this.transferablePower = transferablePower;
       this.resistance = resistance;
       this.income = income;
-      this.alignment = alignment;
       this.specialAbility = specialAbility;
 
       groupTreasury = 0;
@@ -138,5 +139,14 @@ public class NonSpecialCard extends Card {
 
     public void setIsConnected(boolean[] isConnected) {
       this.isConnected = isConnected;
+    }
+
+
+    public int getOrientation() {
+        return orientation;
+    }
+
+    public void setOrientation(int orientation) {
+        this.orientation = orientation;
     }
 }

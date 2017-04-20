@@ -9,11 +9,15 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.PopupMenu;
 import android.text.InputType;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.groupc.android.illuminati.Objects.IlluminatiCard;
 import com.groupc.android.illuminati.Objects.Player;
@@ -58,12 +62,25 @@ public class MainScreen extends AppCompatActivity {
         Button playerProfile = (Button) findViewById(R.id.profilebutton);
         Button displaySkillCards = (Button) findViewById(R.id.skillbutton);
         Button centerPile = (Button) findViewById(R.id.centerpilebutton);
+        final Button takeAction = (Button) findViewById(R.id.take_action);
 
         otherPlayers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle names = new Bundle();
                 names.putSerializable("names", players);
+
+                int[] IDs;
+                IDs = new int[table.getNumberOfPlayers()];
+                String name;
+                for (int i = 0; i < IDs.length; i++) {
+                    name = table.getPlayers().get(i).getIlluminatiCard().getCardName();
+                    name = name.replaceAll("\\s+", "");
+                    Log.d("name", name);
+                    IDs[i] = getResources().getIdentifier(name.toLowerCase(), "drawable", getPackageName());
+                    Log.d("id",IDs[i] +"");
+                }
+                names.putIntArray("cardNames", IDs);
 
                 FragmentTransaction ft = fm.beginTransaction();
                 ListFragment playerListFrag = new PlayerListFragment();
@@ -122,6 +139,7 @@ public class MainScreen extends AppCompatActivity {
                     name = table.getCenter().getAllGroupCards().get(i).getCardName();
                     name = name.replaceAll("\\s+","");
                     IDs[i] = getResources().getIdentifier(name.toLowerCase(), "drawable", getPackageName());
+                    Log.d("id",IDs[i] +"");
                 }
                 centerCardIDs.putIntArray("cardNames", IDs);
 
@@ -129,6 +147,36 @@ public class MainScreen extends AppCompatActivity {
                 Fragment CardListFragment = new CardListFragment();
                 CardListFragment.setArguments(centerCardIDs);
                 ft.replace(R.id.contentframe, CardListFragment);
+                ft.commit();
+            }
+        });
+
+        takeAction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                PopupMenu popupMenu = new PopupMenu(MainScreen.this, takeAction);
+                popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
+
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        Toast.makeText(MainScreen.this, "" + item.getTitle(), Toast.LENGTH_SHORT).show();
+                        return true;
+                    }
+                });
+
+                popupMenu.show();
+            }
+        });
+
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction ft = fm.beginTransaction();
+                //ListFragment playerListFrag = new ListFragment();
+                Fragment playerBoardFragment = new PlayerBoardFragment();
+                ft.replace(R.id.contentframe, playerBoardFragment);
                 ft.commit();
             }
         });
