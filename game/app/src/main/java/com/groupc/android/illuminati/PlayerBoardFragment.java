@@ -47,9 +47,9 @@ public class PlayerBoardFragment extends Fragment {
                 Table.IlluminatiCardEnum.BAVARIANILLUMINATI); //created a random illuminati card
 
         //manually connect the card to the right of the illuminati card
-        //uncomment illuminatiCard.setConnectedCards(new NonSpecialCard[]{null, aCard, null, null});
+        illuminatiCard.setConnectedCards(new NonSpecialCard[]{null, aCard, null, null});
         illuminatiCard.setIsConnected(new boolean[]{false, true, false, false});
-        //uncommenta Card.setConnectedCards(new NonSpecialCard[]{null, illuminatiCard, null, null});
+        aCard.setConnectedCards(new NonSpecialCard[]{null, illuminatiCard, null, null});
 
         //set up the layouts to fit their parents
         ViewGroup.LayoutParams p = new ViewGroup.LayoutParams(
