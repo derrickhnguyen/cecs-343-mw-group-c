@@ -19,12 +19,11 @@ public class NonSpecialCard extends Card {
     private NonSpecialCard[] connectedCards;
     private boolean[] isConnected;
     private Bank bank;
+    private int orientation;
     //index 0: north
     //index 1: east
     //index 2: south
     //index 3: west
-
-    private int orientation;
 
     public NonSpecialCard(  String cardName,
                             CardTypeEnum type,
@@ -36,15 +35,17 @@ public class NonSpecialCard extends Card {
                             ) {
         super(cardName, type);
 
-      this.power = power;
-      this.transferablePower = transferablePower;
-      this.resistance = resistance;
-      this.income = income;
-      this.specialAbility = specialAbility;
+        this.power = power;
+        this.transferablePower = transferablePower;
+        this.resistance = resistance;
+        this.income = income;
+        this.specialAbility = specialAbility;
 
-      groupTreasury = 0;
-      connectedCards = new NonSpecialCard[4];
-      isConnected = new boolean[4];
+        groupTreasury = 0;
+        connectedCards = new NonSpecialCard[4];
+        //0 = top, 1 = right, 2 = bottom, 3 = left
+        isConnected = new boolean[4];
+        orientation = 0;
     }
 
     public void collectIncome() {
@@ -141,12 +142,14 @@ public class NonSpecialCard extends Card {
       this.isConnected = isConnected;
     }
 
-
-    public int getOrientation() {
-        return orientation;
+    public void setOrientation(int o)
+    {
+        //0 = normal, 1 = 90 degrees right, 2 = 180 degrees, 3 = 270 degrees right
+        orientation = o;
     }
 
-    public void setOrientation(int orientation) {
-        this.orientation = orientation;
+    public int getOrientation()
+    {
+        return orientation;
     }
 }

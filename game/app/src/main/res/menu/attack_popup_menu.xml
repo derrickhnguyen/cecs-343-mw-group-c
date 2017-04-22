@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/attack_to_control"
+        android:title="Attack to Control"/>
+    <item
+        android:id="@+id/attack_to_neutralize"
+        android:title="Attack to Neutralize"/>
+    <item
+        android:id="@+id/attack_to_destroy"
+        android:title="Attack to Destroy"/>
+</menu>

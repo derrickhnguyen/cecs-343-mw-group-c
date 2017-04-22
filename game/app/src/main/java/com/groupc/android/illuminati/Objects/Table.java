@@ -13,10 +13,13 @@ public class Table {
     private int                         numberOfPlayers;
     private int                         playerCount;
     private Queue<Player>               players;
-    private ArrayList<IlluminatiCard>             cards;
+    private ArrayList<IlluminatiCard>   cards;
 
     private Player  currentPlayer;
     private boolean gameIsActive;
+    private boolean actionInitialized;
+
+    private Action action;
 
     private int numberOfIlluminatiCards = 8;
     private boolean[] isTaken;
@@ -34,6 +37,7 @@ public class Table {
 
         cards = new ArrayList<>();
         initializeIlluminatiCards();
+        actionInitialized = false;
     }
 
     public void addPlayer() {
@@ -121,6 +125,19 @@ public class Table {
         }
 
         return true;
+    }
+
+    public void newAction() {
+        action = new Action(currentPlayer, this);
+        actionInitialized = true;
+    }
+    public Action getAction() {
+        return action;
+    }
+
+    public boolean actionInitialized() {
+        if(actionInitialized == true) return true;
+        else return false;
     }
 
     private boolean checkIfWon(Player player) {

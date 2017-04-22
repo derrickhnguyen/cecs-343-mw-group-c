@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -162,6 +163,70 @@ public class MainScreen extends AppCompatActivity {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         Toast.makeText(MainScreen.this, "" + item.getTitle(), Toast.LENGTH_SHORT).show();
+
+                        if(! table.actionInitialized()) table.newAction();
+
+                        int i = 0;
+                        switch(item.getItemId()) {
+                            case R.id.attack_a_group:
+                                i = 1;
+                                break;
+                            case R.id.attack_to_control:
+                                table.getAction().getAttack().setAttackType(Table.AttackEnum.CONTROL);
+                                break;
+                            case R.id.attack_to_neutralize:
+                                table.getAction().getAttack().setAttackType(Table.AttackEnum.NEUTRALIZE);
+                                break;
+                            case R.id.attack_to_destroy:
+                                table.getAction().getAttack().setAttackType(Table.AttackEnum.DESTROY);
+                                break;
+                            case R.id.transfer_money:
+                                i = 2;
+                                break;
+                            case R.id.move_a_group:
+                                i = 3;
+                                break;
+                            case R.id.give_a_group_away:
+                                i = 4;
+                                break;
+                            case R.id.drop_a_group:
+                                i = 5;
+                                break;
+                            case R.id.give_away_money:
+                                i = 6;
+                                break;
+                            case R.id.give_away_special:
+                                i = 7;
+                                break;
+                            case R.id.use_a_special:
+                                i = 8;
+                                break;
+                            case R.id.special_power_action:
+                                i = 9;
+                                break;
+                            case R.id.pass:
+                                i = 10;
+                                break;
+                            default:
+                                return onOptionsItemSelected(item);
+                        }
+                        table.getAction().setChoice(i);
+                        table.getAction().takeAction();
+
+//                        switch(item.getItemId()) {
+//                            case R.id.attack_to_control:
+//                                table.getAction().getAttack().setAttackType(Table.AttackEnum.CONTROL);
+//                                break;
+//                            case R.id.attack_to_neutralize:
+//                                table.getAction().getAttack().setAttackType(Table.AttackEnum.NEUTRALIZE);
+//                                break;
+//                            case R.id.attack_to_destroy:
+//                                table.getAction().getAttack().setAttackType(Table.AttackEnum.DESTROY);
+//                                break;
+//                            default:
+//                                return true;
+//                        }
+
                         return true;
                     }
                 });

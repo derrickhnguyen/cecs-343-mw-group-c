@@ -292,7 +292,7 @@ public class Deck {
         cards.add(fraternalOrders);
 
         GroupCard girlieMagazines = new GroupCard(
-                "Girly Magazines",
+                "Girlie Magazines",
                 group,
                 2, 0, 2, 3,
                 new Table.AlignmentEnum[] {Table.AlignmentEnum.LIBERAL},
@@ -660,14 +660,14 @@ public class Deck {
         );
         cards.add(scienceFictionFans);
 
-        GroupCard semiconsciousLiberationArmy = new GroupCard(
+        GroupCard semiconcsciousLiberationArmy = new GroupCard(
                 "Semiconscious Liberation Army",
                 group,
                 0, 0, 8, 0,
                 new Table.AlignmentEnum[] {Table.AlignmentEnum.CRIMINAL, Table.AlignmentEnum.VIOLENT, Table.AlignmentEnum.LIBERAL, Table.AlignmentEnum.WEIRD, Table.AlignmentEnum.COMMUNIST},
                 Table.SpecialAbilityEnum.PLUSONEONANYATTEMPTTODESTROYANYGROUP
         );
-        cards.add(semiconsciousLiberationArmy);
+        cards.add(semiconcsciousLiberationArmy);
 
         GroupCard smof = new GroupCard(
                 "SMOF",

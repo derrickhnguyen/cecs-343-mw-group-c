@@ -1,52 +1,23 @@
 package com.groupc.android.illuminati.Objects;
 
-import java.util.Scanner;
-
-/**
- * Created by micha on 4/9/2017.
- */
-
 public class Action {
     private Player  player;
     private Table   table;
+    private int     choice;
     private int     actionsTaken;
+    private Attack  attack;
 
     public Action(Player player, Table table) {
         this.player = player;
         this.table = table;
-        int choice = displayActions();
-        takeAction(choice);
     }
 
-    public int getActionsTaken() {
-        return actionsTaken;
-    }
+    public int getActionsTaken() { return actionsTaken; }
 
-    public int displayActions() {
-        int choice = 0;
-        System.out.println("Choose an action:\n" +
-                "Regular Actions:\n" +
-                "1. Attack a Group\n" +
-                "2. Transfer Money\n" +
-                "3. Move a Group\n" +
-                "4. Give a Group Away\n" +
-                "\n" +
-                "Free Actions\n" +
-                "5. Drop a Group\n" +
-                "6. Give Away Money\n" +
-                "7. Give Away Special\n" +
-                "8. Use a Special\n" +
-                "9. Special Power Action\n" +
-                "\n" +
-                "10. Pass");
-        //int choice = number from user choice
-        return choice;
-    }
-
-    public void takeAction(int choice) {
+    public void takeAction() {
       switch(choice) {
-        case 1: Table.AttackEnum attackType = chooseAttackType();
-                Attack attack = new Attack(player, attackType, table);
+        case 1: attack = new Attack(player, table);
+
                 //find a way to reset chinese campaign donors alignment (rule enforcement)
                 //find a way to reset defending groups resistance if defender owns survivalists (rule enforcement)
                 actionsTaken++;
@@ -80,4 +51,8 @@ public class Action {
         Table.AttackEnum attackType = null;
         return attackType;
     }
+
+    public void setChoice(int choice) { this.choice = choice; }
+
+    public Attack getAttack() { return attack; }
 }

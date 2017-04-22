@@ -14,13 +14,13 @@ import com.groupc.android.illuminati.Objects.Table.AttackEnum;
     Center center;
     DestroyedCards destroyedCards;
 
-   public Attack(Player attackingPlayer, AttackEnum attackType, Table table) {
+   public Attack(Player attackingPlayer, Table table) {
        this.attackingPlayer = attackingPlayer;
        this.table = table;
-       this.attackType = attackType;
+       //this.attackType = attackType;
        center = table.getCenter();
        destroyedCards = table.getDestroyedCards();
-       setUpAttackAnnouncement();
+       //setUpAttackAnnouncement();
    }
 
    private void setUpAttackAnnouncement() {
@@ -118,8 +118,7 @@ import com.groupc.android.illuminati.Objects.Table.AttackEnum;
      return attackType;
    }
 
-   public void setAttackType(AttackEnum attackType) {
-     this.attackType = attackType;
-   }
+   public void setAttackType(AttackEnum attackType) { this.attackType = attackType; }
+
 
  }

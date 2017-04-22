@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/attack_a_group"
-        android:title="Attack a Group"/>
+    <item   android:id="@+id/attack_a_group"
+            android:title="Attack a Group" >
+            <menu>
+                <item   android:id="@+id/attack_to_control"
+                        android:title="Attack to Control"/>
+                <item   android:id="@+id/attack_to_neutralize"
+                        android:title="Attack to Neutralize"/>
+                <item   android:id="@+id/attack_to_destroy"
+                        android:title="Attack to Destroy"/>
+            </menu>/>
+        </item>
+
     <item
         android:id="@+id/transfer_money"
         android:title="Transfer Money"/>
