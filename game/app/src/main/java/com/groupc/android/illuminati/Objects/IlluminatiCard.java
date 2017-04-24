@@ -38,4 +38,9 @@ public class IlluminatiCard extends NonSpecialCard {
     public String getName() {
         return illuminati.getName();
     }
+
+    public String getCardName() {
+        return super.getCardName();
+    }
+
 }

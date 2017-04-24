@@ -20,6 +20,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.groupc.android.illuminati.Objects.GroupCard;
 import com.groupc.android.illuminati.Objects.IlluminatiCard;
 import com.groupc.android.illuminati.Objects.Player;
 import com.groupc.android.illuminati.Objects.Table;
@@ -31,7 +32,7 @@ public class MainScreen extends AppCompatActivity {
     FragmentManager fm;
     Player[] players;
     private String numberOfPlayers;
-    Table table;
+    static Table table;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,6 +137,7 @@ public class MainScreen extends AppCompatActivity {
                 Bundle centerCardIDs = new Bundle();
                 int[] IDs = new int[table.getCenter().getCount()];
                 String name;
+
                 for(int i = 0; i < IDs.length; i++) {
                     name = table.getCenter().getAllGroupCards().get(i).getCardName();
                     name = name.replaceAll("\\s+","");
@@ -166,19 +168,90 @@ public class MainScreen extends AppCompatActivity {
 
                         if(! table.actionInitialized()) table.newAction();
 
+                        ListFragment playerListFrag = null;
+                        Bundle bundle = null;
+                        FragmentTransaction ft = null;
+
                         int i = 0;
                         switch(item.getItemId()) {
                             case R.id.attack_a_group:
                                 i = 1;
+                                //open the player list
+
+
+                                //end opening player list
                                 break;
                             case R.id.attack_to_control:
                                 table.getAction().getAttack().setAttackType(Table.AttackEnum.CONTROL);
+                                i = 1;
+                                bundle = new Bundle();
+                                bundle.putSerializable("names", players);
+
+                                int[] IDs;
+                                IDs = new int[table.getNumberOfPlayers()];
+                                String name;
+                                for (int j = 0; j < IDs.length; j++) {
+                                    name = table.getPlayers().get(j).getIlluminatiCard().getCardName();
+                                    name = name.replaceAll("\\s+", "");
+                                    Log.d("name", name);
+
+                                    IDs[j] = getResources().getIdentifier(name.toLowerCase(), "drawable", getPackageName());
+                                    Log.d("id",IDs[j] +"");
+                                }
+
+                                bundle.putIntArray("cardNames", IDs);
+
+                                playerListFrag = new PlayerListFragment();
+                                ft = fm.beginTransaction();
+                                bundle.putString("type", "control");
+                                playerListFrag.setArguments(bundle);
+                                ft.replace(R.id.contentframe, playerListFrag);
+                                ft.commit();
                                 break;
                             case R.id.attack_to_neutralize:
                                 table.getAction().getAttack().setAttackType(Table.AttackEnum.NEUTRALIZE);
+                                i = 1;
+                                bundle = new Bundle();
+                                bundle.putSerializable("names", players);
+
+                                IDs = new int[table.getNumberOfPlayers()];
+                                for (int j = 0; j < IDs.length; j++) {
+                                    name = table.getPlayers().get(j).getIlluminatiCard().getCardName();
+                                    name = name.replaceAll("\\s+", "");
+                                    Log.d("name", name);
+                                    IDs[j] = getResources().getIdentifier(name.toLowerCase(), "drawable", getPackageName());
+                                    Log.d("id",IDs[j] +"");
+                                }
+                                bundle.putIntArray("cardNames", IDs);
+
+                                playerListFrag = new PlayerListFragment();
+                                ft = fm.beginTransaction();
+                                bundle.putString("type", "neutralize");
+                                playerListFrag.setArguments(bundle);
+                                ft.replace(R.id.contentframe, playerListFrag);
+                                ft.commit();
                                 break;
                             case R.id.attack_to_destroy:
                                 table.getAction().getAttack().setAttackType(Table.AttackEnum.DESTROY);
+                                i = 1;
+                                bundle = new Bundle();
+                                bundle.putSerializable("names", players);
+
+                                IDs = new int[table.getNumberOfPlayers()];
+                                for (int j = 0; j < IDs.length; j++) {
+                                    name = table.getPlayers().get(j).getIlluminatiCard().getCardName();
+                                    name = name.replaceAll("\\s+", "");
+                                    Log.d("name", name);
+                                    IDs[j] = getResources().getIdentifier(name.toLowerCase(), "drawable", getPackageName());
+                                    Log.d("id",IDs[j] +"");
+                                }
+                                bundle.putIntArray("cardNames", IDs);
+                                playerListFrag = new PlayerListFragment();
+                                ft = fm.beginTransaction();
+                                bundle.putString("type", "destroy");
+                                playerListFrag.setArguments(bundle);
+                                ft.replace(R.id.contentframe, playerListFrag);
+                                ft.commit();
                                 break;
                             case R.id.transfer_money:
                                 i = 2;
@@ -241,6 +314,10 @@ public class MainScreen extends AppCompatActivity {
                 FragmentTransaction ft = fm.beginTransaction();
                 //ListFragment playerListFrag = new ListFragment();
                 Fragment playerBoardFragment = new PlayerBoardFragment();
+                Player currentPlayer = table.getCurrentPlayer();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("player", currentPlayer);
+                playerBoardFragment.setArguments(bundle);
                 ft.replace(R.id.contentframe, playerBoardFragment);
                 ft.commit();
             }
@@ -264,5 +341,10 @@ public class MainScreen extends AppCompatActivity {
         table.addCardsToCenter();
 
         table.seeWhoGoesFirst();
+    }
+
+    public static Table getTable()
+    {
+        return table;
     }
 }

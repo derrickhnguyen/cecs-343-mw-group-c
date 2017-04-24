@@ -1,8 +1,10 @@
 package com.groupc.android.illuminati;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,40 +18,52 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.groupc.android.illuminati.Objects.Card;
+import com.groupc.android.illuminati.Objects.GroupCard;
 import com.groupc.android.illuminati.Objects.IlluminatiCard;
 import com.groupc.android.illuminati.Objects.NonSpecialCard;
+import com.groupc.android.illuminati.Objects.Player;
 import com.groupc.android.illuminati.Objects.Table;
 
 import org.xmlpull.v1.XmlPullParser;
 
+import static android.R.attr.name;
+
 public class PlayerBoardFragment extends Fragment {
+
     View view_a; //a view
     IlluminatiCard illuminatiCard; //card in which the board is built from
     RelativeLayout ll; //android layout
+    Bundle bundle;
+    String type;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //illuminatiCard = (IlluminatiCard) getArguments().getSerializable("card");
         //for when we get the input from an intent
-        NonSpecialCard aCard = new NonSpecialCard("name", Table.CardTypeEnum.GROUP,
-                5,
-                5,
-                5,
-                5,
-                Table.SpecialAbilityEnum.ILLUMINATIGROUPMAYPARTICIPATEINTWOATTACKSPERTURN); //created a random card
-
-        illuminatiCard = new IlluminatiCard("card",
-                Table.CardTypeEnum.ILLUMINATI,
-                4,
-                4,
-                4,
-                4,
-                Table.SpecialAbilityEnum.MAYMAKEONEPRIVILEGEDATTACKEACHTURNATACOSTOFFIVEMEGABUCKS,
-                Table.IlluminatiCardEnum.BAVARIANILLUMINATI); //created a random illuminati card
-
-        //manually connect the card to the right of the illuminati card
-        illuminatiCard.setConnectedCards(new NonSpecialCard[]{null, aCard, null, null});
-        illuminatiCard.setIsConnected(new boolean[]{false, true, false, false});
-        aCard.setConnectedCards(new NonSpecialCard[]{null, illuminatiCard, null, null});
+        Intent playerIntent = getActivity().getIntent();
+        bundle = getArguments();
+        Player player = (Player) bundle.getSerializable("player");
+        type = bundle.getString("type");
+        illuminatiCard = player.getIlluminatiCard();
+//        NonSpecialCard aCard = new NonSpecialCard("name", Table.CardTypeEnum.GROUP,
+//                5,
+//                5,
+//                5,
+//                5,
+//                Table.SpecialAbilityEnum.ILLUMINATIGROUPMAYPARTICIPATEINTWOATTACKSPERTURN); //created a random card
+//
+//        illuminatiCard = new IlluminatiCard("card",
+//                Table.CardTypeEnum.ILLUMINATI,
+//                4,
+//                4,
+//                4,
+//                4,
+//                Table.SpecialAbilityEnum.MAYMAKEONEPRIVILEGEDATTACKEACHTURNATACOSTOFFIVEMEGABUCKS,
+//                Table.IlluminatiCardEnum.BAVARIANILLUMINATI); //created a random illuminati card
+//
+//        //manually connect the card to the right of the illuminati card
+//        illuminatiCard.setConnectedCards(new NonSpecialCard[]{null, aCard, null, null});
+//        illuminatiCard.setIsConnected(new boolean[]{false, true, false, false});
+//        aCard.setConnectedCards(new NonSpecialCard[]{null, illuminatiCard, null, null});
 
         //set up the layouts to fit their parents
         ViewGroup.LayoutParams p = new ViewGroup.LayoutParams(
@@ -72,7 +86,9 @@ public class PlayerBoardFragment extends Fragment {
 //        card1.setId(View.generateViewId());
 //
         ImageView illCard = new ImageView(getActivity()); //create image for illuminati card
-        illCard.setImageResource(R.drawable.card); //set it to the feminist pic (only one we have so far)
+        //illCard.setImageResource(R.drawable.card); //set it to the feminist pic (only one we have so far)
+        illCard.setImageResource(getResources().getIdentifier(illuminatiCard.getCardName().toLowerCase(), "drawable", getActivity().getPackageName()));
+
         illCard.setId(View.generateViewId()); //for the layout to work, each imageview needs an ID,
         //this generates a random ID for the view and set it to it
         //the actual ID doesn't matter since we'll always use the getID() method
@@ -108,13 +124,43 @@ public class PlayerBoardFragment extends Fragment {
         return view_a; //send main view out
     }
 
-    private void attach(NonSpecialCard c, ImageView cardImage)
+    private void attach(final NonSpecialCard c, ImageView cardImage)
     {
         boolean[] connected = c.getIsConnected(); //get boolean for cards connected to card
         NonSpecialCard[] connectedCards = c.getConnectedCards(); //get cards connected to card
         //set image to card's image, will implement later
-        cardImage.setImageResource(R.drawable.card); //use feminist card again (this might be wrong)
+        cardImage.setImageResource(getResources().getIdentifier(c.getCardName().toLowerCase().replace(" ", ""), "drawable", getActivity().getPackageName()));
+        Log.d("cardName", c.getCardName().toLowerCase().replace(" ", ""));
         cardImage.setId(View.generateViewId()); //probably don't need to do this
+        cardImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int attackedCardID = bundle.getInt("attackedCardID");
+                GroupCard attackedCard = (GroupCard) bundle.getSerializable("attackedCard");
+                if(attackedCardID >= 0)
+                {
+                    bundle.putSerializable("attackingCard", c);
+                    //do attack stuff
+                    Log.d("ATTACKING CARD NAME", c.getCardName());
+                    Log.d("ATTACKED CARD NAME", attackedCard.getCardName());
+                } else
+                if(type != null)
+                {
+                    Log.d("ATTACK TYPE", type);
+                    switch(type)
+                    {
+                        case "control":
+                            break;
+                        case "neutralize":
+                            break;
+                        case "destroy":
+                            break;
+                    }
+                } else {
+                    //idk
+                }
+            }
+        });
 
         for(int i = 0; i < 4; i++) { //checks each side of card
             if(connected[i]) { //if connected card on that side
@@ -165,4 +211,5 @@ public class PlayerBoardFragment extends Fragment {
             }
          }
     }
+
 }

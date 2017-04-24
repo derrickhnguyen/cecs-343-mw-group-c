@@ -3,11 +3,14 @@ package com.groupc.android.illuminati.Objects;
 import android.content.res.Resources;
 
 import com.groupc.android.illuminati.Objects.Table.CardTypeEnum;
+
+import java.io.Serializable;
+
 /**
  * Created by micha on 4/9/2017.
  */
 
-public class Card {
+public class Card implements Serializable{
   private String cardName;
   private CardTypeEnum type;
 

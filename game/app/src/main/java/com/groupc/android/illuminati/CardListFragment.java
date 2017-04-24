@@ -1,16 +1,25 @@
 package com.groupc.android.illuminati;
 
+import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.SimpleAdapter;
+
+import com.groupc.android.illuminati.Objects.GroupCard;
+import com.groupc.android.illuminati.Objects.Player;
 
 public class CardListFragment extends ListFragment {
 
@@ -49,5 +58,30 @@ public class CardListFragment extends ListFragment {
         setListAdapter(adapter);
 
         return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+
+    @Override
+    public void onListItemClick(ListView l, View v, int pos, long id)
+    {
+        Bundle bundle = getArguments();
+        String type = bundle.getString("type");
+        ArrayList<GroupCard> cardArray = (ArrayList<GroupCard>) bundle.getSerializable("cardObjects");
+        Log.d("CARD AGAGIN", cardArray.get(0).getCardName());
+        if(type != null)
+        {
+            //bundle.putInt("attackedCardID", cardNames[pos]);
+            bundle.putSerializable("attackedCard", cardArray.get(pos));
+            FragmentManager fm = getFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            //ListFragment playerListFrag = new ListFragment();
+            Fragment playerBoardFragment = new PlayerBoardFragment();
+            Player currentPlayer = MainScreen.getTable().getCurrentPlayer();
+            bundle.putSerializable("player", currentPlayer);
+            playerBoardFragment.setArguments(bundle);
+            ft.replace(R.id.contentframe, playerBoardFragment);
+            ft.commit();
+        }
+        super.onListItemClick(l, v, pos, id);
     }
 }
