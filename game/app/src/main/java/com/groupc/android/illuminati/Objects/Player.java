@@ -16,6 +16,7 @@ public class Player implements Serializable {
     private ArrayList<SpecialCard> hand;
     private boolean ownsSurvivalists;
     private IlluminatiCard illuminatiCard;
+    private int actionsTaken;
 
     public Player(String username, IlluminatiCard illuminatiCard) {
         this.username       = username;
@@ -23,6 +24,7 @@ public class Player implements Serializable {
         powerStructure = new PowerStructure(illuminatiCard);
         hand = new ArrayList<SpecialCard>();
         ownsSurvivalists = false;
+        actionsTaken = 0;
     }
 
     public IlluminatiCard getIlluminatiCard() {
@@ -66,6 +68,18 @@ public class Player implements Serializable {
 
     public boolean ownsSurvivalists() {
       return ownsSurvivalists;
+    }
+
+    public int actionsTaken() {
+        return actionsTaken;
+    }
+
+    public void takeAction() {
+        actionsTaken++;
+    }
+
+    public void resetAcitonsTaken() {
+        actionsTaken = 0;
     }
 
     public void setOwnsSurvivalists(boolean ownsSurvivalists) {

@@ -1,5 +1,6 @@
 package com.groupc.android.illuminati.Objects;
 
+import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -87,15 +88,18 @@ public class Table {
         return numberOfPlayers;
     }
 
-    public void seeWhoGoesFirst() {
+    public ArrayList<Integer> seeWhoGoesFirst() {
         int maxDiceRoll = 0;
         Player firstPlayer = null;
+        ArrayList<Integer> diceRolls = new ArrayList<>();
         for(int i = 0; i < numberOfPlayers; i++) {
             currentPlayer = players.poll();
-            if(currentPlayer.rollDice() > maxDiceRoll) {
+            int diceRoll = currentPlayer.rollDice();
+            if(diceRoll > maxDiceRoll) {
                 maxDiceRoll = currentPlayer.rollDice();
                 firstPlayer = currentPlayer;
             }
+            diceRolls.add(diceRoll);
             players.add(currentPlayer);
         }
         for(int i = 0; i < numberOfPlayers; i++) {
@@ -108,20 +112,24 @@ public class Table {
                 players.add(currentPlayer);
             }
         }
+        return diceRolls;
     }
 
-    public boolean turn() {
-        while(gameIsActive) {
+    public boolean newTurn() {
+        currentPlayer.resetAcitonsTaken();
             currentPlayer = players.poll();
-            int maxActionsTaken = 2;
-            int actionsTaken = 0;
-            while(actionsTaken < maxActionsTaken) {
-                Action action = new Action(currentPlayer, this);
-                actionsTaken += action.getActionsTaken();
-            }
-
-            if(checkIfWon(currentPlayer)) break;
+            //if(checkIfWon(currentPlayer))
             players.add(currentPlayer);
+        currentPlayer = players.peek();
+
+        if(center.getAllGroupCards().size() < 3) {
+            ArrayList<GroupCard> cards = new ArrayList<GroupCard>();
+            while(cards.size() < 2) {
+                Card card = deck.draw();
+                if(card.getType() == CardTypeEnum.GROUP) cards.add((GroupCard) card);
+            }
+            center.addGroupToCenter(cards.get(0));
+            center.addGroupToCenter(cards.get(1));
         }
 
         return true;

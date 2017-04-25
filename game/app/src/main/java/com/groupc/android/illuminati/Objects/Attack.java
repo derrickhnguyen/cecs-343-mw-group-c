@@ -60,7 +60,8 @@ import com.groupc.android.illuminati.Objects.Table.AttackEnum;
                 defendingCard);
         announcement.setAlignmentBonus(new AlignmentBonus(attackingCard, defendingCard).getAlignmentBonus());
         announcement.setPowerStructurePositionBonus(new PowerStructurePositionBonus(defendingPlayer, defendingCard).getPowerStructurePositionBonus());
-        announcement.setSpecialPowerBonus(new SpecialPowerBonus(attackingCard, defendingCard, this).getSpecialPowerBonus());
+        if(attackingCard.getType() != Table.CardTypeEnum.ILLUMINATI && defendingCard.getType() != Table.CardTypeEnum.ILLUMINATI)
+            announcement.setSpecialPowerBonus(new SpecialPowerBonus(attackingCard, defendingCard, this).getSpecialPowerBonus());
         //announcement.setAttackerMoneyBonus();
         announcement.send(defendingPlayer);
 

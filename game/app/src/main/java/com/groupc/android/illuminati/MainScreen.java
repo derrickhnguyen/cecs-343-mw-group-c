@@ -5,6 +5,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -183,6 +184,7 @@ public class MainScreen extends AppCompatActivity {
                                 break;
                             case R.id.attack_to_control:
                                 //table.getAction().getAttack().setAttackType(Table.AttackEnum.CONTROL);
+                                table.getCurrentPlayer().takeAction();
                                 i = 1;
                                 bundle = new Bundle();
                                 bundle.putSerializable("names", players);
@@ -207,8 +209,10 @@ public class MainScreen extends AppCompatActivity {
                                 playerListFrag.setArguments(bundle);
                                 ft.replace(R.id.contentframe, playerListFrag);
                                 ft.commit();
+                                if(table.getCurrentPlayer().actionsTaken() > 1) endTurn();
                                 break;
                             case R.id.attack_to_neutralize:
+                                table.getCurrentPlayer().takeAction();
                                 table.getAction().getAttack().setAttackType(Table.AttackEnum.NEUTRALIZE);
                                 i = 1;
                                 bundle = new Bundle();
@@ -230,8 +234,10 @@ public class MainScreen extends AppCompatActivity {
                                 playerListFrag.setArguments(bundle);
                                 ft.replace(R.id.contentframe, playerListFrag);
                                 ft.commit();
+                                if(table.getCurrentPlayer().actionsTaken() > 1) endTurn();
                                 break;
                             case R.id.attack_to_destroy:
+                                table.getCurrentPlayer().takeAction();
                                 table.getAction().getAttack().setAttackType(Table.AttackEnum.DESTROY);
                                 i = 1;
                                 bundle = new Bundle();
@@ -252,15 +258,22 @@ public class MainScreen extends AppCompatActivity {
                                 playerListFrag.setArguments(bundle);
                                 ft.replace(R.id.contentframe, playerListFrag);
                                 ft.commit();
+                                if(table.getCurrentPlayer().actionsTaken() > 2) endTurn();
                                 break;
                             case R.id.transfer_money:
+                                table.getCurrentPlayer().takeAction();
                                 i = 2;
+                                if(table.getCurrentPlayer().actionsTaken() > 2) endTurn();
                                 break;
                             case R.id.move_a_group:
+                                table.getCurrentPlayer().takeAction();
                                 i = 3;
+                                if(table.getCurrentPlayer().actionsTaken() > 2) endTurn();
                                 break;
                             case R.id.give_a_group_away:
+                                table.getCurrentPlayer().takeAction();
                                 i = 4;
+                                if(table.getCurrentPlayer().actionsTaken() > 2) endTurn();
                                 break;
                             case R.id.drop_a_group:
                                 i = 5;
@@ -324,6 +337,16 @@ public class MainScreen extends AppCompatActivity {
         });
     }
 
+    private void endTurn() {
+        table.newTurn();
+        Context context = getApplicationContext();
+        CharSequence text = "Too many actions!\nPass to " + table.getCurrentPlayer().getUsername() + "!";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+    }
+
     private void beginGame() {
         table = new Table();
         if(numberOfPlayers != null) table.setNumberOfPlayers(numberOfPlayers);
@@ -340,7 +363,23 @@ public class MainScreen extends AppCompatActivity {
 
         table.addCardsToCenter();
 
-        table.seeWhoGoesFirst();
+        ArrayList<Integer> diceRolls = table.seeWhoGoesFirst();
+
+        for(int i = 0; i < diceRolls.size(); i++) {
+            Context context = getApplicationContext();
+            CharSequence text = "Player " + (i + 1) + " rolled " + diceRolls.get(i);
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
+
+        Context context = getApplicationContext();
+        CharSequence text = table.getCurrentPlayer().getUsername() + " goes first!";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
     }
 
     public static Table getTable()
