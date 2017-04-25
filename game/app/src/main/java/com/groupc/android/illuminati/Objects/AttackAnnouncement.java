@@ -74,7 +74,10 @@ import com.groupc.android.illuminati.Objects.Player;
    }
 
    public void send(Player player) {
-     //send attack announcement to player
+     if(player == null)
+     {
+
+     }
    }
 
    public boolean betting() {
@@ -90,12 +93,12 @@ import com.groupc.android.illuminati.Objects.Player;
 
    public boolean isAccepted() {
      //hook up to sending and accepting
-    return false;
+    return true;
    }
 
    public int getScore() {
      int score = 0;
-
+       //fix
      return score;
    }
 

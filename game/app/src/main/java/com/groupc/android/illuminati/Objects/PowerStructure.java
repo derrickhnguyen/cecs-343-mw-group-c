@@ -23,10 +23,11 @@ public class PowerStructure {
 
 
     public boolean hasRoom(GroupCard defendingGroup) {
-        return false;
+        return true; //fix
     }
 
     public void addToPowerStructure(GroupCard defendingGroup) {
-
+        illuminatiCard.setConnectedCards(new NonSpecialCard[]{null, defendingGroup, null, null});
+        illuminatiCard.setIsConnected(new boolean[]{false, true, false, false});
     }
 }

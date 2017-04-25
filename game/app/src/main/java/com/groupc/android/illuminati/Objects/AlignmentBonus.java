@@ -10,11 +10,22 @@ import com.groupc.android.illuminati.Objects.Table.AlignmentEnum;
    private AlignmentEnum defenderAlignment;
 
    public AlignmentBonus(NonSpecialCard attackingGroup, NonSpecialCard defendingGroup) {
-     attackerAlignment = attackingGroup.getAlignment();
-     defenderAlignment = defendingGroup.getAlignment();
+       if(!attackingGroup.getType().equals(Table.CardTypeEnum.ILLUMINATI))
+       {
+           attackerAlignment = attackingGroup.getAlignment();
+           defenderAlignment = defendingGroup.getAlignment();
+       } else {
+           attackerAlignment = null;
+           defenderAlignment = null;
+       }
+
    }
 
    public int getAlignmentBonus() {
+       if(attackerAlignment == null)
+       {
+           return 0;
+       }
        if (attackerAlignment == defenderAlignment) return 4;
        else if (
                attackerAlignment == AlignmentEnum.GOVERNMENT && defenderAlignment == AlignmentEnum.COMMUNIST ||

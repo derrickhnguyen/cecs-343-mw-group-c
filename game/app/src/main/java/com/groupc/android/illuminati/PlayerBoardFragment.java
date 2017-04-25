@@ -1,6 +1,8 @@
 package com.groupc.android.illuminati;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -17,6 +19,8 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.groupc.android.illuminati.Objects.Action;
+import com.groupc.android.illuminati.Objects.Attack;
 import com.groupc.android.illuminati.Objects.Card;
 import com.groupc.android.illuminati.Objects.GroupCard;
 import com.groupc.android.illuminati.Objects.IlluminatiCard;
@@ -135,14 +139,49 @@ public class PlayerBoardFragment extends Fragment {
         cardImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(getArguments().getBoolean("isSuccessful"))
+                {
+                    MainScreen.getTable().getCurrentPlayer().getPowerStructure().addToPowerStructure((GroupCard) bundle.getSerializable("attackedCard"));
+                    return;
+                }
                 int attackedCardID = bundle.getInt("attackedCardID");
                 GroupCard attackedCard = (GroupCard) bundle.getSerializable("attackedCard");
-                if(attackedCardID >= 0)
+                if(attackedCard != null)
                 {
                     bundle.putSerializable("attackingCard", c);
                     //do attack stuff
                     Log.d("ATTACKING CARD NAME", c.getCardName());
                     Log.d("ATTACKED CARD NAME", attackedCard.getCardName());
+                    Log.d("ATTACK TYPE", type);
+                    Table.AttackEnum attackType = null;
+                    if(type.equals("neutralize"))
+                    {
+                        attackType = Table.AttackEnum.NEUTRALIZE;
+                    } else if(type.equals("destroy"))
+                    {
+                        attackType = Table.AttackEnum.DESTROY;
+                    } else if(type.equals("control")) {
+                        attackType = Table.AttackEnum.CONTROL;
+                    } else {
+                        //error
+                    }
+                    Table table = MainScreen.getTable();
+                    Attack attack = new Attack(table.getCurrentPlayer(), c, null, attackedCard, false, attackType);
+
+                    table.getAction().setAttack(attack);
+
+                    if(attack.isSuccessful())
+                    {
+                        FragmentManager fm = getFragmentManager();
+                        FragmentTransaction ft = fm.beginTransaction();
+                        //ListFragment playerListFrag = new ListFragment();
+                        Fragment playerBoardFragment = new PlayerBoardFragment();
+                        Player currentPlayer = table.getCurrentPlayer();
+                        playerBoardFragment.setArguments(bundle);
+                        bundle.putBoolean("isSuccessful", true);
+                        ft.replace(R.id.contentframe, playerBoardFragment);
+                        ft.commit();
+                    }
                 } else
                 if(type != null)
                 {

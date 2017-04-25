@@ -14,7 +14,7 @@ public class Action {
 
     public int getActionsTaken() { return actionsTaken; }
 
-    public void takeAction() {
+     /*public void takeAction() {
       switch(choice) {
         case 1: attack = new Attack(player, table);
 
@@ -46,7 +46,7 @@ public class Action {
         default:
       }
     }
-
+    */
     private Table.AttackEnum chooseAttackType() {
         Table.AttackEnum attackType = null;
         return attackType;
@@ -55,4 +55,10 @@ public class Action {
     public void setChoice(int choice) { this.choice = choice; }
 
     public Attack getAttack() { return attack; }
+
+    public void setAttack(Attack attack)
+    {
+        this.attack = attack;
+        attack.setUpAttackAnnouncement();
+    }
 }

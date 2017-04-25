@@ -14,6 +14,10 @@ package com.groupc.android.illuminati.Objects;
    }
 
    public int getPowerStructurePositionBonus() {
+     if(defendingPlayer == null)
+     {
+       return 0;
+     }
      for(int i = 0; i < 4; i++) {
        if((Card) defendingGroup.getConnectedCards()[i] == (Card) defendingPlayer.getIlluminatiCard()) return 10;
        for(int j = 0; j < 4; j++) {

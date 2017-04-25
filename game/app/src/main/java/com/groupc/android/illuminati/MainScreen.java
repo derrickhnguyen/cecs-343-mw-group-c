@@ -182,7 +182,7 @@ public class MainScreen extends AppCompatActivity {
                                 //end opening player list
                                 break;
                             case R.id.attack_to_control:
-                                table.getAction().getAttack().setAttackType(Table.AttackEnum.CONTROL);
+                                //table.getAction().getAttack().setAttackType(Table.AttackEnum.CONTROL);
                                 i = 1;
                                 bundle = new Bundle();
                                 bundle.putSerializable("names", players);
@@ -284,7 +284,7 @@ public class MainScreen extends AppCompatActivity {
                                 return onOptionsItemSelected(item);
                         }
                         table.getAction().setChoice(i);
-                        table.getAction().takeAction();
+                        //table.getAction().takeAction();
 
 //                        switch(item.getItemId()) {
 //                            case R.id.attack_to_control:

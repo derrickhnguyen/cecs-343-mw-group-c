@@ -66,11 +66,11 @@ public class CardListFragment extends ListFragment {
     {
         Bundle bundle = getArguments();
         String type = bundle.getString("type");
-        ArrayList<GroupCard> cardArray = (ArrayList<GroupCard>) bundle.getSerializable("cardObjects");
-        Log.d("CARD AGAGIN", cardArray.get(0).getCardName());
+
         if(type != null)
         {
-            //bundle.putInt("attackedCardID", cardNames[pos]);
+            ArrayList<GroupCard> cardArray = (ArrayList<GroupCard>) bundle.getSerializable("cardObjects");
+            Log.d("CARD AGAGIN", cardArray.get(0).getCardName());
             bundle.putSerializable("attackedCard", cardArray.get(pos));
             FragmentManager fm = getFragmentManager();
             FragmentTransaction ft = fm.beginTransaction();
