@@ -2,8 +2,8 @@ package com.groupc.android.illuminati.Objects;
 
 import android.util.Log;
 
+import com.groupc.android.illuminati.MainScreen;
 import com.groupc.android.illuminati.Objects.Table.AttackEnum;
-
 /**
  * Created by micha on 4/11/2017.
  */
@@ -42,6 +42,8 @@ import com.groupc.android.illuminati.Objects.Table.AttackEnum;
             //player is attacking the center pile
         }
         this.attackType = attackType;
+        table = MainScreen.getTable();
+        center = table.getCenter();
     }
 
     public void setUpAttackAnnouncement() {
@@ -81,7 +83,8 @@ import com.groupc.android.illuminati.Objects.Table.AttackEnum;
             Log.d("OTHER SCORE", announcement.getScore() + "");
             if (sum - announcement.getScore() > 0)
                 attackIsSuccesful((GroupCard) defendingCard);
-            else endAttack();
+            //else endAttack();
+            //else endAttack();
         } else endAttack();
     }
 
@@ -96,6 +99,7 @@ import com.groupc.android.illuminati.Objects.Table.AttackEnum;
         if (attackType == AttackEnum.CONTROL) {
             if (attackingPlayer.getPowerStructure().hasRoom(defendingGroup)) {
                 attackingPlayer.getPowerStructure().addToPowerStructure(defendingGroup);
+                center.removeGroupFromCenter(defendingGroup);
             } else {
                 for (int i = 0; i < defendingGroup.getConnectedCards().length; i++) {
                     if (defendingGroup.getConnectedCards()[i] != null) {
@@ -106,6 +110,7 @@ import com.groupc.android.illuminati.Objects.Table.AttackEnum;
                 }
                 if (attackingPlayer.getPowerStructure().hasRoom(defendingGroup)) {
                     attackingPlayer.getPowerStructure().addToPowerStructure(defendingGroup);
+                    center.removeGroupFromCenter(defendingGroup);
                 } else return;
             }
         }

@@ -142,7 +142,7 @@ public class MainScreen extends AppCompatActivity {
                     name = table.getCenter().getAllGroupCards().get(i).getCardName();
                     name = name.replaceAll("\\s+","");
                     IDs[i] = getResources().getIdentifier(name.toLowerCase(), "drawable", getPackageName());
-                    Log.d("id",IDs[i] +"");
+                    Log.d("GRP ", table.getCenter().getAllGroupCards().get(i).getCardName());
                 }
                 centerCardIDs.putIntArray("cardNames", IDs);
 

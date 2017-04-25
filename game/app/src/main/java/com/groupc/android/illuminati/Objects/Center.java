@@ -24,6 +24,7 @@ public class Center {
         if(uncontrolledGroupCards.contains(groupCard)) {
           uncontrolledGroupCards.remove(groupCard);
           count--;
+            System.out.println("asdfasdfasdfasdf" + groupCard.getCardName());
           return groupCard;
         }
         else return null;
