@@ -4,11 +4,14 @@ import android.util.Log;
 
 import com.groupc.android.illuminati.MainScreen;
 import com.groupc.android.illuminati.Objects.Table.AttackEnum;
+
+import java.security.acl.Group;
+
 /**
  * Created by micha on 4/11/2017.
  */
 
- public class Attack {
+public class Attack {
     Player attackingPlayer;
     Player defendingPlayer;
     AttackEnum attackType;
@@ -16,11 +19,11 @@ import com.groupc.android.illuminati.Objects.Table.AttackEnum;
     Center center;
     DestroyedCards destroyedCards;
     NonSpecialCard attackingCard;
-    NonSpecialCard defendingCard;
+    GroupCard defendingCard;
     boolean isAttackingAPlayer;
     boolean isSuccessful;
 
-//    public Attack(Player attackingPlayer, Table table) {
+    //    public Attack(Player attackingPlayer, Table table) {
 //        this.attackingPlayer = attackingPlayer;
 //        this.table = table;
 //        //this.attackType = attackType;
@@ -28,7 +31,7 @@ import com.groupc.android.illuminati.Objects.Table.AttackEnum;
 //        destroyedCards = table.getDestroyedCards();
 //        //setUpAttackAnnouncement();
 //    }
-    public Attack(Player attackingPlayer, NonSpecialCard attackingCard, Player defendingPlayer, NonSpecialCard defendingCard, boolean isAttackingAPlayer, AttackEnum attackType)
+    public Attack(Player attackingPlayer, NonSpecialCard attackingCard, Player defendingPlayer, GroupCard defendingCard, boolean isAttackingAPlayer, AttackEnum attackType)
     {
         this.attackingPlayer = attackingPlayer;
         this.attackingCard = attackingCard;
@@ -60,8 +63,7 @@ import com.groupc.android.illuminati.Objects.Table.AttackEnum;
                 defendingCard);
         announcement.setAlignmentBonus(new AlignmentBonus(attackingCard, defendingCard).getAlignmentBonus());
         announcement.setPowerStructurePositionBonus(new PowerStructurePositionBonus(defendingPlayer, defendingCard).getPowerStructurePositionBonus());
-        if(attackingCard.getType() != Table.CardTypeEnum.ILLUMINATI && defendingCard.getType() != Table.CardTypeEnum.ILLUMINATI)
-            announcement.setSpecialPowerBonus(new SpecialPowerBonus(attackingCard, defendingCard, this).getSpecialPowerBonus());
+//        announcement.setSpecialPowerBonus(new SpecialPowerBonus(attackingCard, defendingCard, this).getSpecialPowerBonus());
         //announcement.setAttackerMoneyBonus();
         announcement.send(defendingPlayer);
 
@@ -83,59 +85,60 @@ import com.groupc.android.illuminati.Objects.Table.AttackEnum;
             Log.d("DICE ROLL SUM", sum + "");
             Log.d("OTHER SCORE", announcement.getScore() + "");
             if (sum - announcement.getScore() > 0)
-                attackIsSuccesful((GroupCard) defendingCard);
+                Log.d("ATTACKING CARD", attackingCard.getCardName());
+            attackIsSuccesful(attackingCard);
             //else endAttack();
             //else endAttack();
         } else endAttack();
     }
 
 
-    public void attackIsSuccesful(GroupCard defendingGroup) {
+    public void attackIsSuccesful(NonSpecialCard puppet) {
         isSuccessful = true;
-        if (defendingGroup.getCardName().equals("Survivalists")) {
+        if (defendingCard.getCardName().equals("Survivalists")) {
             if (defendingPlayer != null) defendingPlayer.setOwnsSurvivalists(false);
             attackingPlayer.setOwnsSurvivalists(true);
         }
 
         if (attackType == AttackEnum.CONTROL) {
-            if (attackingPlayer.getPowerStructure().hasRoom(defendingGroup)) {
-                attackingPlayer.getPowerStructure().addToPowerStructure(defendingGroup);
-                center.removeGroupFromCenter(defendingGroup);
+            if (attackingPlayer.getPowerStructure().hasRoom(defendingCard)) {
+                attackingPlayer.getPowerStructure().addToPowerStructure(puppet, defendingCard);
+                center.removeGroupFromCenter(defendingCard);
             } else {
-                for (int i = 0; i < defendingGroup.getConnectedCards().length; i++) {
-                    if (defendingGroup.getConnectedCards()[i] != null) {
-                        GroupCard puppet = (GroupCard) defendingGroup.getConnectedCards()[i];
-                        defendingGroup.removePuppet(defendingGroup.getConnectedCards()[i]);
-                        center.addGroupToCenter(puppet);
+                for (int i = 0; i < defendingCard.getConnectedCards().length; i++) {
+                    if (defendingCard.getConnectedCards()[i] != null) {
+                        GroupCard topCard = (GroupCard) defendingCard.getConnectedCards()[i];
+                        defendingCard.removePuppet(topCard);
+                        center.addGroupToCenter(topCard);
                     }
                 }
-                if (attackingPlayer.getPowerStructure().hasRoom(defendingGroup)) {
-                    attackingPlayer.getPowerStructure().addToPowerStructure(defendingGroup);
-                    center.removeGroupFromCenter(defendingGroup);
+                if (attackingPlayer.getPowerStructure().hasRoom(defendingCard)) {
+                    attackingPlayer.getPowerStructure().addToPowerStructure(puppet, defendingCard);
+                    center.removeGroupFromCenter(defendingCard);
                 } else return;
             }
         }
 
         if (attackType == AttackEnum.NEUTRALIZE) {
-            for (int i = 0; i < defendingGroup.getConnectedCards().length; i++) {
-                if (defendingGroup.getConnectedCards()[i] != null) {
-                    GroupCard puppet = (GroupCard) defendingGroup.getConnectedCards()[i];
-                    defendingGroup.removePuppet(defendingGroup.getConnectedCards()[i]);
-                    center.addGroupToCenter(puppet);
+            for (int i = 0; i < defendingCard.getConnectedCards().length; i++) {
+                if (defendingCard.getConnectedCards()[i] != null) {
+                    GroupCard topCard = (GroupCard) defendingCard.getConnectedCards()[i];
+                    defendingCard.removePuppet(topCard);
+                    center.addGroupToCenter(topCard);
                 }
             }
-            center.addGroupToCenter(defendingGroup);
+            center.addGroupToCenter(defendingCard);
         }
 
         if (attackType == AttackEnum.DESTROY) {
-            for (int i = 0; i < defendingGroup.getConnectedCards().length; i++) {
-                if (defendingGroup.getConnectedCards()[i] != null) {
-                    GroupCard puppet = (GroupCard) defendingGroup.getConnectedCards()[i];
-                    defendingGroup.removePuppet(defendingGroup.getConnectedCards()[i]);
-                    center.addGroupToCenter(puppet);
+            for (int i = 0; i < defendingCard.getConnectedCards().length; i++) {
+                if (defendingCard.getConnectedCards()[i] != null) {
+                    GroupCard topCard = (GroupCard) defendingCard.getConnectedCards()[i];
+                    defendingCard.removePuppet(topCard);
+                    center.addGroupToCenter(topCard);
                 }
             }
-            destroyedCards.addDestroyedCard(defendingGroup);
+            destroyedCards.addDestroyedCard(defendingCard);
         }
     }
 

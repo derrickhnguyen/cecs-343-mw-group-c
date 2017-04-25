@@ -1,5 +1,9 @@
 package com.groupc.android.illuminati.Objects;
 
+import android.util.Log;
+
+import com.groupc.android.illuminati.MainScreen;
+
 import java.util.ArrayList;
 
 /**
@@ -11,6 +15,7 @@ public class PowerStructure {
     private ArrayList<NonSpecialCard> powerStructureCards;
 
     public PowerStructure(IlluminatiCard illuminatiCard) {
+
         this.illuminatiCard = illuminatiCard;
         powerStructureCards = new ArrayList<NonSpecialCard>();
         powerStructureCards.add(illuminatiCard);
@@ -31,13 +36,42 @@ public class PowerStructure {
         return true; //fix
     }
 
-    public void addToPowerStructure(GroupCard defendingGroup) {
-        illuminatiCard.setConnectedCards(new NonSpecialCard[]{null, defendingGroup, null, null});
-        illuminatiCard.setIsConnected(new boolean[]{false, true, false, false});
+    public void addToPowerStructure(NonSpecialCard parentCard, GroupCard defendingGroup) {
+        Log.d("parent", parentCard.getCardName());
+        Log.d("defending", defendingGroup.getCardName());
+        //find(parentCard, defendingGroup).attachCard(defendingGroup, 0);
+        parentCard.attachCard(defendingGroup, 1);
+        //Log.d("CARDSDSDSDSD", MainScreen.getTable().getCurrentPlayer().getPowerStructure().getIlluminatiCard().getConnectedCards()[1].getCardName());
         powerStructureCards.add(defendingGroup);
     }
 
-    public ArrayList<NonSpecialCard> getPowerStructureCards() {
+    public NonSpecialCard find(NonSpecialCard parent, NonSpecialCard searched)
+    {
+        NonSpecialCard found = null;
+        if(illuminatiCard.equals(parent))
+        {
+            return illuminatiCard;
+        }
+        for(int i = 0; i < 4; i++)
+        {
+            if(parent.getIsConnected()[i])
+            {
+                if(parent.getConnectedCards()[i].equals(searched))
+                {
+                    found = parent.getConnectedCards()[i];
+                } else {
+                    if(found == null)
+                    {
+                        found = find(parent.getConnectedCards()[i], searched);
+                    }
+                }
+            }
+        }
+        return found;
+    }
+
+    public ArrayList<NonSpecialCard> getPowerStructureCards()
+    {
         return powerStructureCards;
     }
 }

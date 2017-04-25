@@ -141,62 +141,56 @@ public class PlayerBoardFragment extends Fragment {
             public void onClick(View v) {
                 if(getArguments().getBoolean("isSuccessful"))
                 {
-                    MainScreen.getTable().getCurrentPlayer().getPowerStructure().addToPowerStructure((GroupCard) bundle.getSerializable("attackedCard"));
-                    return;
-                }
-                int attackedCardID = bundle.getInt("attackedCardID");
-                GroupCard attackedCard = (GroupCard) bundle.getSerializable("attackedCard");
-                if(attackedCard != null)
-                {
-                    bundle.putSerializable("attackingCard", c);
-                    //do attack stuff
-                    Log.d("ATTACKING CARD NAME", c.getCardName());
-                    Log.d("ATTACKED CARD NAME", attackedCard.getCardName());
-                    Log.d("ATTACK TYPE", type);
-                    Table.AttackEnum attackType = null;
-                    if(type.equals("neutralize"))
-                    {
-                        attackType = Table.AttackEnum.NEUTRALIZE;
-                    } else if(type.equals("destroy"))
-                    {
-                        attackType = Table.AttackEnum.DESTROY;
-                    } else if(type.equals("control")) {
-                        attackType = Table.AttackEnum.CONTROL;
-                    } else {
-                        //error
-                    }
-                    Table table = MainScreen.getTable();
-                    Attack attack = new Attack(table.getCurrentPlayer(), c, null, attackedCard, false, attackType);
-
-                    table.getAction().setAttack(attack);
-
-                    if(attack.isSuccessful())
-                    {
-                        FragmentManager fm = getFragmentManager();
-                        FragmentTransaction ft = fm.beginTransaction();
-                        //ListFragment playerListFrag = new ListFragment();
-                        Fragment playerBoardFragment = new PlayerBoardFragment();
-                        Player currentPlayer = table.getCurrentPlayer();
-                        playerBoardFragment.setArguments(bundle);
-                        bundle.putBoolean("isSuccessful", true);
-                        ft.replace(R.id.contentframe, playerBoardFragment);
-                        ft.commit();
-                    }
-                } else
-                if(type != null)
-                {
-                    Log.d("ATTACK TYPE", type);
-                    switch(type)
-                    {
-                        case "control":
-                            break;
-                        case "neutralize":
-                            break;
-                        case "destroy":
-                            break;
-                    }
+                    //MainScreen.getTable().getCurrentPlayer().getPowerStructure().addToPowerStructure((GroupCard) bundle.getSerializable("attackedCard"));
+                    //return;
                 } else {
-                    //idk
+                    int attackedCardID = bundle.getInt("attackedCardID");
+                    GroupCard attackedCard = (GroupCard) bundle.getSerializable("attackedCard");
+                    if (attackedCard != null) {
+                        bundle.putSerializable("attackingCard", c);
+                        //do attack stuff
+                        Log.d("ATTACKING CARD NAME", c.getCardName());
+                        Log.d("ATTACKED CARD NAME", attackedCard.getCardName());
+                        Log.d("ATTACK TYPE", type);
+                        Table.AttackEnum attackType = null;
+                        if (type.equals("neutralize")) {
+                            attackType = Table.AttackEnum.NEUTRALIZE;
+                        } else if (type.equals("destroy")) {
+                            attackType = Table.AttackEnum.DESTROY;
+                        } else if (type.equals("control")) {
+                            attackType = Table.AttackEnum.CONTROL;
+                        } else {
+                            //error
+                        }
+                        Table table = MainScreen.getTable();
+                        Attack attack = new Attack(table.getCurrentPlayer(), c, null, attackedCard, false, attackType);
+
+                        table.getAction().setAttack(attack);
+
+                        if (attack.isSuccessful()) {
+                            FragmentManager fm = getFragmentManager();
+                            FragmentTransaction ft = fm.beginTransaction();
+                            //ListFragment playerListFrag = new ListFragment();
+                            Fragment playerBoardFragment = new PlayerBoardFragment();
+                            Player currentPlayer = table.getCurrentPlayer();
+                            playerBoardFragment.setArguments(bundle);
+                            bundle.putBoolean("isSuccessful", true);
+                            ft.replace(R.id.contentframe, playerBoardFragment);
+                            ft.commit();
+                        }
+                    } else if (type != null) {
+                        Log.d("ATTACK TYPE", type);
+                        switch (type) {
+                            case "control":
+                                break;
+                            case "neutralize":
+                                break;
+                            case "destroy":
+                                break;
+                        }
+                    } else {
+                        //idk
+                    }
                 }
             }
         });
@@ -237,18 +231,18 @@ public class PlayerBoardFragment extends Fragment {
                     lp.addRule(RelativeLayout.LEFT_OF, cardImage.getId());
                     //newCardImage.setRotation(attachedCard.getOrientation()*90 + 270);
                 } else {
-                    //some mistake
+                    Log.d("ERROR", "ORIENTATION WRONG");
                 }
 
                 //add the layout params
                 newCardImage.setLayoutParams(lp);
                 //add card to view
+                Log.d("SHOW THE REST OF", "TRUE");
                 ll.addView(newCardImage);
                 //recursively call the check
                 attach(attachedCard, newCardImage);
-
             }
-         }
+        }
     }
 
 }

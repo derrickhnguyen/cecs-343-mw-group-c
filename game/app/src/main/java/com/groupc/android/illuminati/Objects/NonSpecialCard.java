@@ -10,13 +10,13 @@ import com.groupc.android.illuminati.Objects.Table.SpecialAbilityEnum;
 
 public class NonSpecialCard extends Card {
     private int   power,
-                  transferablePower,
-                  resistance,
-                  income,
-                  groupTreasury;
+            transferablePower,
+            resistance,
+            income,
+            groupTreasury;
     private AlignmentEnum alignment;
     private SpecialAbilityEnum specialAbility;
-    private NonSpecialCard[] connectedCards;
+    private GroupCard[] connectedCards;
     private boolean[] isConnected;
     private Bank bank;
     private int orientation;
@@ -32,7 +32,7 @@ public class NonSpecialCard extends Card {
                             int resistance,
                             int income,
                             SpecialAbilityEnum specialAbility
-                            ) {
+    ) {
         super(cardName, type);
 
         this.power = power;
@@ -42,15 +42,15 @@ public class NonSpecialCard extends Card {
         this.specialAbility = specialAbility;
 
         groupTreasury = 0;
-        connectedCards = new NonSpecialCard[4];
+        connectedCards = new GroupCard[4];
         //0 = top, 1 = right, 2 = bottom, 3 = left
         isConnected = new boolean[4];
         orientation = 0;
     }
 
     public void collectIncome() {
-      bank.withdraw(income);
-      groupTreasury += income;
+        bank.withdraw(income);
+        groupTreasury += income;
     }
 
     public void attack(NonSpecialCard otherCard) {
@@ -71,75 +71,75 @@ public class NonSpecialCard extends Card {
     }
 
     public int getPower() {
-      return power;
+        return power;
     }
 
     public void setPower(int power) {
-      this.power = power;
+        this.power = power;
     }
 
     public int getTransferablePower() {
-      return transferablePower;
+        return transferablePower;
     }
 
     public void setTransferablePower(int transferablePower) {
-      this.transferablePower = transferablePower;
+        this.transferablePower = transferablePower;
     }
 
     public int getResistance() {
-      return resistance;
+        return resistance;
     }
 
     public void setResistance(int resistance) {
-      this.resistance = resistance;
+        this.resistance = resistance;
     }
 
     public int getIncome() {
-      return income;
+        return income;
     }
 
     public void setIncome(int income) {
-      this.income = income;
+        this.income = income;
     }
 
     public int getGroupTreasury() {
-      return getGroupTreasury();
+        return getGroupTreasury();
     }
 
     public void setGroupTreasury(int groupTreasury) {
-      this.groupTreasury = groupTreasury;
+        this.groupTreasury = groupTreasury;
     }
 
     public AlignmentEnum getAlignment() {
-      return alignment;
+        return alignment;
     }
 
     public void setAlignment(AlignmentEnum alignment) {
-      this.alignment = alignment;
+        this.alignment = alignment;
     }
 
     public SpecialAbilityEnum getSpecialAbilityEnum() {
-      return specialAbility;
+        return specialAbility;
     }
 
     public void setSpecialAbility(SpecialAbilityEnum specialAbility) {
-      this.specialAbility = specialAbility;
+        this.specialAbility = specialAbility;
     }
 
-    public NonSpecialCard[] getConnectedCards() {
-      return connectedCards;
+    public GroupCard[] getConnectedCards() {
+        return connectedCards;
     }
 
-    public void setConnectedCards(NonSpecialCard[] connectedCards) {
-      this.connectedCards = connectedCards;
+    public void setConnectedCards(GroupCard[] connectedCards) {
+        this.connectedCards = connectedCards;
     }
 
     public boolean[] getIsConnected() {
-      return isConnected;
+        return isConnected;
     }
 
     public void setIsConnected(boolean[] isConnected) {
-      this.isConnected = isConnected;
+        this.isConnected = isConnected;
     }
 
     public void setOrientation(int o)
@@ -152,4 +152,17 @@ public class NonSpecialCard extends Card {
     {
         return orientation;
     }
+
+    public boolean attachCard(GroupCard card, int direction)
+    {
+        if(isConnected[direction])
+        {
+            return false;
+        } else {
+            isConnected[direction] = true;
+            connectedCards[direction] = card;
+            return true;
+        }
+    }
+
 }
