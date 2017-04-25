@@ -7,20 +7,10 @@
 
     <!-- TODO: Update blank fragment layout -->
     <Button
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:text="Settings"
-        android:layout_weight="1"/>
-    <Button
         android:id="@+id/take_action"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:text="Take Action"
-        android:layout_weight="1"/>
-    <Button
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:text="5000 MB"
         android:layout_weight="1"/>
 
 </LinearLayout>

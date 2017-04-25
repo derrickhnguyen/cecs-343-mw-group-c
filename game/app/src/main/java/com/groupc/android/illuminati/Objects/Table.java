@@ -130,6 +130,12 @@ public class Table {
             }
             center.addGroupToCenter(cards.get(0));
             center.addGroupToCenter(cards.get(1));
+
+            for(int i = 0; i < currentPlayer.getPowerStructure().getPowerStructureCards().size(); i++) {
+                int income = currentPlayer.getPowerStructure().getPowerStructureCards().get(i).getIncome();
+                int treasury = currentPlayer.getPowerStructure().getPowerStructureCards().get(i).getGroupTreasury();
+                currentPlayer.getPowerStructure().getPowerStructureCards().get(i).setGroupTreasury(income + treasury);
+            }
         }
 
         return true;
@@ -155,6 +161,8 @@ public class Table {
     public Center getCenter() { return center; }
 
     DestroyedCards getDestroyedCards() { return destroyedCards; }
+
+    public Deck getDeck() { return deck; }
 
     public Player getCurrentPlayer() {
         return currentPlayer;

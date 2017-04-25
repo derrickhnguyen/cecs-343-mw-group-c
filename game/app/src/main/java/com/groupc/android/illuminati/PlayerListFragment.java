@@ -42,7 +42,10 @@ public class PlayerListFragment extends ListFragment {
 
         cardNames = getArguments().getIntArray("cardNames");
 
-        players = (Player[]) getArguments().getSerializable("names");
+        players = new Player[MainScreen.table.getPlayers().size()];
+        for(int i = 0; i < players.length; i++) {
+            players[i] = MainScreen.table.getPlayers().get(i);
+        }
 
         for (int i = 0; i < players.length; i++) {
             HashMap<String, String> map = new HashMap<String, String>();

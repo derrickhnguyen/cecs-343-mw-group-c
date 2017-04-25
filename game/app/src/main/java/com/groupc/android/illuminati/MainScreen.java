@@ -21,9 +21,11 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.groupc.android.illuminati.Objects.Card;
 import com.groupc.android.illuminati.Objects.GroupCard;
 import com.groupc.android.illuminati.Objects.IlluminatiCard;
 import com.groupc.android.illuminati.Objects.Player;
+import com.groupc.android.illuminati.Objects.SpecialCard;
 import com.groupc.android.illuminati.Objects.Table;
 
 import java.util.ArrayList;
@@ -112,14 +114,23 @@ public class MainScreen extends AppCompatActivity {
             public void onClick(View v) {
                 Bundle cardIDs = new Bundle();
 
-                if(table.getCurrentPlayer().getHand() != null) {
+                if(table.getCurrentPlayer().getHand().size() == 0) {
+                    table.newTurn();
+                    Context context = getApplicationContext();
+                    CharSequence text = "No Specials Yet";
+                    int duration = Toast.LENGTH_SHORT;
+
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                }
+                if(table.getCurrentPlayer().getHand().size() > 0) {
                     int[] IDs;
                     IDs = new int[table.getCurrentPlayer().getHand().size()];
                     String name;
                     for (int i = 0; i < IDs.length; i++) {
                         name = table.getCurrentPlayer().getHand().get(i).getCardName();
-                        name = name.replaceAll("\\s}", "");
-                        IDs[i] = getResources().getIdentifier(name.toLowerCase(), "drawable", getPackageCodePath());
+                        name = name.replaceAll("\\s+","");
+                        IDs[i] = getResources().getIdentifier(name.toLowerCase(), "drawable", getPackageName());
                     }
                     cardIDs.putIntArray("cardNames", IDs);
 
@@ -339,12 +350,26 @@ public class MainScreen extends AppCompatActivity {
 
     private void endTurn() {
         table.newTurn();
+
+        for(int i = 0; i < table.getCurrentPlayer().getPowerStructure().getPowerStructureCards().size(); i++) {
+            String name = table.getCurrentPlayer().getPowerStructure().getPowerStructureCards().get(i).getCardName();
+            int income = table.getCurrentPlayer().getPowerStructure().getPowerStructureCards().get(i).getIncome();
+            Context context = getApplicationContext();
+            CharSequence text = name + " collecting an income of " + income;
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
+
         Context context = getApplicationContext();
         CharSequence text = "Too many actions!\nPass to " + table.getCurrentPlayer().getUsername() + "!";
         int duration = Toast.LENGTH_SHORT;
 
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
+
+        drawCard();
     }
 
     private void beginGame() {
@@ -365,7 +390,7 @@ public class MainScreen extends AppCompatActivity {
 
         ArrayList<Integer> diceRolls = table.seeWhoGoesFirst();
 
-        for(int i = 0; i < diceRolls.size(); i++) {
+        for(int i = diceRolls.size() - 1; i >= 0 ; i--) {
             Context context = getApplicationContext();
             CharSequence text = "Player " + (i + 1) + " rolled " + diceRolls.get(i);
             int duration = Toast.LENGTH_SHORT;
@@ -380,10 +405,45 @@ public class MainScreen extends AppCompatActivity {
 
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
+
+        drawCard();
+
+        for(int i = 0; i < table.getCurrentPlayer().getPowerStructure().getPowerStructureCards().size(); i++) {
+            String name = table.getCurrentPlayer().getPowerStructure().getPowerStructureCards().get(i).getCardName();
+            int income = table.getCurrentPlayer().getPowerStructure().getPowerStructureCards().get(i).getIncome();
+            context = getApplicationContext();
+            text = name + " collecting an income of " + income;
+            duration = Toast.LENGTH_SHORT;
+
+            toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
     }
 
     public static Table getTable()
     {
         return table;
+    }
+
+    private void drawCard() {
+        Card card;
+        card = table.getDeck().draw();
+        Context context = getApplicationContext();
+        CharSequence text = table.getCurrentPlayer().getUsername() + " drew " + card.getCardName();
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+
+        if(card.getType() == Table.CardTypeEnum.GROUP) {
+            text = card.getCardName() + " added to center";
+            table.getCenter().addGroupToCenter((GroupCard) card);
+        }
+        else {
+            text = card.getCardName() + " added to specials";
+            table.getCurrentPlayer().addCardToHand((SpecialCard) card);
+        }
+
+        toast = Toast.makeText(context, text, duration);
+        toast.show();
     }
 }

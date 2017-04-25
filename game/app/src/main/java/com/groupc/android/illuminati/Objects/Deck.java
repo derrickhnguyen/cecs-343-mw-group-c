@@ -688,7 +688,7 @@ public class Deck {
         cards.add(societyForCreativeAnarchism);
 
         GroupCard southAmericanNazis = new GroupCard(
-                "South American Nazis",
+                "South America Nazis",
                 group,
                 4, 0, 6, 2,
                 new Table.AlignmentEnum[] {Table.AlignmentEnum.CONSERVATIVE, Table.AlignmentEnum.VIOLENT},
