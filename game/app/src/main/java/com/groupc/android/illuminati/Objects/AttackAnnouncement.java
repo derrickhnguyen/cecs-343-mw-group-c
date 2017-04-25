@@ -64,7 +64,7 @@ import com.groupc.android.illuminati.Objects.Player;
      attackMoneySpentBonus += moneySpent;
    }
 
-   public int getDefenderMoneySpentBonuse() {
+   public int getDefenderMoneySpentBonus() {
      return defenderMoneySpentBonus;
    }
 
@@ -97,8 +97,14 @@ import com.groupc.android.illuminati.Objects.Player;
    }
 
    public int getScore() {
-     int score = 0;
-       //fix
+     int score =
+             alignmentBonus
+             + powerStructurePositionBonus
+             + specialPowerBonus
+             + attackMoneySpentBonus
+             - defenderMoneySpentBonus
+             + attackingGroup.getPower()
+             - defendingGroup.getResistance();
      return score;
    }
 

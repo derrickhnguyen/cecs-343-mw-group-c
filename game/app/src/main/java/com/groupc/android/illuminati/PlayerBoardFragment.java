@@ -1,8 +1,11 @@
 package com.groupc.android.illuminati;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -18,9 +21,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.groupc.android.illuminati.Objects.Action;
 import com.groupc.android.illuminati.Objects.Attack;
+import com.groupc.android.illuminati.Objects.AttackAnnouncement;
 import com.groupc.android.illuminati.Objects.Card;
 import com.groupc.android.illuminati.Objects.GroupCard;
 import com.groupc.android.illuminati.Objects.IlluminatiCard;
@@ -167,6 +172,8 @@ public class PlayerBoardFragment extends Fragment {
 
                         table.getAction().setAttack(attack);
 
+                        getAttackResult();
+
                         if (attack.isSuccessful()) {
                             FragmentManager fm = getFragmentManager();
                             FragmentTransaction ft = fm.beginTransaction();
@@ -245,4 +252,42 @@ public class PlayerBoardFragment extends Fragment {
         }
     }
 
+    private void getAttackResult() {
+        AttackAnnouncement announcement = MainScreen.table.getAction().getAttack().getAttackAnnouncement();
+        String attackName = MainScreen.table.getAction().getAttack().getAttackName();
+        String defendName = MainScreen.table.getAction().getAttack().getDefendName();
+        int power = MainScreen.table.getAction().getAttack().getAttackPower();
+        int resistance = MainScreen.table.getAction().getAttack().getDefendingResistance();
+        int alignmentBonus = announcement.getAlignmentBonus();
+        int powerStructurePositionBonus = announcement.getPowerStructurePositionBonus();
+        int specialPowerBonus = announcement.getSpecialPowerBonus();
+        //int attackerMoneySpent = announcement.getAttackMoneySpentBonus();
+        //int defenderMoneySpent = announcement.getDefenderMoneySpentBonus();
+        int scoreNeeded = MainScreen.getTable().getAction().getAttack().getAttackAnnouncement().getScore();
+        int roll = MainScreen.getTable().getAction().getAttack().getDiceSum();
+        String won;
+        if(MainScreen.table.getAction().getAttack().isSuccessful()) won = attackName + " won!";
+        else won = attackName + " lost!";
+
+        CharSequence text =
+                attackName + "'s Power - " + power +
+                        "\n" + defendName + "'s Resistance - " + resistance +
+                        "\nAlignment Bonus - " + alignmentBonus +
+                        "\nPower Structure Position Bonus - " + powerStructurePositionBonus +
+                        "\nSpecial Power Bonus - " + specialPowerBonus +
+                        "\nScore Needed - " + scoreNeeded +
+                        "\nScore Rolled - " + roll +
+                        "\n" + won;
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
+        builder.setMessage(text)
+                .setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //do things
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
 }

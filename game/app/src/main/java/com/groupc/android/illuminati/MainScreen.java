@@ -21,6 +21,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.groupc.android.illuminati.Objects.AttackAnnouncement;
 import com.groupc.android.illuminati.Objects.Card;
 import com.groupc.android.illuminati.Objects.GroupCard;
 import com.groupc.android.illuminati.Objects.IlluminatiCard;
@@ -446,4 +447,5 @@ public class MainScreen extends AppCompatActivity {
         toast = Toast.makeText(context, text, duration);
         toast.show();
     }
+
 }

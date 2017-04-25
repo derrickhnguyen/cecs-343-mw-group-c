@@ -5,43 +5,31 @@ import android.util.Log;
 import com.groupc.android.illuminati.MainScreen;
 import com.groupc.android.illuminati.Objects.Table.AttackEnum;
 
-import java.security.acl.Group;
-
-/**
- * Created by micha on 4/11/2017.
- */
-
 public class Attack {
-    Player attackingPlayer;
-    Player defendingPlayer;
-    AttackEnum attackType;
+    private Player attackingPlayer;
+    private Player defendingPlayer;
+    private AttackEnum attackType;
     Table table;
-    Center center;
-    DestroyedCards destroyedCards;
-    NonSpecialCard attackingCard;
-    GroupCard defendingCard;
-    boolean isAttackingAPlayer;
-    boolean isSuccessful;
+    private Center center;
+    private DestroyedCards destroyedCards;
+    private NonSpecialCard attackingCard;
+    private GroupCard defendingCard;
+    private boolean isSuccessful;
+    AttackAnnouncement announcement;
+    private int sum;
 
-    //    public Attack(Player attackingPlayer, Table table) {
-//        this.attackingPlayer = attackingPlayer;
-//        this.table = table;
-//        //this.attackType = attackType;
-//        center = table.getCenter();
-//        destroyedCards = table.getDestroyedCards();
-//        //setUpAttackAnnouncement();
-//    }
     public Attack(Player attackingPlayer, NonSpecialCard attackingCard, Player defendingPlayer, GroupCard defendingCard, boolean isAttackingAPlayer, AttackEnum attackType)
     {
         this.attackingPlayer = attackingPlayer;
         this.attackingCard = attackingCard;
         this.defendingCard = defendingCard;
+        boolean isAttackingAPlayer1;
         if(isAttackingAPlayer)
         {
-            this.isAttackingAPlayer = true;
+            isAttackingAPlayer1 = true;
             this.defendingPlayer = defendingPlayer;
         } else {
-            this.isAttackingAPlayer = false;
+            isAttackingAPlayer1 = false;
             //player is attacking the center pile
         }
         this.attackType = attackType;
@@ -49,25 +37,19 @@ public class Attack {
         center = table.getCenter();
     }
 
-    public void setUpAttackAnnouncement() {
-        //NonSpecialCard attackingGroup = null;
-        //defendingPlayer = null;
-        //NonSpecialCard defendingGroup = null;
-        //attackingGroup = get this from user
-        //defendingPlayer = get this from user
-        //defendingGroup = get this from user
-        AttackAnnouncement announcement = new AttackAnnouncement(
+    void setUpAttackAnnouncement() {
+        announcement = new AttackAnnouncement(
                 attackingPlayer,
                 attackingCard,
                 defendingPlayer,
                 defendingCard);
         announcement.setAlignmentBonus(new AlignmentBonus(attackingCard, defendingCard).getAlignmentBonus());
         announcement.setPowerStructurePositionBonus(new PowerStructurePositionBonus(defendingPlayer, defendingCard).getPowerStructurePositionBonus());
-//        announcement.setSpecialPowerBonus(new SpecialPowerBonus(attackingCard, defendingCard, this).getSpecialPowerBonus());
+        announcement.setSpecialPowerBonus(new SpecialPowerBonus(attackingCard, defendingCard, this).getSpecialPowerBonus());
         //announcement.setAttackerMoneyBonus();
         announcement.send(defendingPlayer);
 
-        boolean isAttacker = true;
+        //boolean isAttacker = true;
         /*while (announcement.betting()) {
             isAttacker = !isAttacker;
             if (isAttacker) {
@@ -80,20 +62,22 @@ public class Attack {
         }*/
 
         if (announcement.isAccepted()) {
-            DiceRoll diceRoll = new DiceRoll();
-            int sum = diceRoll.getDiceSum();
-            Log.d("DICE ROLL SUM", sum + "");
-            Log.d("OTHER SCORE", announcement.getScore() + "");
-            if (sum - announcement.getScore() > 0)
-                Log.d("ATTACKING CARD", attackingCard.getCardName());
-            attackIsSuccesful(attackingCard);
-            //else endAttack();
-            //else endAttack();
+            rollDice(announcement);
         } else endAttack();
     }
 
+    private int rollDice(AttackAnnouncement announcement) {
+        DiceRoll diceRoll = new DiceRoll();
+        sum = diceRoll.getDiceSum();
+        Log.d("DICE ROLL SUM", sum + "");
+        Log.d("OTHER SCORE", announcement.getScore() + "");
+        if (sum - announcement.getScore() > 0) attackIsSuccessful(attackingCard);
+        //else endAttack();
+        //else endAttack();
+        return sum;
+    }
 
-    public void attackIsSuccesful(NonSpecialCard puppet) {
+    private void attackIsSuccessful(NonSpecialCard puppet) {
         isSuccessful = true;
         if (defendingCard.getCardName().equals("Survivalists")) {
             if (defendingPlayer != null) defendingPlayer.setOwnsSurvivalists(false);
@@ -107,7 +91,7 @@ public class Attack {
             } else {
                 for (int i = 0; i < defendingCard.getConnectedCards().length; i++) {
                     if (defendingCard.getConnectedCards()[i] != null) {
-                        GroupCard topCard = (GroupCard) defendingCard.getConnectedCards()[i];
+                        GroupCard topCard = defendingCard.getConnectedCards()[i];
                         defendingCard.removePuppet(topCard);
                         center.addGroupToCenter(topCard);
                     }
@@ -122,7 +106,7 @@ public class Attack {
         if (attackType == AttackEnum.NEUTRALIZE) {
             for (int i = 0; i < defendingCard.getConnectedCards().length; i++) {
                 if (defendingCard.getConnectedCards()[i] != null) {
-                    GroupCard topCard = (GroupCard) defendingCard.getConnectedCards()[i];
+                    GroupCard topCard = defendingCard.getConnectedCards()[i];
                     defendingCard.removePuppet(topCard);
                     center.addGroupToCenter(topCard);
                 }
@@ -133,7 +117,7 @@ public class Attack {
         if (attackType == AttackEnum.DESTROY) {
             for (int i = 0; i < defendingCard.getConnectedCards().length; i++) {
                 if (defendingCard.getConnectedCards()[i] != null) {
-                    GroupCard topCard = (GroupCard) defendingCard.getConnectedCards()[i];
+                    GroupCard topCard = defendingCard.getConnectedCards()[i];
                     defendingCard.removePuppet(topCard);
                     center.addGroupToCenter(topCard);
                 }
@@ -142,36 +126,23 @@ public class Attack {
         }
     }
 
-    public void endAttack() {
-        return;
-    }
+    void endAttack() {}
 
-    public AttackEnum getAttackType() {
-        return attackType;
-    }
+    AttackEnum getAttackType() { return attackType; }
 
-    public void setAttackType(AttackEnum attackType) {
-        this.attackType = attackType;
-    }
+    public void setAttackType(AttackEnum attackType) { this.attackType = attackType; }
 
-    public boolean isSuccessful()
-    {
-        return isSuccessful;
-    }
+    public boolean isSuccessful() { return isSuccessful; }
 
-//    public void setAttack(Player attackingPlayer, NonSpecialCard attackingCard, Player defendingPlayer, NonSpecialCard defendingCard, boolean isAttackingAPlayer, AttackEnum attackType)
-//    {
-//        this.attackingPlayer = attackingPlayer;
-//        this.attackingCard = attackingCard;
-//        this.defendingCard = defendingCard;
-//        if(isAttackingAPlayer)
-//        {
-//            this.isAttackingAPlayer = true;
-//            this.defendingPlayer = defendingPlayer;
-//        } else {
-//            this.isAttackingAPlayer = false;
-//            //player is attacking the center pile
-//        }
-//        this.attackType = attackType;
-//    }
+    public AttackAnnouncement getAttackAnnouncement() { return announcement; }
+
+    public int getAttackPower() { return attackingCard.getPower(); }
+
+    public int getDefendingResistance() { return defendingCard.getResistance(); }
+
+    public String getAttackName() { return attackingCard.getCardName(); }
+
+    public String getDefendName() { return defendingCard.getCardName(); }
+
+    public int getDiceSum() { return sum; }
 }

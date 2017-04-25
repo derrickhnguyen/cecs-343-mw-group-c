@@ -16,6 +16,7 @@ import com.groupc.android.illuminati.Objects.Table.SpecialAbilityEnum;
    public SpecialPowerBonus(NonSpecialCard attackingGroup, NonSpecialCard defendingGroup, Attack attack) {
      this.attackingGroup = attackingGroup;
      this.defendingGroup = defendingGroup;
+       this.attack = attack;
    }
 
     public int getSpecialPowerBonus() {
