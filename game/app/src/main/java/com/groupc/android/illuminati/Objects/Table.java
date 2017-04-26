@@ -168,6 +168,12 @@ public class Table {
         return currentPlayer;
     }
 
+    NonSpecialCard giver;
+
+    public void setGiver(NonSpecialCard giver) { this.giver = giver; }
+
+    public NonSpecialCard getGiver() { return giver; }
+
     public enum AlignmentEnum {
 
         GOVERNMENT("Government"),

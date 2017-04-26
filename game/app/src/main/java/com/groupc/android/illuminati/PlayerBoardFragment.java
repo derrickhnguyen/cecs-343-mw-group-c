@@ -115,6 +115,13 @@ public class PlayerBoardFragment extends Fragment {
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
             }
+            else if(type.equals("transfer_money_2")) {
+                Context context = getActivity().getApplicationContext();
+                CharSequence text = "Choose receiving group";
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+            }
         }
 
         return view_a; //send main view out
@@ -141,13 +148,8 @@ public class PlayerBoardFragment extends Fragment {
                 } else if(type.equals("transfer_money")) {
                     bundle.putSerializable("givingCard", c);
                     givingCard = c;
+                    MainScreen.table.setGiver(givingCard);
                 } else if(type.equals("transfer_money2")) {
-                    Context context = getActivity().getApplicationContext();
-                    CharSequence text = "Choose receiving group";
-                    int duration = Toast.LENGTH_SHORT;
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();
-
                     bundle.putSerializable("receivingCard", c);
                     receivingCard = c;
 
@@ -170,11 +172,12 @@ public class PlayerBoardFragment extends Fragment {
 
                     builder.show();
 
-                    givingCard.giveMoney(receivingCard, mb[0]);
+                    MainScreen.table.getGiver().giveMoney(receivingCard, mb[0]);
 
-                    context = getActivity().getApplicationContext();
-                    text = givingCard.getCardName() + " gave " + receivingCard.getCardName() + " " + mb[0] + " MB";
-                    toast = Toast.makeText(context, text, duration);
+                    Context context = getActivity().getApplicationContext();
+                    CharSequence text = MainScreen.table.getGiver().getCardName() + " gave " + receivingCard.getCardName() + " " + mb[0] + " MB";
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
 
 
