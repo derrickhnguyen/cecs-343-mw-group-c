@@ -257,7 +257,7 @@ public class MainScreen extends AppCompatActivity {
                                 playerListFrag.setArguments(bundle);
                                 ft.replace(R.id.contentframe, playerListFrag);
                                 ft.commit();
-                                if(table.getCurrentPlayer().actionsTaken() > 1) endTurn();
+                                if(table.getCurrentPlayer().actionsTaken() > 2) endTurn();
                                 break;
                             case R.id.attack_to_neutralize:
                                 table.getCurrentPlayer().takeAction();
@@ -282,7 +282,7 @@ public class MainScreen extends AppCompatActivity {
                                 playerListFrag.setArguments(bundle);
                                 ft.replace(R.id.contentframe, playerListFrag);
                                 ft.commit();
-                                if(table.getCurrentPlayer().actionsTaken() > 1) endTurn();
+                                if(table.getCurrentPlayer().actionsTaken() > 2) endTurn();
                                 break;
                             case R.id.attack_to_destroy:
                                 table.getCurrentPlayer().takeAction();
@@ -388,23 +388,28 @@ public class MainScreen extends AppCompatActivity {
     private void endTurn() {
         table.newTurn();
 
-        for(int i = 0; i < table.getCurrentPlayer().getPowerStructure().getPowerStructureCards().size(); i++) {
-            String name = table.getCurrentPlayer().getPowerStructure().getPowerStructureCards().get(i).getCardName();
-            int income = table.getCurrentPlayer().getPowerStructure().getPowerStructureCards().get(i).getIncome();
-            Context context = getApplicationContext();
-            CharSequence text = name + " collecting an income of " + income;
-            int duration = Toast.LENGTH_SHORT;
-
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
-        }
-
         Context context = getApplicationContext();
         CharSequence text = "Too many actions!\nPass to " + table.getCurrentPlayer().getUsername() + "!";
         int duration = Toast.LENGTH_SHORT;
 
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
+
+        for(int i = 0; i < table.getCurrentPlayer().getPowerStructure().getPowerStructureCards().size(); i++) {
+            String name = table.getCurrentPlayer().getPowerStructure().getPowerStructureCards().get(i).getCardName();
+            int income = table.getCurrentPlayer().getPowerStructure().getPowerStructureCards().get(i).getIncome();
+            context = getApplicationContext();
+            text = name + " collecting an income of " + income;
+            duration = Toast.LENGTH_SHORT;
+
+            toast = Toast.makeText(context, text, duration);
+            toast.show();
+
+            table.getCurrentPlayer().getPowerStructure().getPowerStructureCards().get(i).setGroupTreasury(
+                    table.getCurrentPlayer().getPowerStructure().getPowerStructureCards().get(i).getGroupTreasury()
+                            + table.getCurrentPlayer().getPowerStructure().getPowerStructureCards().get(i).getIncome()
+            );
+        }
 
         drawCard();
     }
@@ -443,8 +448,6 @@ public class MainScreen extends AppCompatActivity {
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
 
-        drawCard();
-
         for(int i = 0; i < table.getCurrentPlayer().getPowerStructure().getPowerStructureCards().size(); i++) {
             String name = table.getCurrentPlayer().getPowerStructure().getPowerStructureCards().get(i).getCardName();
             int income = table.getCurrentPlayer().getPowerStructure().getPowerStructureCards().get(i).getIncome();
@@ -459,6 +462,8 @@ public class MainScreen extends AppCompatActivity {
                     table.getCurrentPlayer().getPowerStructure().getPowerStructureCards().get(i).getGroupTreasury()
                     + table.getCurrentPlayer().getPowerStructure().getPowerStructureCards().get(i).getIncome()
             );
+
+            drawCard();
         }
     }
 

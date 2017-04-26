@@ -71,7 +71,7 @@ public class Attack {
         sum = diceRoll.getDiceSum();
         Log.d("DICE ROLL SUM", sum + "");
         Log.d("OTHER SCORE", announcement.getScore() + "");
-        if (sum - announcement.getScore() > 0) attackIsSuccessful(attackingCard);
+        if (sum - announcement.getScore() >= 0 && sum < 11) attackIsSuccessful(attackingCard);
         //else endAttack();
         //else endAttack();
         return sum;
