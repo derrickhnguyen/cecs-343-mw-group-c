@@ -39,7 +39,7 @@ public class MainScreen extends AppCompatActivity {
 
     FragmentManager fm;
     Player[] players;
-    private String numberOfPlayers;
+    private int numberOfPlayers;
     static Table table;
     boolean pass;
     public static int cheatInt = 0;
@@ -61,8 +61,15 @@ public class MainScreen extends AppCompatActivity {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                numberOfPlayers = input.getText().toString();
-                beginGame();
+                int inputInt = Integer.parseInt(input.getText().toString());
+                if(inputInt < 1 || inputInt > 8)
+                {
+                    Toast.makeText(getBaseContext(), "Enter a valid player amount", Toast.LENGTH_SHORT).show();
+                } else {
+                    numberOfPlayers = Integer.parseInt(input.getText().toString());
+                    beginGame();
+                }
+
             }
         });
 
@@ -513,7 +520,8 @@ public class MainScreen extends AppCompatActivity {
 
     private void beginGame() {
         table = new Table();
-        if(numberOfPlayers != null) table.setNumberOfPlayers(numberOfPlayers);
+        if(numberOfPlayers > 0 || numberOfPlayers < 9) table.setNumberOfPlayers(numberOfPlayers);
+        else Log.d("ERROR", "INVALID PLAYER AMOUNT");
 
         for(int i = 0; i < table.getNumberOfPlayers(); i++) {
             table.addPlayer();

@@ -80,8 +80,8 @@ public class Table {
         }
     }
 
-    public void setNumberOfPlayers(String numberOfPlayers) {
-        this.numberOfPlayers = Integer.parseInt(numberOfPlayers);
+    public void setNumberOfPlayers(int numberOfPlayers) {
+        this.numberOfPlayers = numberOfPlayers;
     }
 
     public int getNumberOfPlayers() {
