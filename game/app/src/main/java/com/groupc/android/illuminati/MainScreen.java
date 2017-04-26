@@ -315,7 +315,6 @@ public class MainScreen extends AppCompatActivity {
                                 ft[0].replace(R.id.contentframe, playerBoardFragment[0]);
                                 ft[0].commit();
 
-
                                 if(table.getCurrentPlayer().actionsTaken() > 2) endTurn();
                                 break;
                             case R.id.move_a_group:
@@ -332,7 +331,7 @@ public class MainScreen extends AppCompatActivity {
                                 playerBoardFragment[0] = new PlayerBoardFragment();
                                 bundle[0] = new Bundle();
                                 bundle[0].putSerializable("player", table.getCurrentPlayer());
-                                bundle[0].putString("type", "dropgroup");
+                                bundle[0].putString("type", "drop_group");
                                 playerBoardFragment[0].setArguments(bundle[0]);
                                 ft[0].replace(R.id.contentframe, playerBoardFragment[0]);
                                 ft[0].commit();

@@ -115,6 +115,12 @@ public class PlayerBoardFragment extends Fragment {
                 int duration = Toast.LENGTH_SHORT;
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
+            } else if(type.equals("drop_group")) {
+                Context context = getActivity().getApplicationContext();
+                CharSequence text = "Choose group to drop";
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
             }
         }
 
@@ -168,6 +174,25 @@ public class PlayerBoardFragment extends Fragment {
                                 });
 
                                 builder.show();
+
+                } else if(type.equals("drop_group")) {
+                    bundle.putSerializable("droppedCard", c);
+                    if(c.getType() == Table.CardTypeEnum.ILLUMINATI) {
+                        Context context = getActivity();
+                        CharSequence text = "Can't drop illuminati group. Turn wasted!";
+                        int duration = Toast.LENGTH_SHORT;
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
+                    } else {
+                        MainScreen.table.getCenter().addGroupToCenter(
+                                MainScreen.table.getCurrentPlayer().getPowerStructure().removeCard((GroupCard) c)
+                        );
+                        Context context = getActivity();
+                        CharSequence text = c.getCardName() + " dropped!";
+                        int duration = Toast.LENGTH_SHORT;
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
+                    }
 
                 } else if(type.equals("attack")) {
                     if(bundle.getSerializable("puppetCard") == null)

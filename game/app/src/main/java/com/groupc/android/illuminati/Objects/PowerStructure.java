@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.groupc.android.illuminati.MainScreen;
 
+import java.security.acl.Group;
 import java.util.ArrayList;
 
 /**
@@ -73,5 +74,17 @@ public class PowerStructure {
     public ArrayList<NonSpecialCard> getPowerStructureCards()
     {
         return powerStructureCards;
+    }
+
+    public GroupCard removeCard(GroupCard card) {
+        for(int i = 0; i < powerStructureCards.size(); i++){
+            for(int j = 0; j < powerStructureCards.get(i).getConnectedCards().length; j++) {
+                if(powerStructureCards.get(i).getConnectedCards()[j] == card)
+                    powerStructureCards.get(i).getConnectedCards()[j] = null;
+                    powerStructureCards.get(i).getIsConnected()[j] = false;
+            }
+        }
+        powerStructureCards.remove(card);
+        return card;
     }
 }
