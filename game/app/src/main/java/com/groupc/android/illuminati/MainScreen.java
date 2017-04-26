@@ -313,6 +313,21 @@ public class MainScreen extends AppCompatActivity {
                                 playerBoardFragment.setArguments(bundle);
                                 ft.replace(R.id.contentframe, playerBoardFragment);
                                 ft.commit();
+
+
+                                type = "transfer_money2";
+                                fm = getFragmentManager();
+                                ft = fm.beginTransaction();
+                                playerBoardFragment = new PlayerBoardFragment();
+                                currentPlayer = table.getCurrentPlayer();
+                                bundle = new Bundle();
+                                bundle.putSerializable("player", currentPlayer);
+                                bundle.putString("type", type);
+                                playerBoardFragment.setArguments(bundle);
+                                ft.replace(R.id.contentframe, playerBoardFragment);
+                                ft.commit();
+
+
                                 if(table.getCurrentPlayer().actionsTaken() > 2) endTurn();
                                 break;
                             case R.id.move_a_group:

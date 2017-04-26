@@ -165,4 +165,10 @@ public class NonSpecialCard extends Card {
         }
     }
 
+    public boolean giveMoney(NonSpecialCard receivingCard, int mb) {
+        groupTreasury -= mb;
+        receivingCard.setGroupTreasury(receivingCard.getGroupTreasury() + mb);
+        return true;
+    }
+
 }

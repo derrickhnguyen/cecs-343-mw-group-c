@@ -10,11 +10,13 @@ import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
@@ -36,6 +38,7 @@ import com.groupc.android.illuminati.Objects.Table;
 
 import org.xmlpull.v1.XmlPullParser;
 
+import java.security.acl.Group;
 import java.util.ArrayList;
 
 import static android.R.attr.name;
@@ -56,29 +59,8 @@ public class PlayerBoardFragment extends Fragment {
         bundle = getArguments();
         Player player = (Player) bundle.getSerializable("player");
         type = bundle.getString("type");
-//        if(type.equals("transfer_money")) transferMoney();
         illuminatiCard = player.getIlluminatiCard();
         views = new ArrayList<ImageView>();
-//        NonSpecialCard aCard = new NonSpecialCard("name", Table.CardTypeEnum.GROUP,
-//                5,
-//                5,
-//                5,
-//                5,
-//                Table.SpecialAbilityEnum.ILLUMINATIGROUPMAYPARTICIPATEINTWOATTACKSPERTURN); //created a random card
-//
-//        illuminatiCard = new IlluminatiCard("card",
-//                Table.CardTypeEnum.ILLUMINATI,
-//                4,
-//                4,
-//                4,
-//                4,
-//                Table.SpecialAbilityEnum.MAYMAKEONEPRIVILEGEDATTACKEACHTURNATACOSTOFFIVEMEGABUCKS,
-//                Table.IlluminatiCardEnum.BAVARIANILLUMINATI); //created a random illuminati card
-//
-//        //manually connect the card to the right of the illuminati card
-//        illuminatiCard.setConnectedCards(new NonSpecialCard[]{null, aCard, null, null});
-//        illuminatiCard.setIsConnected(new boolean[]{false, true, false, false});
-//        aCard.setConnectedCards(new NonSpecialCard[]{null, illuminatiCard, null, null});
 
         //set up the layouts to fit their parents
         ViewGroup.LayoutParams p = new ViewGroup.LayoutParams(
@@ -96,11 +78,6 @@ public class PlayerBoardFragment extends Fragment {
         sv.setLayoutParams(p); //make fill parent
         ll.setLayoutParams(p); //make fill parent
 
-        //put cards onto the screen
-//        ImageView card1 = new ImageView(getActivity());
-//        card1.setImageResource(R.drawable.card);
-//        card1.setId(View.generateViewId());
-//
         ImageView illCard = new ImageView(getActivity()); //create image for illuminati card
         //illCard.setImageResource(R.drawable.card); //set it to the feminist pic (only one we have so far)
         illCard.setImageResource(getResources().getIdentifier(illuminatiCard.getCardName().toLowerCase(), "drawable", getActivity().getPackageName()));
@@ -124,28 +101,26 @@ public class PlayerBoardFragment extends Fragment {
             ll.addView(iv);
         }
 
-//
-//        card1.setLayoutParams(rp);
-//
-//        //layout for card being attached
-//        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
-//                RelativeLayout.LayoutParams.WRAP_CONTENT,
-//                RelativeLayout.LayoutParams.WRAP_CONTENT);
-//        lp.addRule(RelativeLayout.RIGHT_OF, card1.getId()); //put card right of the first card
-//
-//        card2.setLayoutParams(lp); //set the layout params to the card
-
-        //add cards to view
-
 
         //finish creating other views
         sv.addView(ll); //add layout to the scroll
         sc.addView(sv); //add scrolls together
         view_a = sc; //view to make view
 
+        if(type != null) {
+            if(type.equals("transfer_money")){
+                Context context = getActivity().getApplicationContext();
+                CharSequence text = "Choose giving group";
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+            }
+        }
+
         return view_a; //send main view out
     }
 
+    NonSpecialCard givingCard, receivingCard;
     private void attach(final NonSpecialCard c, ImageView cardImage)
     {
         boolean[] connected = c.getIsConnected(); //get boolean for cards connected to card
@@ -163,12 +138,46 @@ public class PlayerBoardFragment extends Fragment {
                 if(type == null)
                 {
                     //do nothing
-                }
+                } else if(type.equals("transfer_money")) {
+                    bundle.putSerializable("givingCard", c);
+                    givingCard = c;
+                } else if(type.equals("transfer_money2")) {
+                    Context context = getActivity().getApplicationContext();
+                    CharSequence text = "Choose receiving group";
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
 
-                if(getArguments().getBoolean("isSuccessful"))
-                {
-                    //MainScreen.getTable().getCurrentPlayer().getPowerStructure().addToPowerStructure((GroupCard) bundle.getSerializable("attackedCard"));
-                    //return;
+                    bundle.putSerializable("receivingCard", c);
+                    receivingCard = c;
+
+                    final int[] mb = new int[1];
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle("How many MB's?");
+
+                    final EditText input = new EditText(getActivity());
+
+                    input.setInputType(InputType.TYPE_CLASS_NUMBER);
+                    builder.setView(input);
+
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            mb[0] = Integer.parseInt(input.getText().toString());
+                        }
+                    });
+
+                    builder.show();
+
+                    givingCard.giveMoney(receivingCard, mb[0]);
+
+                    context = getActivity().getApplicationContext();
+                    text = givingCard.getCardName() + " gave " + receivingCard.getCardName() + " " + mb[0] + " MB";
+                    toast = Toast.makeText(context, text, duration);
+                    toast.show();
+
+
                 } else if(type.equals("attack")) {
                     if(bundle.getSerializable("puppetCard") == null)
                     {
@@ -363,10 +372,6 @@ public class PlayerBoardFragment extends Fragment {
                 });
         AlertDialog alert = builder.create();
         alert.show();
-
-    }
-
-    private void transferMoney() {
 
     }
 }
