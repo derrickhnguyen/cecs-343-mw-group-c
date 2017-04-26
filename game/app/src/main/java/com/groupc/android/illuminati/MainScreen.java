@@ -525,10 +525,7 @@ public class MainScreen extends AppCompatActivity {
 
     private void drawCard() {
         Card card;
-        do {
-
         card = table.getDeck().draw();
-        }while(card.getType() != Table.CardTypeEnum.SPECIAL);
         Context context = getApplicationContext();
         CharSequence text = table.getCurrentPlayer().getUsername() + " drew " + card.getCardName();
         int duration = Toast.LENGTH_SHORT;
