@@ -50,7 +50,7 @@ public class MainScreen extends AppCompatActivity {
         setContentView(R.layout.activity_main_screen);
         fm = getFragmentManager();
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("How many players?");
 
         final EditText input = new EditText(this);
@@ -62,9 +62,16 @@ public class MainScreen extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 int inputInt = Integer.parseInt(input.getText().toString());
-                if(inputInt < 1 || inputInt > 8)
+                if(inputInt < 1)
                 {
-                    Toast.makeText(getBaseContext(), "Enter a valid player amount", Toast.LENGTH_SHORT).show();
+
+                    Toast.makeText(getBaseContext(), "Player Number set to 1", Toast.LENGTH_SHORT).show();
+                    numberOfPlayers = 1;
+                    beginGame();
+                } else if(inputInt > 8) {
+                    Toast.makeText(getBaseContext(), "Player Number set to 8", Toast.LENGTH_SHORT).show();
+                    numberOfPlayers = 8;
+                    beginGame();
                 } else {
                     numberOfPlayers = Integer.parseInt(input.getText().toString());
                     beginGame();
