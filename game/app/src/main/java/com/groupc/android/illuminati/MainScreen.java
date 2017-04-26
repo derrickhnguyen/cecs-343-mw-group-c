@@ -53,7 +53,7 @@ public class MainScreen extends AppCompatActivity {
 
         final EditText input = new EditText(this);
 
-        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        input.setInputType(InputType.TYPE_CLASS_NUMBER);
         builder.setView(input);
 
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -218,6 +218,7 @@ public class MainScreen extends AppCompatActivity {
                         if(! table.actionInitialized()) table.newAction();
 
                         ListFragment playerListFrag = null;
+                        Fragment playerBoardFragment = null;
                         Bundle bundle = null;
                         FragmentTransaction ft = null;
 
@@ -243,7 +244,8 @@ public class MainScreen extends AppCompatActivity {
 
                                 playerListFrag = new PlayerListFragment();
                                 ft = fm.beginTransaction();
-                                bundle.putString("type", "control");
+                                bundle.putString("type", "attack");
+                                bundle.putString("attackType", "control");
                                 playerListFrag.setArguments(bundle);
                                 ft.replace(R.id.contentframe, playerListFrag);
                                 ft.commit();
@@ -267,7 +269,8 @@ public class MainScreen extends AppCompatActivity {
 
                                 playerListFrag = new PlayerListFragment();
                                 ft = fm.beginTransaction();
-                                bundle.putString("type", "neutralize");
+                                bundle.putString("type", "attack");
+                                bundle.putString("attackType", "neutralize");
                                 playerListFrag.setArguments(bundle);
                                 ft.replace(R.id.contentframe, playerListFrag);
                                 ft.commit();
@@ -290,7 +293,8 @@ public class MainScreen extends AppCompatActivity {
                                 bundle.putIntArray("cardNames", IDs);
                                 playerListFrag = new PlayerListFragment();
                                 ft = fm.beginTransaction();
-                                bundle.putString("type", "destroy");
+                                bundle.putString("type", "attack");
+                                bundle.putString("attackType", "destroy");
                                 playerListFrag.setArguments(bundle);
                                 ft.replace(R.id.contentframe, playerListFrag);
                                 ft.commit();
@@ -301,7 +305,7 @@ public class MainScreen extends AppCompatActivity {
                                 String type = "transfer_money";
                                 fm = getFragmentManager();
                                 ft = fm.beginTransaction();
-                                Fragment playerBoardFragment = new PlayerBoardFragment();
+                                playerBoardFragment = new PlayerBoardFragment();
                                 Player currentPlayer = table.getCurrentPlayer();
                                 bundle = new Bundle();
                                 bundle.putSerializable("player", currentPlayer);
@@ -320,6 +324,16 @@ public class MainScreen extends AppCompatActivity {
                                 if(table.getCurrentPlayer().actionsTaken() > 2) endTurn();
                                 break;
                             case R.id.drop_a_group:
+                                fm = getFragmentManager();
+                                ft = fm.beginTransaction();
+                                playerBoardFragment = new PlayerBoardFragment();
+                                bundle = new Bundle();
+                                bundle.putSerializable("player", table.getCurrentPlayer());
+                                bundle.putString("type", "dropgroup");
+                                playerBoardFragment.setArguments(bundle);
+                                ft.replace(R.id.contentframe, playerBoardFragment);
+                                ft.commit();
+                                if(table.getCurrentPlayer().actionsTaken() > 2) endTurn();
                                 break;
                             case R.id.give_away_money:
                                 break;
@@ -467,5 +481,4 @@ public class MainScreen extends AppCompatActivity {
         toast = Toast.makeText(context, text, duration);
         toast.show();
     }
-
 }

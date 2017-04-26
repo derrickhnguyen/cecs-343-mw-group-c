@@ -14,15 +14,19 @@ public class Attack {
     private DestroyedCards destroyedCards;
     private NonSpecialCard attackingCard;
     private GroupCard defendingCard;
+    private NonSpecialCard puppetCard;
     private boolean isSuccessful;
     AttackAnnouncement announcement;
     private int sum;
+    private int puppetArrow;
 
-    public Attack(Player attackingPlayer, NonSpecialCard attackingCard, Player defendingPlayer, GroupCard defendingCard, boolean isAttackingAPlayer, AttackEnum attackType)
+    public Attack(Player attackingPlayer, NonSpecialCard attackingCard, Player defendingPlayer, GroupCard defendingCard, NonSpecialCard puppetCard, int puppetArrow, boolean isAttackingAPlayer, AttackEnum attackType)
     {
         this.attackingPlayer = attackingPlayer;
         this.attackingCard = attackingCard;
         this.defendingCard = defendingCard;
+        this.puppetCard = puppetCard;
+        this.puppetArrow = puppetArrow;
         boolean isAttackingAPlayer1;
         if(isAttackingAPlayer)
         {
@@ -71,7 +75,7 @@ public class Attack {
         sum = diceRoll.getDiceSum();
         Log.d("DICE ROLL SUM", sum + "");
         Log.d("OTHER SCORE", announcement.getScore() + "");
-        if (sum - announcement.getScore() >= 0 && sum < 11) attackIsSuccessful(attackingCard);
+        if (sum - announcement.getScore() >= 0 && sum < 11) attackIsSuccessful(puppetCard);
         //else endAttack();
         //else endAttack();
         return sum;
@@ -86,7 +90,7 @@ public class Attack {
 
         if (attackType == AttackEnum.CONTROL) {
             if (attackingPlayer.getPowerStructure().hasRoom(defendingCard)) {
-                attackingPlayer.getPowerStructure().addToPowerStructure(puppet, defendingCard);
+                attackingPlayer.getPowerStructure().addToPowerStructure(puppet, defendingCard, puppetArrow);
                 center.removeGroupFromCenter(defendingCard);
             } else {
                 for (int i = 0; i < defendingCard.getConnectedCards().length; i++) {
@@ -97,7 +101,7 @@ public class Attack {
                     }
                 }
                 if (attackingPlayer.getPowerStructure().hasRoom(defendingCard)) {
-                    attackingPlayer.getPowerStructure().addToPowerStructure(puppet, defendingCard);
+                    attackingPlayer.getPowerStructure().addToPowerStructure(puppet, defendingCard, puppetArrow);
                     center.removeGroupFromCenter(defendingCard);
                 } else return;
             }

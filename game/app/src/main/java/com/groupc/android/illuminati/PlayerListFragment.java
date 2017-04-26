@@ -54,8 +54,10 @@ public class PlayerListFragment extends ListFragment {
             map.put("brand_images", cardNames[i] + "");
             aList.add(map);
         }
-
-        if(type != null)
+        if(type == null)
+        {
+            //do nothing
+        } else if(type.equals("attack"))
         {
             HashMap<String, String> map = new HashMap<String, String>();
             map.put("player_name", "Center Pile");
@@ -79,48 +81,51 @@ public class PlayerListFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int pos, long id)
     {
-        if(type == null) {
+        if(type == null)
+        {
             //do nothing
-        } else {
-            Log.d("position", pos  + "");
+        } else if(type.equals("attack")){
+            String attackType = getArguments().getString("attackType");
+            if(attackType.equals("control")) {
+                Log.d("position", pos + "");
 
-            if(pos == players.length)
-            {
-                Bundle centerCardIDs = new Bundle();
-                Table table = MainScreen.getTable();
-                int[] IDs = new int[table.getCenter().getCount()];
-                String name;
-                ArrayList<GroupCard> cards = table.getCenter().getAllGroupCards();
-                //GroupCard[] cardArray = (GroupCard[]) cards.toArray();
-                //centerCardIDs.putSerializable("cardOjbects", cardArray);
-                centerCardIDs.putSerializable("cardObjects", cards);
-                Log.d("CARDS", cards.get(0).getCardName());
-                for(int i = 0; i < IDs.length; i++) {
-                    name = table.getCenter().getAllGroupCards().get(i).getCardName();
-                    name = name.replaceAll("\\s+","");
-                    IDs[i] = getResources().getIdentifier(name.toLowerCase(), "drawable", getContext().getPackageName());
-                    Log.d("id",IDs[i] +"");
+                if (pos == players.length) {
+                    Bundle centerCardIDs = getArguments();
+                    Table table = MainScreen.getTable();
+                    int[] IDs = new int[table.getCenter().getCount()];
+                    String name;
+                    ArrayList<GroupCard> cards = table.getCenter().getAllGroupCards();
+                    //GroupCard[] cardArray = (GroupCard[]) cards.toArray();
+                    //centerCardIDs.putSerializable("cardOjbects", cardArray);
+                    centerCardIDs.putSerializable("cardObjects", cards);
+                    Log.d("CARDS", cards.get(0).getCardName());
+                    for (int i = 0; i < IDs.length; i++) {
+                        name = table.getCenter().getAllGroupCards().get(i).getCardName();
+                        name = name.replaceAll("\\s+", "");
+                        IDs[i] = getResources().getIdentifier(name.toLowerCase(), "drawable", getContext().getPackageName());
+                        Log.d("id", IDs[i] + "");
+                    }
+                    centerCardIDs.putIntArray("cardNames", IDs);
+                    centerCardIDs.putString("type", type);
+                    fm = getFragmentManager();
+                    FragmentTransaction ft = fm.beginTransaction();
+                    Fragment CardListFragment = new CardListFragment();
+                    CardListFragment.setArguments(centerCardIDs);
+                    ft.replace(R.id.contentframe, CardListFragment);
+                    ft.commit();
+                } else {
+                    fm = getFragmentManager();
+                    FragmentTransaction ft = fm.beginTransaction();
+                    //ListFragment playerListFrag = new ListFragment();
+                    Fragment playerBoardFragment = new PlayerBoardFragment();
+                    Player currentPlayer = players[pos];
+                    Bundle bundle = getArguments();
+                    bundle.putSerializable("player", currentPlayer);
+                    bundle.putString("type", type);
+                    playerBoardFragment.setArguments(bundle);
+                    ft.replace(R.id.contentframe, playerBoardFragment);
+                    ft.commit();
                 }
-                centerCardIDs.putIntArray("cardNames", IDs);
-                centerCardIDs.putString("type", type);
-                fm = getFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                Fragment CardListFragment = new CardListFragment();
-                CardListFragment.setArguments(centerCardIDs);
-                ft.replace(R.id.contentframe, CardListFragment);
-                ft.commit();
-            } else {
-                fm = getFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                //ListFragment playerListFrag = new ListFragment();
-                Fragment playerBoardFragment = new PlayerBoardFragment();
-                Player currentPlayer = players[pos];
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("player", currentPlayer);
-                bundle.putString("type", type);
-                playerBoardFragment.setArguments(bundle);
-                ft.replace(R.id.contentframe, playerBoardFragment);
-                ft.commit();
             }
         }
         super.onListItemClick(l, v, pos, id);

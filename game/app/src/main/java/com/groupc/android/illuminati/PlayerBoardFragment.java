@@ -7,6 +7,7 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -35,6 +36,8 @@ import com.groupc.android.illuminati.Objects.Table;
 
 import org.xmlpull.v1.XmlPullParser;
 
+import java.util.ArrayList;
+
 import static android.R.attr.name;
 
 public class PlayerBoardFragment extends Fragment {
@@ -44,6 +47,7 @@ public class PlayerBoardFragment extends Fragment {
     RelativeLayout ll; //android layout
     Bundle bundle;
     String type;
+    ArrayList<ImageView> views;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //illuminatiCard = (IlluminatiCard) getArguments().getSerializable("card");
@@ -52,8 +56,9 @@ public class PlayerBoardFragment extends Fragment {
         bundle = getArguments();
         Player player = (Player) bundle.getSerializable("player");
         type = bundle.getString("type");
-        if(type.equals("transfer_money")) transferMoney();
+//        if(type.equals("transfer_money")) transferMoney();
         illuminatiCard = player.getIlluminatiCard();
+        views = new ArrayList<ImageView>();
 //        NonSpecialCard aCard = new NonSpecialCard("name", Table.CardTypeEnum.GROUP,
 //                5,
 //                5,
@@ -77,8 +82,9 @@ public class PlayerBoardFragment extends Fragment {
 
         //set up the layouts to fit their parents
         ViewGroup.LayoutParams p = new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT);
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
 
         ScrollView sc = new ScrollView(getActivity()); //let the activity scroll vertically
 
@@ -107,11 +113,17 @@ public class PlayerBoardFragment extends Fragment {
         RelativeLayout.LayoutParams rp = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT);
-        rp.addRule(RelativeLayout.CENTER_VERTICAL); //put card in center (buggy)
-
+       // rp.addRule(RelativeLayout.CENTER_VERTICAL); //put card in center (buggy)
+       // rp.addRule(RelativeLayout.CENTER_HORIZONTAL);
         illCard.setLayoutParams(rp); //picture for illuminati card
-        ll.addView(illCard); //add card to relative layout
+        views.add(illCard);
         attach(illuminatiCard, illCard); //run sequence to make board
+        //ll.addView(illCard); //add card to relative layout
+        for(ImageView iv : views)
+        {
+            ll.addView(iv);
+        }
+
 //
 //        card1.setLayoutParams(rp);
 //
@@ -142,62 +154,116 @@ public class PlayerBoardFragment extends Fragment {
         cardImage.setImageResource(getResources().getIdentifier(c.getCardName().toLowerCase().replace(" ", ""), "drawable", getActivity().getPackageName()));
         Log.d("cardName", c.getCardName().toLowerCase().replace(" ", ""));
         cardImage.setId(View.generateViewId()); //probably don't need to do this
+//        cardImage.setScaleX(0.4f);
+//        cardImage.setScaleY(0.4f);
+//        cardImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
         cardImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(type == null)
+                {
+                    //do nothing
+                }
+
                 if(getArguments().getBoolean("isSuccessful"))
                 {
                     //MainScreen.getTable().getCurrentPlayer().getPowerStructure().addToPowerStructure((GroupCard) bundle.getSerializable("attackedCard"));
                     //return;
-                } else {
-                    int attackedCardID = bundle.getInt("attackedCardID");
-                    GroupCard attackedCard = (GroupCard) bundle.getSerializable("attackedCard");
-                    if (attackedCard != null) {
-                        bundle.putSerializable("attackingCard", c);
-                        //do attack stuff
-                        Log.d("ATTACKING CARD NAME", c.getCardName());
-                        Log.d("ATTACKED CARD NAME", attackedCard.getCardName());
-                        Log.d("ATTACK TYPE", type);
-                        Table.AttackEnum attackType = null;
-                        if (type.equals("neutralize")) {
-                            attackType = Table.AttackEnum.NEUTRALIZE;
-                        } else if (type.equals("destroy")) {
-                            attackType = Table.AttackEnum.DESTROY;
-                        } else if (type.equals("control")) {
-                            attackType = Table.AttackEnum.CONTROL;
-                        } else {
-                            //error
-                        }
-                        Table table = MainScreen.getTable();
-                        Attack attack = new Attack(table.getCurrentPlayer(), c, null, attackedCard, false, attackType);
+                } else if(type.equals("attack")) {
+                    if(bundle.getSerializable("puppetCard") == null)
+                    {
+                        bundle.putSerializable("puppetCard", c);
 
-                        table.getAction().setAttack(attack);
+                        AlertDialog.Builder b = new AlertDialog.Builder(getContext());
+                        b.setTitle("Choose which arrow to attach to");
+                        String[] types = {"Top", "Right", "Bottom", "Left"};
+                        b.setItems(types, new DialogInterface.OnClickListener() {
 
-                        getAttackResult();
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
 
-                        if (attack.isSuccessful()) {
-                            FragmentManager fm = getFragmentManager();
-                            FragmentTransaction ft = fm.beginTransaction();
-                            //ListFragment playerListFrag = new ListFragment();
-                            Fragment playerBoardFragment = new PlayerBoardFragment();
-                            Player currentPlayer = table.getCurrentPlayer();
-                            playerBoardFragment.setArguments(bundle);
-                            bundle.putBoolean("isSuccessful", true);
-                            ft.replace(R.id.contentframe, playerBoardFragment);
-                            ft.commit();
-                        }
-                    } else if (type != null) {
-                        Log.d("ATTACK TYPE", type);
-                        switch (type) {
-                            case "control":
-                                break;
-                            case "neutralize":
-                                break;
-                            case "destroy":
-                                break;
-                        }
+                                dialog.dismiss();
+                                switch(which){
+                                    case 0:
+                                        bundle.putInt("connectingArrow", 0);
+                                        break;
+                                    case 1:
+                                        bundle.putInt("connectingArrow", 1);
+                                        break;
+                                    case 2:
+                                        bundle.putInt("connectingArrow", 2);
+                                        break;
+                                    case 3:
+                                        bundle.putInt("connectingArrow", 3);
+                                        break;
+                                    default:
+                                        //something
+                                        break;
+                                }
+                                FragmentManager fm = getFragmentManager();
+                                FragmentTransaction ft = fm.beginTransaction();
+                                //ListFragment playerListFrag = new ListFragment();
+                                Fragment playerBoardFragment = new PlayerBoardFragment();
+                                playerBoardFragment.setArguments(bundle);
+                                ft.replace(R.id.contentframe, playerBoardFragment);
+                                ft.commit();
+                            }
+                        });
+
+                        b.show();
                     } else {
-                        //idk
+                        int attackedCardID = bundle.getInt("attackedCardID");
+                        GroupCard attackedCard = (GroupCard) bundle.getSerializable("attackedCard");
+                        if (attackedCard != null) {
+                            bundle.putSerializable("attackingCard", c);
+                            //do attack stuff
+                            Log.d("ATTACKING CARD NAME", c.getCardName());
+                            Log.d("ATTACKED CARD NAME", attackedCard.getCardName());
+                            Log.d("ATTACK TYPE", type);
+                            Table.AttackEnum attackType = null;
+                            String attackTypeString = bundle.getString("attackType");
+                            if (attackTypeString.equals("neutralize")) {
+                                attackType = Table.AttackEnum.NEUTRALIZE;
+                            } else if (attackTypeString.equals("destroy")) {
+                                attackType = Table.AttackEnum.DESTROY;
+                            } else if (attackTypeString.equals("control")) {
+                                attackType = Table.AttackEnum.CONTROL;
+                            } else {
+                                //error
+                            }
+                            NonSpecialCard puppetCard = (NonSpecialCard) bundle.getSerializable("puppetCard");
+                            int puppetArrow = bundle.getInt("connectingArrow");
+                            Table table = MainScreen.getTable();
+                            Attack attack = new Attack(table.getCurrentPlayer(), c, null, attackedCard, puppetCard, puppetArrow, false, attackType);
+
+                            table.getAction().setAttack(attack);
+
+                            getAttackResult();
+
+                            if (attack.isSuccessful()) {
+                                FragmentManager fm = getFragmentManager();
+                                FragmentTransaction ft = fm.beginTransaction();
+                                //ListFragment playerListFrag = new ListFragment();
+                                Fragment playerBoardFragment = new PlayerBoardFragment();
+                                Player currentPlayer = table.getCurrentPlayer();
+                                playerBoardFragment.setArguments(bundle);
+                                bundle.putBoolean("isSuccessful", true);
+                                ft.replace(R.id.contentframe, playerBoardFragment);
+                                ft.commit();
+                            }
+                        } else if (type != null) {
+                            Log.d("ATTACK TYPE", type);
+                            switch (type) {
+                                case "control":
+                                    break;
+                                case "neutralize":
+                                    break;
+                                case "destroy":
+                                    break;
+                            }
+                        } else {
+                            //idk
+                        }
                     }
                 }
             }
@@ -219,12 +285,13 @@ public class PlayerBoardFragment extends Fragment {
 
 
                 ImageView newCardImage = new ImageView(getActivity()); //new image for card
+                newCardImage.setId(View.generateViewId());
                 newCardImage.setRotation(attachedCard.getOrientation()); //roate to match the orientation
 
                 RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
                         RelativeLayout.LayoutParams.WRAP_CONTENT,
                         RelativeLayout.LayoutParams.WRAP_CONTENT); //stock layout
-
+                RelativeLayout.LayoutParams op = (RelativeLayout.LayoutParams) cardImage.getLayoutParams();
                 //depending on orientation and arrow position, add the card on a certain side
                 if((i + c.getOrientation()) % 4 == 0){
                     lp.addRule(RelativeLayout.ABOVE, cardImage.getId());
@@ -237,16 +304,21 @@ public class PlayerBoardFragment extends Fragment {
                     //newCardImage.setRotation(attachedCard.getOrientation()*90 + 180);
                 } else if((i + c.getOrientation()) % 4 == 3){
                     lp.addRule(RelativeLayout.LEFT_OF, cardImage.getId());
+                    //op.addRule(RelativeLayout.RIGHT_OF, newCardImage.getId());
                     //newCardImage.setRotation(attachedCard.getOrientation()*90 + 270);
                 } else {
                     Log.d("ERROR", "ORIENTATION WRONG");
                 }
 
                 //add the layout params
+                //views.remove(cardImage);
+                //cardImage.setLayoutParams(op);
+                //views.add(cardImage);
                 newCardImage.setLayoutParams(lp);
+
                 //add card to view
                 Log.d("SHOW THE REST OF", "TRUE");
-                ll.addView(newCardImage);
+                views.add(newCardImage);
                 //recursively call the check
                 attach(attachedCard, newCardImage);
             }
@@ -270,6 +342,7 @@ public class PlayerBoardFragment extends Fragment {
         if(MainScreen.table.getAction().getAttack().isSuccessful()) won = attackName + " won!";
         else won = attackName + " lost!";
 
+
         CharSequence text =
                 attackName + "'s Power - " + power +
                         "\n" + defendName + "'s Resistance - " + resistance +
@@ -290,6 +363,7 @@ public class PlayerBoardFragment extends Fragment {
                 });
         AlertDialog alert = builder.create();
         alert.show();
+
     }
 
     private void transferMoney() {

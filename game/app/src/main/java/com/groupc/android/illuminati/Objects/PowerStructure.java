@@ -36,11 +36,11 @@ public class PowerStructure {
         return true; //fix
     }
 
-    public void addToPowerStructure(NonSpecialCard parentCard, GroupCard defendingGroup) {
+    public void addToPowerStructure(NonSpecialCard parentCard, GroupCard defendingGroup, int puppetArrow) {
         Log.d("parent", parentCard.getCardName());
         Log.d("defending", defendingGroup.getCardName());
         //find(parentCard, defendingGroup).attachCard(defendingGroup, 0);
-        parentCard.attachCard(defendingGroup, 1);
+        parentCard.attachCard(defendingGroup, puppetArrow);
         //Log.d("CARDSDSDSDSD", MainScreen.getTable().getCurrentPlayer().getPowerStructure().getIlluminatiCard().getConnectedCards()[1].getCardName());
         powerStructureCards.add(defendingGroup);
     }
