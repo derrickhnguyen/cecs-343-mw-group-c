@@ -23,8 +23,10 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import com.groupc.android.illuminati.Objects.Card;
 import com.groupc.android.illuminati.Objects.GroupCard;
 import com.groupc.android.illuminati.Objects.Player;
+import com.groupc.android.illuminati.Objects.SpecialCard;
 import com.groupc.android.illuminati.Objects.Table;
 
 public class PlayerListFragment extends ListFragment {
@@ -164,6 +166,21 @@ public class PlayerListFragment extends ListFragment {
             });
 
             builder.show();
+        } else if(type.equals("give_special")) {
+            Bundle bundle = getArguments();
+            Card c = (Card) bundle.getSerializable("card");
+
+            Player player = MainScreen.table.getSpecificPlayer(Integer.toString(pos));
+            System.out.println(player.getUsername());
+            System.out.println(c.getCardName());
+            MainScreen.table.getCurrentPlayer().removeCardFromHand((SpecialCard) c);
+            player.addCardToHand((SpecialCard) c);
+
+            Context context = getActivity();
+            CharSequence text = MainScreen.table.getCurrentPlayer().getUsername() + " gave " + player.getUsername() + " " + c.getCardName();
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
         }
         super.onListItemClick(l, v, pos, id);
     }
