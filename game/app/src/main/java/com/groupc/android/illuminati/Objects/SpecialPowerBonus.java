@@ -57,7 +57,7 @@ import com.groupc.android.illuminati.Objects.Table.SpecialAbilityEnum;
           if(attack.getAttackType() == AttackEnum.CONTROL && defendingGroup.getCardName().equals("Post Office")) return 4;
          case PLUSFOURFORDIRECTCONTROLNEUTRALIZATIONORDESTRUCTIONOFORBITALMINDCONTROLLASERS:
         for(int i = 0; i < 4; i++) {
-          if(attackingGroup.getConnectedCards()[i].getCardName().equals("Orbital Mind Control Lasers")) return 4;
+          if(attackingGroup.getConnectedCards()[i]!= null && attackingGroup.getConnectedCards()[i].getCardName().equals("Orbital Mind Control Lasers")) return 4;
         }
          case PLUSFIVEONANYATTEMPTTOCONTROLBIGMEDIAOREMPTYVEE:
         if(attack.getAttackType() == AttackEnum.CONTROL && (defendingGroup.getCardName().equals("Big Media") || defendingGroup.getCardName().equals("Empty Vee"))) return 5;

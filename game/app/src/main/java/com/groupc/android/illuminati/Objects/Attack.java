@@ -73,9 +73,11 @@ public class Attack {
     private int rollDice(AttackAnnouncement announcement) {
         DiceRoll diceRoll = new DiceRoll();
         sum = diceRoll.getDiceSum();
+        sum -= MainScreen.cheatInt;
         Log.d("DICE ROLL SUM", sum + "");
         Log.d("OTHER SCORE", announcement.getScore() + "");
         if (sum <= announcement.getScore() && sum < 11) attackIsSuccessful(puppetCard);
+        Log.d("PUPPETCARD", puppetCard.getCardName());
         //else endAttack();
         //else endAttack();
         return sum;

@@ -42,6 +42,7 @@ public class MainScreen extends AppCompatActivity {
     private String numberOfPlayers;
     static Table table;
     boolean pass;
+    public static int cheatInt = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,6 +131,20 @@ public class MainScreen extends AppCompatActivity {
                 mbListFrag.setArguments(names);
                 ft.replace(R.id.contentframe, mbListFrag);
                 ft.commit();
+            }
+        });
+
+        mb.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if(cheatInt != 1000) {
+                    cheatInt = 1000;
+                    Toast.makeText(getBaseContext(), "Cheat mode enabled! :D", Toast.LENGTH_SHORT).show();
+                } else {
+                    cheatInt = 0;
+                    Toast.makeText(getBaseContext(), "Cheat mode disabled! :'(", Toast.LENGTH_SHORT).show();
+                }
+                return false;
             }
         });
 
@@ -397,6 +412,37 @@ public class MainScreen extends AppCompatActivity {
         });
     }
 
+    String tag = "SYSTEM";
+    public void onStart()
+    {
+        super.onStart();
+        Log.d(tag, "In the onStart() event");
+    }
+    public void onRestart()
+    {
+        super.onRestart();
+        Log.d(tag, "In the onRestart() event");
+    }
+    public void onResume()
+    {
+        super.onResume();
+        Log.d(tag, "In the onResume() event");
+    }
+    public void onPause()
+    {
+        super.onPause();
+        Log.d(tag, "In the onPause() event");
+    }
+    public void onStop()
+    {
+        super.onStop();
+        Log.d(tag, "In the onStop() event");
+    }
+    public void onDestroy()
+    {
+        super.onDestroy();
+        Log.d(tag, "In the onDestroy() event");
+    }
     private void endTurn() {
         table.newTurn();
 

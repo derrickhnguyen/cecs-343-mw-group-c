@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.groupc.android.illuminati.MainScreen;
 
+import java.io.Serializable;
 import java.security.acl.Group;
 import java.util.ArrayList;
 
@@ -11,7 +12,7 @@ import java.util.ArrayList;
  * Created by micha on 4/9/2017.
  */
 
-public class PowerStructure {
+public class PowerStructure implements Serializable {
     private IlluminatiCard illuminatiCard;
     private ArrayList<NonSpecialCard> powerStructureCards;
 

@@ -95,6 +95,7 @@ public class PlayerBoardFragment extends Fragment {
        // rp.addRule(RelativeLayout.CENTER_HORIZONTAL);
         illCard.setLayoutParams(rp); //picture for illuminati card
         views.add(illCard);
+        //ll.addView(illCard);
         attach(illuminatiCard, illCard); //run sequence to make board
         //ll.addView(illCard); //add card to relative layout
         for(ImageView iv : views)
@@ -131,7 +132,7 @@ public class PlayerBoardFragment extends Fragment {
     private void attach(final NonSpecialCard c, ImageView cardImage)
     {
         boolean[] connected = c.getIsConnected(); //get boolean for cards connected to card
-        NonSpecialCard[] connectedCards = c.getConnectedCards(); //get cards connected to card
+        final NonSpecialCard[] connectedCards = c.getConnectedCards(); //get cards connected to card
         //set image to card's image, will implement later
         cardImage.setImageResource(getResources().getIdentifier(c.getCardName().toLowerCase().replace(" ", ""), "drawable", getActivity().getPackageName()));
         Log.d("cardName", c.getCardName().toLowerCase().replace(" ", ""));
@@ -139,9 +140,21 @@ public class PlayerBoardFragment extends Fragment {
 //        cardImage.setScaleX(0.4f);
 //        cardImage.setScaleY(0.4f);
 //        cardImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        final String[]connectedNames = new String[4];
+
+        for(int i = 0; i < 4; i++)
+        {
+            if(connectedCards[i]!=null)
+            {
+                connectedNames[i] = connectedCards[i].getCardName();
+            } else {
+                connectedNames[i] = "empty";
+            }
+        }
         cardImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(getContext(), "Top: " + connectedNames[0] + "\nRight: " + connectedNames[1] + "\nBottom: " + connectedNames[2] + "\nLeft: " + connectedNames[3], Toast.LENGTH_SHORT).show();
                 if(type == null)
                 {
                     //do nothing
@@ -265,17 +278,27 @@ public class PlayerBoardFragment extends Fragment {
 
                             getAttackResult();
 
-                            if (attack.isSuccessful()) {
-                                FragmentManager fm = getFragmentManager();
-                                FragmentTransaction ft = fm.beginTransaction();
-                                //ListFragment playerListFrag = new ListFragment();
-                                Fragment playerBoardFragment = new PlayerBoardFragment();
-                                Player currentPlayer = table.getCurrentPlayer();
-                                playerBoardFragment.setArguments(bundle);
-                                bundle.putBoolean("isSuccessful", true);
-                                ft.replace(R.id.contentframe, playerBoardFragment);
-                                ft.commit();
-                            }
+//                            if (attack.isSuccessful()) {
+//                                FragmentManager fm = getFragmentManager();
+//                                FragmentTransaction ft = fm.beginTransaction();
+//                                //ListFragment playerListFrag = new ListFragment();
+//                                Fragment playerBoardFragment = new PlayerBoardFragment();
+//                                Player currentPlayer = table.getCurrentPlayer();
+//                                playerBoardFragment.setArguments(bundle);
+//                                ft.replace(R.id.contentframe, playerBoardFragment);
+//                                ft.commit();
+//                            } else {
+                            FragmentManager fm = getFragmentManager();
+                            FragmentTransaction ft = fm.beginTransaction();
+                            //ListFragment playerListFrag = new ListFragment();
+                            Fragment playerBoardFragment = new PlayerBoardFragment();
+                            Player currentPlayer = table.getCurrentPlayer();
+                            Bundle newBundle = new Bundle();
+                            newBundle.putSerializable("player", currentPlayer);
+                            playerBoardFragment.setArguments(newBundle);
+                            ft.replace(R.id.contentframe, playerBoardFragment);
+                            ft.commit();
+                        //}
                         } else if (type != null) {
                             Log.d("ATTACK TYPE", type);
                             switch (type) {
@@ -320,15 +343,19 @@ public class PlayerBoardFragment extends Fragment {
                 //depending on orientation and arrow position, add the card on a certain side
                 if((i + c.getOrientation()) % 4 == 0){
                     lp.addRule(RelativeLayout.ABOVE, cardImage.getId());
+                    lp.addRule(RelativeLayout.ALIGN_LEFT, cardImage.getId());
                     //newCardImage.setRotation(attachedCard.getOrientation()*90);
                 } else if((i + c.getOrientation()) % 4 == 1){
                     lp.addRule(RelativeLayout.RIGHT_OF, cardImage.getId());
+                    lp.addRule(RelativeLayout.ALIGN_BOTTOM, cardImage.getId());
                     //newCardImage.setRotation(attachedCard.getOrientation()*90 + 90);
                 } else if((i + c.getOrientation()) % 4 == 2){
                     lp.addRule(RelativeLayout.BELOW, cardImage.getId());
+                    lp.addRule(RelativeLayout.ALIGN_LEFT, cardImage.getId());
                     //newCardImage.setRotation(attachedCard.getOrientation()*90 + 180);
                 } else if((i + c.getOrientation()) % 4 == 3){
                     lp.addRule(RelativeLayout.LEFT_OF, cardImage.getId());
+                    lp.addRule(RelativeLayout.ALIGN_BOTTOM, cardImage.getId());
                     //op.addRule(RelativeLayout.RIGHT_OF, newCardImage.getId());
                     //newCardImage.setRotation(attachedCard.getOrientation()*90 + 270);
                 } else {
@@ -344,6 +371,7 @@ public class PlayerBoardFragment extends Fragment {
                 //add card to view
                 Log.d("SHOW THE REST OF", "TRUE");
                 views.add(newCardImage);
+                //ll.addView(newCardImage);
                 //recursively call the check
                 attach(attachedCard, newCardImage);
             }
