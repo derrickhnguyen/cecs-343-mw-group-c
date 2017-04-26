@@ -334,6 +334,17 @@ public class MainScreen extends AppCompatActivity {
                                 break;
                             case R.id.move_a_group:
                                 table.getCurrentPlayer().takeAction();
+
+                                fm = getFragmentManager();
+                                ft[0] = fm.beginTransaction();
+                                playerBoardFragment[0] = new PlayerBoardFragment();
+                                bundle[0] = new Bundle();
+                                bundle[0].putSerializable("player", table.getCurrentPlayer());
+                                bundle[0].putString("type", "move_group");
+                                playerBoardFragment[0].setArguments(bundle[0]);
+                                ft[0].replace(R.id.contentframe, playerBoardFragment[0]);
+                                ft[0].commit();
+
                                 if(table.getCurrentPlayer().actionsTaken() > 2) endTurn();
                                 break;
                             case R.id.give_a_group_away:

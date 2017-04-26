@@ -34,6 +34,7 @@ import com.groupc.android.illuminati.Objects.GroupCard;
 import com.groupc.android.illuminati.Objects.IlluminatiCard;
 import com.groupc.android.illuminati.Objects.NonSpecialCard;
 import com.groupc.android.illuminati.Objects.Player;
+import com.groupc.android.illuminati.Objects.PowerStructure;
 import com.groupc.android.illuminati.Objects.Table;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -42,6 +43,7 @@ import java.security.acl.Group;
 import java.util.ArrayList;
 
 import static android.R.attr.name;
+import static com.groupc.android.illuminati.MainScreen.table;
 
 public class PlayerBoardFragment extends Fragment {
     FragmentManager fm;
@@ -122,6 +124,12 @@ public class PlayerBoardFragment extends Fragment {
                 int duration = Toast.LENGTH_SHORT;
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
+            } else if(type.equals("move_group")) {
+                Context context = getActivity().getApplicationContext();
+                CharSequence text = "Choose group to move";
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
             }
         }
 
@@ -161,7 +169,7 @@ public class PlayerBoardFragment extends Fragment {
                 } else if(type.equals("transfer_money")) {
                     bundle.putSerializable("receivingCard", c);
                     receivingCard = c;
-                    MainScreen.table.setGiver(givingCard);
+                    table.setGiver(givingCard);
                     final int[] mb = new int[1];
 
                                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -176,10 +184,10 @@ public class PlayerBoardFragment extends Fragment {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         mb[0] = Integer.parseInt(input.getText().toString());
-                                        MainScreen.table.getCurrentPlayer().getIlluminatiCard().giveMoney(receivingCard, mb[0]);
+                                        table.getCurrentPlayer().getIlluminatiCard().giveMoney(receivingCard, mb[0]);
 
                                         Context context = getActivity();
-                                        CharSequence text = MainScreen.table.getCurrentPlayer().getIlluminatiCard().getCardName() + " gave " + receivingCard.getCardName() + " " + mb[0] + " MB";
+                                        CharSequence text = table.getCurrentPlayer().getIlluminatiCard().getCardName() + " gave " + receivingCard.getCardName() + " " + mb[0] + " MB";
                                         int duration = Toast.LENGTH_SHORT;
                                         Toast toast = Toast.makeText(context, text, duration);
                                         toast.show();
@@ -197,8 +205,8 @@ public class PlayerBoardFragment extends Fragment {
                         Toast toast = Toast.makeText(context, text, duration);
                         toast.show();
                     } else {
-                        MainScreen.table.getCenter().addGroupToCenter(
-                                MainScreen.table.getCurrentPlayer().getPowerStructure().removeCard((GroupCard) c)
+                        table.getCenter().addGroupToCenter(
+                                table.getCurrentPlayer().getPowerStructure().removeCard((GroupCard) c)
                         );
                         Context context = getActivity();
                         CharSequence text = c.getCardName() + " dropped!";
@@ -206,6 +214,73 @@ public class PlayerBoardFragment extends Fragment {
                         Toast toast = Toast.makeText(context, text, duration);
                         toast.show();
                     }
+
+                } else if(type.equals("move_group")){
+                    if(bundle.getSerializable("movedCard") == null) {
+                        bundle.putSerializable("movedCard", c);
+                        Context context = getActivity();
+                        CharSequence text = "Choose where you want to move it to";
+                        int duration = Toast.LENGTH_SHORT;
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
+                        fm = getFragmentManager();
+                        FragmentTransaction ft = fm.beginTransaction();
+                        PlayerBoardFragment playerBoardFragment = new PlayerBoardFragment();
+                        playerBoardFragment.setArguments(bundle);
+                        ft.replace(R.id.contentframe, playerBoardFragment);
+                        ft.commit();
+
+                    } else {
+                        bundle.putSerializable("whereToMove", c);
+                        AlertDialog.Builder b = new AlertDialog.Builder(getContext());
+                        b.setTitle("Choose which arrow to attach to");
+                        String[] types = {"Top", "Right", "Bottom", "Left"};
+                        b.setItems(types, new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                dialog.dismiss();
+                                switch (which) {
+                                    case 0:
+                                        bundle.putInt("connectingArrow", 0);
+                                        break;
+                                    case 1:
+                                        bundle.putInt("connectingArrow", 1);
+                                        break;
+                                    case 2:
+                                        bundle.putInt("connectingArrow", 2);
+                                        break;
+                                    case 3:
+                                        bundle.putInt("connectingArrow", 3);
+                                        break;
+                                    default:
+                                        //something
+                                        break;
+                                }
+
+                                PowerStructure powerStructure = MainScreen.table.getCurrentPlayer().getPowerStructure();
+                                powerStructure.removeCard((GroupCard) bundle.getSerializable("movedCard"));
+                                powerStructure.addToPowerStructure(c, (GroupCard) bundle.getSerializable("movedCard"), bundle.getInt("connectingArrow"));
+
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("player", MainScreen.table.getCurrentPlayer());
+                                FragmentManager fm = getFragmentManager();
+                                FragmentTransaction ft = fm.beginTransaction();
+                                //ListFragment playerListFrag = new ListFragment();
+                                Fragment playerBoardFragment = new PlayerBoardFragment();
+                                playerBoardFragment.setArguments(bundle);
+                                ft.replace(R.id.contentframe, playerBoardFragment);
+                                ft.commit();
+                            }
+                        });
+
+                        b.show();
+
+
+                    }
+
+
 
                 } else if(type.equals("attack")) {
                     if(bundle.getSerializable("puppetCard") == null)
@@ -379,11 +454,11 @@ public class PlayerBoardFragment extends Fragment {
     }
 
     private void getAttackResult() {
-        AttackAnnouncement announcement = MainScreen.table.getAction().getAttack().getAttackAnnouncement();
-        String attackName = MainScreen.table.getAction().getAttack().getAttackName();
-        String defendName = MainScreen.table.getAction().getAttack().getDefendName();
-        int power = MainScreen.table.getAction().getAttack().getAttackPower();
-        int resistance = MainScreen.table.getAction().getAttack().getDefendingResistance();
+        AttackAnnouncement announcement = table.getAction().getAttack().getAttackAnnouncement();
+        String attackName = table.getAction().getAttack().getAttackName();
+        String defendName = table.getAction().getAttack().getDefendName();
+        int power = table.getAction().getAttack().getAttackPower();
+        int resistance = table.getAction().getAttack().getDefendingResistance();
         int alignmentBonus = announcement.getAlignmentBonus();
         int powerStructurePositionBonus = announcement.getPowerStructurePositionBonus();
         int specialPowerBonus = announcement.getSpecialPowerBonus();
@@ -392,7 +467,7 @@ public class PlayerBoardFragment extends Fragment {
         int scoreNeeded = MainScreen.getTable().getAction().getAttack().getAttackAnnouncement().getScore();
         int roll = MainScreen.getTable().getAction().getAttack().getDiceSum();
         String won;
-        if(MainScreen.table.getAction().getAttack().isSuccessful()) won = attackName + " won!";
+        if(table.getAction().getAttack().isSuccessful()) won = attackName + " won!";
         else won = attackName + " lost!";
 
 
