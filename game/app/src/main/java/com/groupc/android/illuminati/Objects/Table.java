@@ -180,6 +180,18 @@ public class Table {
 
     public NonSpecialCard getReceiver() { return receiver; }
 
+    public Player getSpecificPlayer(String username) {
+        Player returnPlayer = null;
+        for(int i = 0; i < players.size(); i++) {
+            Player player = players.poll();
+            if(player.getUsername().contains(username)) {
+                returnPlayer = player;
+            }
+            players.add(player);
+        }
+        return returnPlayer;
+    }
+
     public enum AlignmentEnum {
 
         GOVERNMENT("Government"),

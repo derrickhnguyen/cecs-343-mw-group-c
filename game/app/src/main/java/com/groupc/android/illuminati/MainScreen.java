@@ -335,9 +335,29 @@ public class MainScreen extends AppCompatActivity {
                                 playerBoardFragment[0].setArguments(bundle[0]);
                                 ft[0].replace(R.id.contentframe, playerBoardFragment[0]);
                                 ft[0].commit();
-                                if(table.getCurrentPlayer().actionsTaken() > 2) endTurn();
                                 break;
                             case R.id.give_away_money:
+                                bundle[0] = new Bundle();
+                                bundle[0].putSerializable("names", players);
+
+                                IDs = new int[table.getNumberOfPlayers()];
+                                for (int j = 0; j < IDs.length; j++) {
+                                    name = table.getPlayers().get(j).getIlluminatiCard().getCardName();
+                                    name = name.replaceAll("\\s+", "");
+                                    Log.d("name", name);
+
+                                    IDs[j] = getResources().getIdentifier(name.toLowerCase(), "drawable", getPackageName());
+                                    Log.d("id",IDs[j] +"");
+                                }
+
+                                bundle[0].putIntArray("cardNames", IDs);
+
+                                playerListFrag = new PlayerListFragment();
+                                ft[0] = fm.beginTransaction();
+                                bundle[0].putString("type", "give_money");
+                                playerListFrag.setArguments(bundle[0]);
+                                ft[0].replace(R.id.contentframe, playerListFrag);
+                                ft[0].commit();
                                 break;
                             case R.id.give_away_special:
                                 break;

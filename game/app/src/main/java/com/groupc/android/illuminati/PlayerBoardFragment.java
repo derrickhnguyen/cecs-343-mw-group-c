@@ -179,7 +179,7 @@ public class PlayerBoardFragment extends Fragment {
                     bundle.putSerializable("droppedCard", c);
                     if(c.getType() == Table.CardTypeEnum.ILLUMINATI) {
                         Context context = getActivity();
-                        CharSequence text = "Can't drop illuminati group. Turn wasted!";
+                        CharSequence text = "Can't drop illuminati group!";
                         int duration = Toast.LENGTH_SHORT;
                         Toast toast = Toast.makeText(context, text, duration);
                         toast.show();

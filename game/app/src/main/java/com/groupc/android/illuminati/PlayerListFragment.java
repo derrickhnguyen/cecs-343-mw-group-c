@@ -4,16 +4,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.ListFragment;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
@@ -57,6 +62,13 @@ public class PlayerListFragment extends ListFragment {
         if(type == null)
         {
             //do nothing
+        } else if(type.equals("give_money")) {
+            Context context = getActivity();
+            CharSequence text = "Choose player to give money to";
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+
         } else if(type.equals("attack"))
         {
             HashMap<String, String> map = new HashMap<String, String>();
@@ -79,7 +91,7 @@ public class PlayerListFragment extends ListFragment {
     }
 
     @Override
-    public void onListItemClick(ListView l, View v, int pos, long id)
+    public void onListItemClick(ListView l, View v, final int pos, long id)
     {
         if(type == null)
         {
@@ -127,6 +139,31 @@ public class PlayerListFragment extends ListFragment {
                     ft.commit();
                 }
             }
+        } else if(type.equals("give_money")) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle("How many MB's?");
+
+            final EditText input = new EditText(getActivity());
+
+            input.setInputType(InputType.TYPE_CLASS_NUMBER);
+            builder.setView(input);
+
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    int mb = Integer.parseInt(input.getText().toString());
+                    Player player = MainScreen.table.getSpecificPlayer(Integer.toString(pos));
+                    MainScreen.table.getCurrentPlayer().getIlluminatiCard().giveMoney(player.getIlluminatiCard(), mb);
+
+                    Context context = getActivity();
+                    CharSequence text = MainScreen.table.getCurrentPlayer().getUsername() + " gave " + player.getUsername() + " " + mb + " MB";
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                }
+            });
+
+            builder.show();
         }
         super.onListItemClick(l, v, pos, id);
     }
