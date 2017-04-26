@@ -44,12 +44,13 @@ import java.util.ArrayList;
 import static android.R.attr.name;
 
 public class PlayerBoardFragment extends Fragment {
-
+    FragmentManager fm;
     View view_a; //a view
     IlluminatiCard illuminatiCard; //card in which the board is built from
     RelativeLayout ll; //android layout
     Bundle bundle;
     String type;
+    String type2;
     ArrayList<ImageView> views;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -110,13 +111,6 @@ public class PlayerBoardFragment extends Fragment {
         if(type != null) {
             if(type.equals("transfer_money")){
                 Context context = getActivity().getApplicationContext();
-                CharSequence text = "Choose giving group";
-                int duration = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
-            }
-            else if(type.equals("transfer_money_2")) {
-                Context context = getActivity().getApplicationContext();
                 CharSequence text = "Choose receiving group";
                 int duration = Toast.LENGTH_SHORT;
                 Toast toast = Toast.makeText(context, text, duration);
@@ -146,40 +140,34 @@ public class PlayerBoardFragment extends Fragment {
                 {
                     //do nothing
                 } else if(type.equals("transfer_money")) {
-                    bundle.putSerializable("givingCard", c);
-                    givingCard = c;
-                    MainScreen.table.setGiver(givingCard);
-                } else if(type.equals("transfer_money2")) {
                     bundle.putSerializable("receivingCard", c);
                     receivingCard = c;
-
+                    MainScreen.table.setGiver(givingCard);
                     final int[] mb = new int[1];
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setTitle("How many MB's?");
+                                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                builder.setTitle("How many MB's?");
 
-                    final EditText input = new EditText(getActivity());
+                                final EditText input = new EditText(getActivity());
 
-                    input.setInputType(InputType.TYPE_CLASS_NUMBER);
-                    builder.setView(input);
+                                input.setInputType(InputType.TYPE_CLASS_NUMBER);
+                                builder.setView(input);
 
-                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            mb[0] = Integer.parseInt(input.getText().toString());
-                        }
-                    });
+                                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        mb[0] = Integer.parseInt(input.getText().toString());
+                                        MainScreen.table.getCurrentPlayer().getIlluminatiCard().giveMoney(receivingCard, mb[0]);
 
-                    builder.show();
+                                        Context context = getActivity();
+                                        CharSequence text = MainScreen.table.getCurrentPlayer().getIlluminatiCard().getCardName() + " gave " + receivingCard.getCardName() + " " + mb[0] + " MB";
+                                        int duration = Toast.LENGTH_SHORT;
+                                        Toast toast = Toast.makeText(context, text, duration);
+                                        toast.show();
+                                    }
+                                });
 
-                    MainScreen.table.getGiver().giveMoney(receivingCard, mb[0]);
-
-                    Context context = getActivity().getApplicationContext();
-                    CharSequence text = MainScreen.table.getGiver().getCardName() + " gave " + receivingCard.getCardName() + " " + mb[0] + " MB";
-                    int duration = Toast.LENGTH_SHORT;
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();
-
+                                builder.show();
 
                 } else if(type.equals("attack")) {
                     if(bundle.getSerializable("puppetCard") == null)

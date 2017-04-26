@@ -174,6 +174,12 @@ public class Table {
 
     public NonSpecialCard getGiver() { return giver; }
 
+    NonSpecialCard receiver;
+
+    public void setReceiver(NonSpecialCard receiver) { this.receiver = receiver; }
+
+    public NonSpecialCard getReceiver() { return receiver; }
+
     public enum AlignmentEnum {
 
         GOVERNMENT("Government"),

@@ -218,15 +218,15 @@ public class MainScreen extends AppCompatActivity {
                         if(! table.actionInitialized()) table.newAction();
 
                         ListFragment playerListFrag = null;
-                        Fragment playerBoardFragment = null;
-                        Bundle bundle = null;
-                        FragmentTransaction ft = null;
+                        final Fragment[] playerBoardFragment = {null};
+                        final Bundle[] bundle = {null};
+                        final FragmentTransaction[] ft = {null};
 
                         switch(item.getItemId()) {
                             case R.id.attack_to_control:
                                 table.getCurrentPlayer().takeAction();
-                                bundle = new Bundle();
-                                bundle.putSerializable("names", players);
+                                bundle[0] = new Bundle();
+                                bundle[0].putSerializable("names", players);
 
                                 int[] IDs;
                                 IDs = new int[table.getNumberOfPlayers()];
@@ -240,22 +240,22 @@ public class MainScreen extends AppCompatActivity {
                                     Log.d("id",IDs[j] +"");
                                 }
 
-                                bundle.putIntArray("cardNames", IDs);
+                                bundle[0].putIntArray("cardNames", IDs);
 
                                 playerListFrag = new PlayerListFragment();
-                                ft = fm.beginTransaction();
-                                bundle.putString("type", "attack");
-                                bundle.putString("attackType", "control");
-                                playerListFrag.setArguments(bundle);
-                                ft.replace(R.id.contentframe, playerListFrag);
-                                ft.commit();
+                                ft[0] = fm.beginTransaction();
+                                bundle[0].putString("type", "attack");
+                                bundle[0].putString("attackType", "control");
+                                playerListFrag.setArguments(bundle[0]);
+                                ft[0].replace(R.id.contentframe, playerListFrag);
+                                ft[0].commit();
                                 if(table.getCurrentPlayer().actionsTaken() > 2) endTurn();
                                 break;
                             case R.id.attack_to_neutralize:
                                 table.getCurrentPlayer().takeAction();
                                 table.getAction().getAttack().setAttackType(Table.AttackEnum.NEUTRALIZE);
-                                bundle = new Bundle();
-                                bundle.putSerializable("names", players);
+                                bundle[0] = new Bundle();
+                                bundle[0].putSerializable("names", players);
 
                                 IDs = new int[table.getNumberOfPlayers()];
                                 for (int j = 0; j < IDs.length; j++) {
@@ -265,22 +265,22 @@ public class MainScreen extends AppCompatActivity {
                                     IDs[j] = getResources().getIdentifier(name.toLowerCase(), "drawable", getPackageName());
                                     Log.d("id",IDs[j] +"");
                                 }
-                                bundle.putIntArray("cardNames", IDs);
+                                bundle[0].putIntArray("cardNames", IDs);
 
                                 playerListFrag = new PlayerListFragment();
-                                ft = fm.beginTransaction();
-                                bundle.putString("type", "attack");
-                                bundle.putString("attackType", "neutralize");
-                                playerListFrag.setArguments(bundle);
-                                ft.replace(R.id.contentframe, playerListFrag);
-                                ft.commit();
+                                ft[0] = fm.beginTransaction();
+                                bundle[0].putString("type", "attack");
+                                bundle[0].putString("attackType", "neutralize");
+                                playerListFrag.setArguments(bundle[0]);
+                                ft[0].replace(R.id.contentframe, playerListFrag);
+                                ft[0].commit();
                                 if(table.getCurrentPlayer().actionsTaken() > 2) endTurn();
                                 break;
                             case R.id.attack_to_destroy:
                                 table.getCurrentPlayer().takeAction();
                                 table.getAction().getAttack().setAttackType(Table.AttackEnum.DESTROY);
-                                bundle = new Bundle();
-                                bundle.putSerializable("names", players);
+                                bundle[0] = new Bundle();
+                                bundle[0].putSerializable("names", players);
 
                                 IDs = new int[table.getNumberOfPlayers()];
                                 for (int j = 0; j < IDs.length; j++) {
@@ -290,42 +290,29 @@ public class MainScreen extends AppCompatActivity {
                                     IDs[j] = getResources().getIdentifier(name.toLowerCase(), "drawable", getPackageName());
                                     Log.d("id",IDs[j] +"");
                                 }
-                                bundle.putIntArray("cardNames", IDs);
+                                bundle[0].putIntArray("cardNames", IDs);
                                 playerListFrag = new PlayerListFragment();
-                                ft = fm.beginTransaction();
-                                bundle.putString("type", "attack");
-                                bundle.putString("attackType", "destroy");
-                                playerListFrag.setArguments(bundle);
-                                ft.replace(R.id.contentframe, playerListFrag);
-                                ft.commit();
+                                ft[0] = fm.beginTransaction();
+                                bundle[0].putString("type", "attack");
+                                bundle[0].putString("attackType", "destroy");
+                                playerListFrag.setArguments(bundle[0]);
+                                ft[0].replace(R.id.contentframe, playerListFrag);
+                                ft[0].commit();
                                 if(table.getCurrentPlayer().actionsTaken() > 2) endTurn();
                                 break;
                             case R.id.transfer_money:
                                 table.getCurrentPlayer().takeAction();
                                 String type = "transfer_money";
                                 fm = getFragmentManager();
-                                ft = fm.beginTransaction();
-                                playerBoardFragment = new PlayerBoardFragment();
-                                Player currentPlayer = table.getCurrentPlayer();
-                                bundle = new Bundle();
-                                bundle.putSerializable("player", currentPlayer);
-                                bundle.putString("type", type);
-                                playerBoardFragment.setArguments(bundle);
-                                ft.replace(R.id.contentframe, playerBoardFragment);
-                                ft.commit();
-
-
-                                type = "transfer_money2";
-                                fm = getFragmentManager();
-                                ft = fm.beginTransaction();
-                                playerBoardFragment = new PlayerBoardFragment();
-                                currentPlayer = table.getCurrentPlayer();
-                                bundle = new Bundle();
-                                bundle.putSerializable("player", currentPlayer);
-                                bundle.putString("type", type);
-                                playerBoardFragment.setArguments(bundle);
-                                ft.replace(R.id.contentframe, playerBoardFragment);
-                                ft.commit();
+                                ft[0] = fm.beginTransaction();
+                                playerBoardFragment[0] = new PlayerBoardFragment();
+                                final Player[] currentPlayer = {table.getCurrentPlayer()};
+                                bundle[0] = new Bundle();
+                                bundle[0].putSerializable("player", currentPlayer[0]);
+                                bundle[0].putString("type", type);
+                                playerBoardFragment[0].setArguments(bundle[0]);
+                                ft[0].replace(R.id.contentframe, playerBoardFragment[0]);
+                                ft[0].commit();
 
 
                                 if(table.getCurrentPlayer().actionsTaken() > 2) endTurn();
@@ -340,14 +327,14 @@ public class MainScreen extends AppCompatActivity {
                                 break;
                             case R.id.drop_a_group:
                                 fm = getFragmentManager();
-                                ft = fm.beginTransaction();
-                                playerBoardFragment = new PlayerBoardFragment();
-                                bundle = new Bundle();
-                                bundle.putSerializable("player", table.getCurrentPlayer());
-                                bundle.putString("type", "dropgroup");
-                                playerBoardFragment.setArguments(bundle);
-                                ft.replace(R.id.contentframe, playerBoardFragment);
-                                ft.commit();
+                                ft[0] = fm.beginTransaction();
+                                playerBoardFragment[0] = new PlayerBoardFragment();
+                                bundle[0] = new Bundle();
+                                bundle[0].putSerializable("player", table.getCurrentPlayer());
+                                bundle[0].putString("type", "dropgroup");
+                                playerBoardFragment[0].setArguments(bundle[0]);
+                                ft[0].replace(R.id.contentframe, playerBoardFragment[0]);
+                                ft[0].commit();
                                 if(table.getCurrentPlayer().actionsTaken() > 2) endTurn();
                                 break;
                             case R.id.give_away_money:
