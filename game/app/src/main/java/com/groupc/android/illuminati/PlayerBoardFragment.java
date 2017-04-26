@@ -52,6 +52,7 @@ public class PlayerBoardFragment extends Fragment {
         bundle = getArguments();
         Player player = (Player) bundle.getSerializable("player");
         type = bundle.getString("type");
+        if(type.equals("transfer_money")) transferMoney();
         illuminatiCard = player.getIlluminatiCard();
 //        NonSpecialCard aCard = new NonSpecialCard("name", Table.CardTypeEnum.GROUP,
 //                5,
@@ -289,5 +290,9 @@ public class PlayerBoardFragment extends Fragment {
                 });
         AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    private void transferMoney() {
+
     }
 }

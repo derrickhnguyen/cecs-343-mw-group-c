@@ -221,19 +221,9 @@ public class MainScreen extends AppCompatActivity {
                         Bundle bundle = null;
                         FragmentTransaction ft = null;
 
-                        int i = 0;
                         switch(item.getItemId()) {
-                            case R.id.attack_a_group:
-                                i = 1;
-                                //open the player list
-
-
-                                //end opening player list
-                                break;
                             case R.id.attack_to_control:
-                                //table.getAction().getAttack().setAttackType(Table.AttackEnum.CONTROL);
                                 table.getCurrentPlayer().takeAction();
-                                i = 1;
                                 bundle = new Bundle();
                                 bundle.putSerializable("names", players);
 
@@ -262,7 +252,6 @@ public class MainScreen extends AppCompatActivity {
                             case R.id.attack_to_neutralize:
                                 table.getCurrentPlayer().takeAction();
                                 table.getAction().getAttack().setAttackType(Table.AttackEnum.NEUTRALIZE);
-                                i = 1;
                                 bundle = new Bundle();
                                 bundle.putSerializable("names", players);
 
@@ -287,7 +276,6 @@ public class MainScreen extends AppCompatActivity {
                             case R.id.attack_to_destroy:
                                 table.getCurrentPlayer().takeAction();
                                 table.getAction().getAttack().setAttackType(Table.AttackEnum.DESTROY);
-                                i = 1;
                                 bundle = new Bundle();
                                 bundle.putSerializable("names", players);
 
@@ -310,56 +298,42 @@ public class MainScreen extends AppCompatActivity {
                                 break;
                             case R.id.transfer_money:
                                 table.getCurrentPlayer().takeAction();
-                                i = 2;
+                                String type = "transfer_money";
+                                fm = getFragmentManager();
+                                ft = fm.beginTransaction();
+                                Fragment playerBoardFragment = new PlayerBoardFragment();
+                                Player currentPlayer = table.getCurrentPlayer();
+                                bundle = new Bundle();
+                                bundle.putSerializable("player", currentPlayer);
+                                bundle.putString("type", type);
+                                playerBoardFragment.setArguments(bundle);
+                                ft.replace(R.id.contentframe, playerBoardFragment);
+                                ft.commit();
                                 if(table.getCurrentPlayer().actionsTaken() > 2) endTurn();
                                 break;
                             case R.id.move_a_group:
                                 table.getCurrentPlayer().takeAction();
-                                i = 3;
                                 if(table.getCurrentPlayer().actionsTaken() > 2) endTurn();
                                 break;
                             case R.id.give_a_group_away:
                                 table.getCurrentPlayer().takeAction();
-                                i = 4;
                                 if(table.getCurrentPlayer().actionsTaken() > 2) endTurn();
                                 break;
                             case R.id.drop_a_group:
-                                i = 5;
                                 break;
                             case R.id.give_away_money:
-                                i = 6;
                                 break;
                             case R.id.give_away_special:
-                                i = 7;
                                 break;
                             case R.id.use_a_special:
-                                i = 8;
                                 break;
                             case R.id.special_power_action:
-                                i = 9;
                                 break;
                             case R.id.pass:
-                                i = 10;
                                 break;
                             default:
                                 return onOptionsItemSelected(item);
                         }
-                        table.getAction().setChoice(i);
-                        //table.getAction().takeAction();
-
-//                        switch(item.getItemId()) {
-//                            case R.id.attack_to_control:
-//                                table.getAction().getAttack().setAttackType(Table.AttackEnum.CONTROL);
-//                                break;
-//                            case R.id.attack_to_neutralize:
-//                                table.getAction().getAttack().setAttackType(Table.AttackEnum.NEUTRALIZE);
-//                                break;
-//                            case R.id.attack_to_destroy:
-//                                table.getAction().getAttack().setAttackType(Table.AttackEnum.DESTROY);
-//                                break;
-//                            default:
-//                                return true;
-//                        }
 
                         return true;
                     }
