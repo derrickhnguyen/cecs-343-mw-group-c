@@ -360,6 +360,33 @@ public class MainScreen extends AppCompatActivity {
                                 ft[0].commit();
                                 break;
                             case R.id.give_away_special:
+                                Bundle cardIDs = new Bundle();
+
+                                if(table.getCurrentPlayer().getHand().size() == 0) {
+                                    table.newTurn();
+                                    Context context = getApplicationContext();
+                                    CharSequence text = "No Specials Yet";
+                                    int duration = Toast.LENGTH_SHORT;
+
+                                    Toast toast = Toast.makeText(context, text, duration);
+                                    toast.show();
+                                }
+                                if(table.getCurrentPlayer().getHand().size() > 0) {
+                                    IDs = new int[table.getCurrentPlayer().getHand().size()];
+                                    for (int i = 0; i < IDs.length; i++) {
+                                        name = table.getCurrentPlayer().getHand().get(i).getCardName();
+                                        name = name.replaceAll("\\s+","");
+                                        IDs[i] = getResources().getIdentifier(name.toLowerCase(), "drawable", getPackageName());
+                                    }
+                                    cardIDs.putIntArray("cardNames", IDs);
+                                    cardIDs.putString("type", "give_special");
+
+                                    ft[0] = fm.beginTransaction();
+                                    Fragment CardListFragment = new CardListFragment();
+                                    CardListFragment.setArguments(cardIDs);
+                                    ft[0].replace(R.id.contentframe, CardListFragment);
+                                    ft[0].commit();
+                                }
                                 break;
                             case R.id.use_a_special:
                                 break;
@@ -498,12 +525,16 @@ public class MainScreen extends AppCompatActivity {
 
     private void drawCard() {
         Card card;
+        do {
+
         card = table.getDeck().draw();
+        }while(card.getType() != Table.CardTypeEnum.SPECIAL);
         Context context = getApplicationContext();
         CharSequence text = table.getCurrentPlayer().getUsername() + " drew " + card.getCardName();
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
+
 
         if(card.getType() == Table.CardTypeEnum.GROUP) {
             text = card.getCardName() + " added to center";

@@ -8,6 +8,7 @@ import java.util.List;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.ListFragment;
@@ -17,9 +18,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
+import com.groupc.android.illuminati.Objects.Card;
 import com.groupc.android.illuminati.Objects.GroupCard;
 import com.groupc.android.illuminati.Objects.Player;
+import com.groupc.android.illuminati.Objects.SpecialCard;
 
 public class CardListFragment extends ListFragment {
 
@@ -67,7 +71,44 @@ public class CardListFragment extends ListFragment {
         Bundle bundle = getArguments();
         String type = bundle.getString("type");
 
-        if(type != null)
+        if(type == null){
+
+        } else if(type.equals("give_special")) {
+            Context context = getActivity();
+            CharSequence text = "Special Chosen";
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+
+            ArrayList<SpecialCard> cardArray = MainScreen.table.getCurrentPlayer().getHand();
+            Card c = cardArray.get(pos);
+
+            Bundle names = new Bundle();
+            names.putSerializable("names", MainScreen.table.getPlayers());
+            names.putSerializable("card", c);
+            names.putString("type", "give_special");
+
+            int[] IDs;
+            IDs = new int[MainScreen.table.getNumberOfPlayers()];
+            String name;
+            for (int i = 0; i < IDs.length; i++) {
+                name = MainScreen.table.getPlayers().get(i).getIlluminatiCard().getCardName();
+                name = name.replaceAll("\\s+", "");
+                Log.d("name", name);
+                IDs[i] = getResources().getIdentifier(name.toLowerCase(), "drawable", getContext().getPackageName());
+                Log.d("id",IDs[i] +"");
+            }
+            names.putIntArray("cardNames", IDs);
+
+            FragmentManager fm = getFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            ListFragment playerListFrag = new PlayerListFragment();
+            playerListFrag.setArguments(names);
+            ft.replace(R.id.contentframe, playerListFrag);
+            ft.commit();
+
+
+        } else
         {
             ArrayList<GroupCard> cardArray = (ArrayList<GroupCard>) bundle.getSerializable("cardObjects");
             Log.d("CARD AGAGIN", cardArray.get(0).getCardName());
