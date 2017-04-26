@@ -41,6 +41,7 @@ public class MainScreen extends AppCompatActivity {
     Player[] players;
     private String numberOfPlayers;
     static Table table;
+    boolean pass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -346,6 +347,8 @@ public class MainScreen extends AppCompatActivity {
                             case R.id.special_power_action:
                                 break;
                             case R.id.pass:
+                                pass = true;
+                                endTurn();
                                 break;
                             default:
                                 return onOptionsItemSelected(item);
@@ -378,8 +381,20 @@ public class MainScreen extends AppCompatActivity {
     private void endTurn() {
         table.newTurn();
 
+        CharSequence text;
+
+        if(pass) {
+            text = table.getPlayers().get(table.getPlayers().size() - 1).getUsername()  + " passed and collected 2MB" +
+                    "\nPass to " + table.getCurrentPlayer().getUsername() + "!";
+            table.getPlayers().get(table.getPlayers().size() - 1).getIlluminatiCard().setGroupTreasury(
+                    table.getPlayers().get(table.getPlayers().size() - 1).getIlluminatiCard().getGroupTreasury() + 2
+            );
+            pass = false;
+        }
+
+        else text = "Too many actions!\nPass to " + table.getCurrentPlayer().getUsername() + "!";
+
         Context context = getApplicationContext();
-        CharSequence text = "Too many actions!\nPass to " + table.getCurrentPlayer().getUsername() + "!";
         int duration = Toast.LENGTH_SHORT;
 
         Toast toast = Toast.makeText(context, text, duration);
