@@ -12,5 +12,12 @@
         android:layout_height="match_parent"
         android:text="Take Action"
         android:layout_weight="1"/>
+    <Button
+        android:id="@+id/mb"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:text="MB"
+        android:layout_weight="1"/>
+
 
 </LinearLayout>

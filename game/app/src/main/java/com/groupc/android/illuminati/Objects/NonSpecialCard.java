@@ -103,7 +103,7 @@ public class NonSpecialCard extends Card {
     }
 
     public int getGroupTreasury() {
-        return getGroupTreasury();
+        return groupTreasury;
     }
 
     public void setGroupTreasury(int groupTreasury) {

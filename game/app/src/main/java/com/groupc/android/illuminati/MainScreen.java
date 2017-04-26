@@ -25,11 +25,15 @@ import com.groupc.android.illuminati.Objects.AttackAnnouncement;
 import com.groupc.android.illuminati.Objects.Card;
 import com.groupc.android.illuminati.Objects.GroupCard;
 import com.groupc.android.illuminati.Objects.IlluminatiCard;
+import com.groupc.android.illuminati.Objects.NonSpecialCard;
 import com.groupc.android.illuminati.Objects.Player;
+import com.groupc.android.illuminati.Objects.PowerStructure;
 import com.groupc.android.illuminati.Objects.SpecialCard;
 import com.groupc.android.illuminati.Objects.Table;
 
 import java.util.ArrayList;
+
+import static com.groupc.android.illuminati.R.id.mb;
 
 public class MainScreen extends AppCompatActivity {
 
@@ -69,6 +73,7 @@ public class MainScreen extends AppCompatActivity {
         Button displaySkillCards = (Button) findViewById(R.id.skillbutton);
         Button centerPile = (Button) findViewById(R.id.centerpilebutton);
         final Button takeAction = (Button) findViewById(R.id.take_action);
+        Button mb = (Button) findViewById(R.id.mb);
 
         otherPlayers.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,6 +97,37 @@ public class MainScreen extends AppCompatActivity {
                 ListFragment playerListFrag = new PlayerListFragment();
                 playerListFrag.setArguments(names);
                 ft.replace(R.id.contentframe, playerListFrag);
+                ft.commit();
+            }
+        });
+
+        mb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle names = new Bundle();
+                ArrayList<NonSpecialCard> powerStructureCards = table.getCurrentPlayer().getPowerStructure().getPowerStructureCards();
+                NonSpecialCard[] cards = new NonSpecialCard[powerStructureCards.size()];
+                for(int i = 0; i < cards.length; i++) {
+                    cards[i] = powerStructureCards.get(i); //.getCardName() + " MB - " + powerStructureCards.get(i).getGroupTreasury();
+                }
+                names.putSerializable("names", cards);
+
+                int[] IDs;
+                IDs = new int[cards.length];
+                String name;
+                for (int i = 0; i < IDs.length; i++) {
+                    name = table.getCurrentPlayer().getPowerStructure().getPowerStructureCards().get(i).getCardName();
+                    name = name.replaceAll("\\s+", "");
+                    Log.d("name", name);
+                    IDs[i] = getResources().getIdentifier(name.toLowerCase(), "drawable", getPackageName());
+                    Log.d("id",IDs[i] +"");
+                }
+                names.putIntArray("cardNames", IDs);
+
+                FragmentTransaction ft = fm.beginTransaction();
+                ListFragment mbListFrag = new MBListFragment();
+                mbListFrag.setArguments(names);
+                ft.replace(R.id.contentframe, mbListFrag);
                 ft.commit();
             }
         });
@@ -418,6 +454,11 @@ public class MainScreen extends AppCompatActivity {
 
             toast = Toast.makeText(context, text, duration);
             toast.show();
+
+            table.getCurrentPlayer().getPowerStructure().getPowerStructureCards().get(i).setGroupTreasury(
+                    table.getCurrentPlayer().getPowerStructure().getPowerStructureCards().get(i).getGroupTreasury()
+                    + table.getCurrentPlayer().getPowerStructure().getPowerStructureCards().get(i).getIncome()
+            );
         }
     }
 
