@@ -7,29 +7,21 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.groupc.android.illuminati.Objects.Action;
 import com.groupc.android.illuminati.Objects.Attack;
 import com.groupc.android.illuminati.Objects.AttackAnnouncement;
-import com.groupc.android.illuminati.Objects.Card;
 import com.groupc.android.illuminati.Objects.GroupCard;
 import com.groupc.android.illuminati.Objects.IlluminatiCard;
 import com.groupc.android.illuminati.Objects.NonSpecialCard;
@@ -37,12 +29,8 @@ import com.groupc.android.illuminati.Objects.Player;
 import com.groupc.android.illuminati.Objects.PowerStructure;
 import com.groupc.android.illuminati.Objects.Table;
 
-import org.xmlpull.v1.XmlPullParser;
-
-import java.security.acl.Group;
 import java.util.ArrayList;
 
-import static android.R.attr.name;
 import static com.groupc.android.illuminati.MainScreen.table;
 
 public class PlayerBoardFragment extends Fragment {
