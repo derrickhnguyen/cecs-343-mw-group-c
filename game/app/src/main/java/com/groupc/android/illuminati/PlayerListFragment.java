@@ -74,8 +74,8 @@ public class PlayerListFragment extends ListFragment {
         } else if(type.equals("attack"))
         {
             HashMap<String, String> map = new HashMap<String, String>();
-            map.put("player_name", "Center Pile");
-            map.put("brand_images", getResources().getIdentifier("illuminati_logo", "drawable", getContext().getPackageName()) + "");
+            map.put("player_name", "");
+            map.put("brand_images", getResources().getIdentifier("center", "drawable", getContext().getPackageName()) + "");
             aList.add(map);
         }
         // Keys used in Hashmap
