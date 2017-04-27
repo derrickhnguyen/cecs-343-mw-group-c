@@ -23,10 +23,12 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="8">
+
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/illuminati_logo"/>
+            android:id="@+id/imageView"
+            android:layout_width="381dp"
+            android:layout_height="438dp"
+            android:src="@drawable/illuminati_logo_3" />
     </FrameLayout>
 
     <fragment android:name="com.groupc.android.illuminati.BottomBarFragment"

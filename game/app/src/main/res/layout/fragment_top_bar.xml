@@ -11,13 +11,17 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:text="Take Action"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:textColor="#FFFFFF"
+        android:background="#000000"/>
     <Button
         android:id="@+id/mb"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:text="MB"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:textColor="#FFFFFF"
+        android:background="#000000"/>
 
 
 </LinearLayout>

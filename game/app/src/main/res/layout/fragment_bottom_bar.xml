@@ -14,30 +14,40 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:text="spcls"/>
+        android:text="spcls"
+        android:textColor="#FFFFFF"
+        android:background="#000000"/>
     <Button
         android:id="@+id/centerpilebutton"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:text="cntr"/>
+        android:text="cntr"
+        android:textColor="#FFFFFF"
+        android:background="#000000"/>
     <Button
         android:id="@+id/homebutton"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:text="Home"/>
+        android:text="Home"
+        android:textColor="#FFFFFF"
+        android:background="#000000"/>
     <Button
         android:id="@+id/profilebutton"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:text="chat"/>
+        android:text="chat"
+        android:textColor="#FFFFFF"
+        android:background="#000000"/>
     <Button
         android:id="@+id/otherplayersbutton"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:text="plyrs"/>
+        android:text="plyrs"
+        android:textColor="#FFFFFF"
+        android:background="#000000"/>
 
 </LinearLayout>
