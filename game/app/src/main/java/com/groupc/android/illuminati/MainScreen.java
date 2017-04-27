@@ -61,7 +61,13 @@ public class MainScreen extends AppCompatActivity {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                int inputInt = Integer.parseInt(input.getText().toString());
+                int inputInt = 4;
+                try {
+                    inputInt = Integer.parseInt(input.getText().toString());
+                } catch(Exception e)
+                {
+                    //do nothing, will default to 4
+                }
                 if(inputInt < 1)
                 {
 
@@ -73,7 +79,8 @@ public class MainScreen extends AppCompatActivity {
                     numberOfPlayers = 8;
                     beginGame();
                 } else {
-                    numberOfPlayers = Integer.parseInt(input.getText().toString());
+                    Toast.makeText(getBaseContext(), "Player Number set to 4", Toast.LENGTH_SHORT).show();
+                    numberOfPlayers = inputInt;
                     beginGame();
                 }
 
