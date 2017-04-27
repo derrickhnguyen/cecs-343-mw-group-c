@@ -90,10 +90,12 @@ public class PlayerBoardFragment extends Fragment {
         //the actual ID doesn't matter since we'll always use the getID() method
 
 //        layout for center card
-        RelativeLayout.LayoutParams rp = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT);
-       // rp.addRule(RelativeLayout.CENTER_VERTICAL); //put card in center (buggy)
+//        RelativeLayout.LayoutParams rp = new RelativeLayout.LayoutParams(
+//                RelativeLayout.LayoutParams.WRAP_CONTENT,
+//                RelativeLayout.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams rp = new RelativeLayout.LayoutParams(800,400);
+
+        // rp.addRule(RelativeLayout.CENTER_VERTICAL); //put card in center (buggy)
        // rp.addRule(RelativeLayout.CENTER_HORIZONTAL);
         illCard.setLayoutParams(rp); //picture for illuminati card
         views.add(illCard);
@@ -162,7 +164,7 @@ public class PlayerBoardFragment extends Fragment {
         cardImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Top: " + connectedNames[0] + "\nRight: " + connectedNames[1] + "\nBottom: " + connectedNames[2] + "\nLeft: " + connectedNames[3], Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), "Top: " + connectedNames[0] + "\nRight: " + connectedNames[1] + "\nBottom: " + connectedNames[2] + "\nLeft: " + connectedNames[3], Toast.LENGTH_SHORT).show();
                 if(type == null)
                 {
                     //do nothing
@@ -213,6 +215,15 @@ public class PlayerBoardFragment extends Fragment {
                         int duration = Toast.LENGTH_SHORT;
                         Toast toast = Toast.makeText(context, text, duration);
                         toast.show();
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("player", MainScreen.table.getCurrentPlayer());
+                        FragmentManager fm = getFragmentManager();
+                        FragmentTransaction ft = fm.beginTransaction();
+                        //ListFragment playerListFrag = new ListFragment();
+                        Fragment playerBoardFragment = new PlayerBoardFragment();
+                        playerBoardFragment.setArguments(bundle);
+                        ft.replace(R.id.contentframe, playerBoardFragment);
+                        ft.commit();
                     }
 
                 } else if(type.equals("move_group")){
@@ -259,10 +270,19 @@ public class PlayerBoardFragment extends Fragment {
                                         break;
                                 }
 
-                                PowerStructure powerStructure = MainScreen.table.getCurrentPlayer().getPowerStructure();
-                                powerStructure.removeCard((GroupCard) bundle.getSerializable("movedCard"));
-                                powerStructure.addToPowerStructure(c, (GroupCard) bundle.getSerializable("movedCard"), bundle.getInt("connectingArrow"));
+                                GroupCard movedCard = null;
+                                try {
+                                    movedCard = (GroupCard) bundle.getSerializable("movedCard");
+                                } catch(Exception e)
+                                {
+                                    //it's the illuminati card
+                                }
 
+                                if(movedCard != null && !c.equals(movedCard)) {
+                                    PowerStructure powerStructure = MainScreen.table.getCurrentPlayer().getPowerStructure();
+                                    powerStructure.removeCard(movedCard);
+                                    powerStructure.addToPowerStructure(c, movedCard, bundle.getInt("connectingArrow"));
+                                }
                                 Bundle bundle = new Bundle();
                                 bundle.putSerializable("player", MainScreen.table.getCurrentPlayer());
                                 FragmentManager fm = getFragmentManager();
@@ -411,9 +431,12 @@ public class PlayerBoardFragment extends Fragment {
                 newCardImage.setId(View.generateViewId());
                 newCardImage.setRotation(attachedCard.getOrientation()); //roate to match the orientation
 
-                RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
-                        RelativeLayout.LayoutParams.WRAP_CONTENT,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT); //stock layout
+//                RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
+//                        RelativeLayout.LayoutParams.WRAP_CONTENT,
+//                        RelativeLayout.LayoutParams.WRAP_CONTENT); //stock layout
+                RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(800,400);
+
+
                 RelativeLayout.LayoutParams op = (RelativeLayout.LayoutParams) cardImage.getLayoutParams();
                 //depending on orientation and arrow position, add the card on a certain side
                 if((i + c.getOrientation()) % 4 == 0){
