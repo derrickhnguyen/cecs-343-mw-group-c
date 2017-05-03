@@ -1,14 +1,7 @@
 package com.groupc.android.illuminati.Objects;
 
-import android.transition.Slide;
-
-import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.Random;
-
-/**
- * Created by micha on 4/9/2017.
- */
 
 public class Deck {
     ArrayList<Card> cards;
@@ -20,18 +13,18 @@ public class Deck {
     }
 
     private void initializeCards() {
-      initializeGroupCards();
-      initializeSpecialCards();
+        initializeGroupCards();
+        initializeSpecialCards();
     }
 
     private void shuffle() {
-      ArrayList<Card> temp = new ArrayList<Card>();
-      while(!cards.isEmpty()) {
-          int x = (int) (Math.random()*cards.size());
-          temp.add(cards.get(x));
-          cards.remove(x);
-      }
-      cards = temp;
+        ArrayList<Card> temp = new ArrayList<Card>();
+        while(!cards.isEmpty()) {
+            int x = (int) (Math.random()*cards.size());
+            temp.add(cards.get(x));
+            cards.remove(x);
+        }
+        cards = temp;
     }
 
     public Card draw() {
@@ -46,6 +39,9 @@ public class Deck {
 
 
     private void initializeGroupCards() {
+
+        //to be added to a database
+
         Table.CardTypeEnum group = Table.CardTypeEnum.GROUP;
         GroupCard americanAutoduelAssociation = new GroupCard(
                 "American Autoduel Association",
@@ -797,6 +793,9 @@ public class Deck {
     }
 
     private void initializeSpecialCards() {
+
+        //to be added to a database
+
         SpecialCard assassination = new SpecialCard(
                 "Assassination",
                 Table.CardTypeEnum.SPECIAL,
