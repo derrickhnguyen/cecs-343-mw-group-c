@@ -1,6 +1,5 @@
 package com.groupc.android.illuminati.Objects;
 
-import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -14,7 +13,7 @@ public class Table {
     private int                         numberOfPlayers;
     private int                         playerCount;
     private Queue<Player>               players;
-    private ArrayList<IlluminatiCard>   cards;
+    private ArrayList<IlluminatiCard>   illuminatiCards;
 
     private Player  currentPlayer;
     private boolean gameIsActive;
@@ -22,8 +21,11 @@ public class Table {
 
     private Action action;
 
-    private int numberOfIlluminatiCards = 8;
+    private int numberOfIlluminatiCards;
     private boolean[] isTaken;
+
+    private NonSpecialCard giver;
+    private NonSpecialCard receiver;
 
     public Table() {
         center          = new Center();
@@ -34,9 +36,10 @@ public class Table {
         playerCount     = 0;
 
         gameIsActive = true;
+        numberOfIlluminatiCards = 8;
         isTaken = new boolean[numberOfIlluminatiCards];
 
-        cards = new ArrayList<>();
+        illuminatiCards = new ArrayList<>();
         initializeIlluminatiCards();
         actionInitialized = false;
     }
@@ -61,7 +64,7 @@ public class Table {
             randInt = rand.nextInt(numberOfIlluminatiCards);
         } while(isTaken[randInt]);
 
-        IlluminatiCard illuminati = cards.get(randInt);
+        IlluminatiCard illuminati = illuminatiCards.get(randInt);
         isTaken[randInt] = true;
 
         return illuminati;
@@ -142,7 +145,8 @@ public class Table {
     }
 
     public void newAction() {
-        action = new Action(currentPlayer, this);
+        action = new Action(
+        );
         actionInitialized = true;
     }
     public Action getAction() {
@@ -160,7 +164,7 @@ public class Table {
 
     public Center getCenter() { return center; }
 
-    DestroyedCards getDestroyedCards() { return destroyedCards; }
+    public DestroyedCards getDestroyedCards() { return destroyedCards; }
 
     public Deck getDeck() { return deck; }
 
@@ -168,13 +172,9 @@ public class Table {
         return currentPlayer;
     }
 
-    NonSpecialCard giver;
-
     public void setGiver(NonSpecialCard giver) { this.giver = giver; }
 
     public NonSpecialCard getGiver() { return giver; }
-
-    NonSpecialCard receiver;
 
     public void setReceiver(NonSpecialCard receiver) { this.receiver = receiver; }
 
@@ -311,7 +311,7 @@ public class Table {
                 Table.SpecialAbilityEnum.PLUSFOURONANYATTEMPTTONEUTRALIZEANYGROUP,
                 Table.IlluminatiCardEnum.SOCIETYOFASSASSINS
         );
-        cards.add(societyOfAssins);
+        illuminatiCards.add(societyOfAssins);
 
         IlluminatiCard network = new IlluminatiCard(
                 "The Network",
@@ -320,7 +320,7 @@ public class Table {
                 Table.SpecialAbilityEnum.TURNSOVERTWOCARDSATBEGGININGOFGAME,
                 Table.IlluminatiCardEnum.NETWORK
         );
-        cards.add(network);
+        illuminatiCards.add(network);
 
         IlluminatiCard discordianSociety = new IlluminatiCard(
                 "The Discordian Society",
@@ -329,7 +329,7 @@ public class Table {
                 Table.SpecialAbilityEnum.PLUSFOURONANYATTEMPTTOCONTROLWEIRDGROUPSIMMUNETOATTACKSFROMGOVERNMENTORSTRAIGHTGROUPS,
                 Table.IlluminatiCardEnum.DISCORDIANSOCIETY
         );
-        cards.add(discordianSociety);
+        illuminatiCards.add(discordianSociety);
 
         IlluminatiCard ufos = new IlluminatiCard(
                 "The ufos",
@@ -338,7 +338,7 @@ public class Table {
                 chooseUFOsSpecialAbilityEnum(),
                 Table.IlluminatiCardEnum.UFOS
         );
-        cards.add(ufos);
+        illuminatiCards.add(ufos);
 
         IlluminatiCard servantsOfCthulhu = new IlluminatiCard(
                 "The Servants of Cthulhu",
@@ -347,7 +347,7 @@ public class Table {
                 Table.SpecialAbilityEnum.PLUSTWOONANYATTEMPTTODESTROYANYGROUP,
                 Table.IlluminatiCardEnum.SERVANTSOFCTHULHU
         );
-        cards.add(servantsOfCthulhu);
+        illuminatiCards.add(servantsOfCthulhu);
 
         IlluminatiCard gnomesOfZurich = new IlluminatiCard(
                 "The Gnomes of Zurich",
@@ -356,7 +356,7 @@ public class Table {
                 Table.SpecialAbilityEnum.MAYMOVEMONEYFREELYATENDOFTURN,
                 Table.IlluminatiCardEnum.GNOMESOFZURICH
         );
-        cards.add(gnomesOfZurich);
+        illuminatiCards.add(gnomesOfZurich);
 
         IlluminatiCard baravianIlluminati = new IlluminatiCard(
                 "The Bavarian Illuminati",
@@ -365,7 +365,7 @@ public class Table {
                 Table.SpecialAbilityEnum.MAYMAKEONEPRIVILEGEDATTACKEACHTURNATACOSTOFFIVEMEGABUCKS,
                 Table.IlluminatiCardEnum.BAVARIANILLUMINATI
         );
-        cards.add(baravianIlluminati);
+        illuminatiCards.add(baravianIlluminati);
 
         IlluminatiCard bermudaTriangle = new IlluminatiCard(
                 "The Bermuda Triangle",
@@ -374,7 +374,7 @@ public class Table {
                 Table.SpecialAbilityEnum.MAYREORGANIZEGROUPSFREELYATENDOFTURN,
                 Table.IlluminatiCardEnum.BERMUTATRIANGE
         );
-        cards.add(bermudaTriangle);
+        illuminatiCards.add(bermudaTriangle);
     }
 
     private Table.SpecialAbilityEnum chooseUFOsSpecialAbilityEnum() { return Table.SpecialAbilityEnum.MAYMAKEONEPRIVILEGEDATTACKEACHTURNATACOSTOFFIVEMEGABUCKS; }

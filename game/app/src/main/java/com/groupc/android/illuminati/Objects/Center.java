@@ -11,9 +11,10 @@ public class Center {
         count = 0;
     }
 
-    public void addGroupToCenter(GroupCard groupCard) {
+    public boolean addGroupToCenter(GroupCard groupCard) {
         uncontrolledGroupCards.add(groupCard);
         count++;
+        return true;
     }
 
     public GroupCard removeGroupFromCenter(GroupCard groupCard) {
