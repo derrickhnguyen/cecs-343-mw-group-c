@@ -1,7 +1,5 @@
 package com.groupc.android.illuminati.Objects;
 
-import android.content.res.Resources;
-
 import com.groupc.android.illuminati.Objects.Table.CardTypeEnum;
 
 import java.io.Serializable;

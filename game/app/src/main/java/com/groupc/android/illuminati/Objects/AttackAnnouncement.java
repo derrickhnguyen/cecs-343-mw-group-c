@@ -1,8 +1,5 @@
 package com.groupc.android.illuminati.Objects;
 
-import com.groupc.android.illuminati.Objects.NonSpecialCard;
-import com.groupc.android.illuminati.Objects.Player;
-
 /**
  * Created by micha on 4/14/2017.
  */
@@ -17,7 +14,7 @@ import com.groupc.android.illuminati.Objects.Player;
    private int powerStructurePositionBonus;
    private int specialPowerBonus;
 
-   private int attackMoneySpentBonus;
+   private int attackerMoneySpentBonus;
    private int defenderMoneySpentBonus;
 
    public AttackAnnouncement(
@@ -55,20 +52,20 @@ import com.groupc.android.illuminati.Objects.Player;
      this.specialPowerBonus = specialPowerBonus;
    }
 
-   public int getAttackMoneySpentBonus() {
-     return attackMoneySpentBonus;
+   public int getAttackerMoneySpentBonus() {
+     return attackerMoneySpentBonus;
    }
 
-   public void setAttackerMoneyBonus() {
+   public void setAttackerMoneySpentBonus() {
      int moneySpent = attackingGroup.spendMoney();
-     attackMoneySpentBonus += moneySpent;
+     attackerMoneySpentBonus += moneySpent;
    }
 
    public int getDefenderMoneySpentBonus() {
      return defenderMoneySpentBonus;
    }
 
-   public void setDefenderMoneyBonus() {
+   public void setDefenderMoneySpentBonus() {
      int moneySpent = defendingGroup.spendMoney();
      defenderMoneySpentBonus += moneySpent;
    }
@@ -101,7 +98,7 @@ import com.groupc.android.illuminati.Objects.Player;
              alignmentBonus
              + powerStructurePositionBonus
              + specialPowerBonus
-             + attackMoneySpentBonus
+             + attackerMoneySpentBonus
              - defenderMoneySpentBonus
              + attackingGroup.getPower()
              - defendingGroup.getResistance();

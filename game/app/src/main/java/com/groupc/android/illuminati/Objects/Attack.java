@@ -1,7 +1,5 @@
 package com.groupc.android.illuminati.Objects;
 
-import android.util.Log;
-
 import com.groupc.android.illuminati.MainScreen;
 import com.groupc.android.illuminati.Objects.Table.AttackEnum;
 
@@ -9,16 +7,16 @@ public class Attack {
     private Player attackingPlayer;
     private Player defendingPlayer;
     private AttackEnum attackType;
-    Table table;
     private Center center;
     private DestroyedCards destroyedCards;
     private NonSpecialCard attackingCard;
     private GroupCard defendingCard;
     private NonSpecialCard puppetCard;
     private boolean isSuccessful;
-    AttackAnnouncement announcement;
     private int sum;
     private int puppetArrow;
+    public Table table;
+    public AttackAnnouncement announcement;
 
     public Attack(Player attackingPlayer, NonSpecialCard attackingCard, Player defendingPlayer, GroupCard defendingCard, NonSpecialCard puppetCard, int puppetArrow, boolean isAttackingAPlayer, AttackEnum attackType)
     {
@@ -27,21 +25,12 @@ public class Attack {
         this.defendingCard = defendingCard;
         this.puppetCard = puppetCard;
         this.puppetArrow = puppetArrow;
-        boolean isAttackingAPlayer1;
-        if(isAttackingAPlayer)
-        {
-            isAttackingAPlayer1 = true;
-            this.defendingPlayer = defendingPlayer;
-        } else {
-            isAttackingAPlayer1 = false;
-            //player is attacking the center pile
-        }
         this.attackType = attackType;
         table = MainScreen.getTable();
         center = table.getCenter();
     }
 
-    void setUpAttackAnnouncement() {
+    public void setUpAttackAnnouncement() {
         announcement = new AttackAnnouncement(
                 attackingPlayer,
                 attackingCard,
@@ -53,18 +42,6 @@ public class Attack {
         //announcement.setAttackerMoneyBonus();
         announcement.send(defendingPlayer);
 
-        //boolean isAttacker = true;
-        /*while (announcement.betting()) {
-            isAttacker = !isAttacker;
-            if (isAttacker) {
-                announcement.setAttackerMoneyBonus();
-                announcement.send(defendingPlayer);
-            } else {
-                announcement.setDefenderMoneyBonus();
-                announcement.send(attackingPlayer);
-            }
-        }*/
-
         if (announcement.isAccepted()) {
             rollDice(announcement);
         } else endAttack();
@@ -74,12 +51,7 @@ public class Attack {
         DiceRoll diceRoll = new DiceRoll();
         sum = diceRoll.getDiceSum();
         sum -= MainScreen.cheatInt;
-        Log.d("DICE ROLL SUM", sum + "");
-        Log.d("OTHER SCORE", announcement.getScore() + "");
         if (sum <= announcement.getScore() && sum < 11) attackIsSuccessful(puppetCard);
-        Log.d("PUPPETCARD", puppetCard.getCardName());
-        //else endAttack();
-        //else endAttack();
         return sum;
     }
 
@@ -132,9 +104,9 @@ public class Attack {
         }
     }
 
-    void endAttack() {}
+    public void endAttack() {}
 
-    AttackEnum getAttackType() { return attackType; }
+    public AttackEnum getAttackType() { return attackType; }
 
     public void setAttackType(AttackEnum attackType) { this.attackType = attackType; }
 
