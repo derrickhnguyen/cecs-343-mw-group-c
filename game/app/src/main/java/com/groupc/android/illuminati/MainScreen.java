@@ -50,6 +50,10 @@ public class MainScreen extends AppCompatActivity {
         setContentView(R.layout.activity_main_screen);
         fm = getFragmentManager();
 
+        FragmentTransaction ft = fm.beginTransaction();
+        Fragment welcomeFragment = new WelcomeFragment();
+        ft.replace(R.id.contentframe, welcomeFragment);
+        ft.commit();
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("How many players?");
 

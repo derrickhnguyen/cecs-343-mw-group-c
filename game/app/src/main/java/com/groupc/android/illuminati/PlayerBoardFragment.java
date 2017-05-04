@@ -7,9 +7,12 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +45,8 @@ public class PlayerBoardFragment extends Fragment {
     String type;
     String type2;
     ArrayList<ImageView> views;
+    int xPad = 0, yPad = 0;
+    int cardWidth = 800, cardHeight = 400;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //illuminatiCard = (IlluminatiCard) getArguments().getSerializable("card");
@@ -59,6 +64,8 @@ public class PlayerBoardFragment extends Fragment {
                 ViewGroup.LayoutParams.WRAP_CONTENT
         );
 
+        //ViewGroup.LayoutParams p = new ViewGroup.LayoutParams(1000,1000);
+
         ScrollView sc = new ScrollView(getActivity()); //let the activity scroll vertically
 
         HorizontalScrollView sv = new HorizontalScrollView(getActivity()); //let the activity scroll horizontally
@@ -69,6 +76,8 @@ public class PlayerBoardFragment extends Fragment {
         sv.setLayoutParams(p); //make fill parent
         ll.setLayoutParams(p); //make fill parent
 
+        ImageView backGround = new ImageView(getActivity());
+        backGround.setId(View.generateViewId());
         ImageView illCard = new ImageView(getActivity()); //create image for illuminati card
         //illCard.setImageResource(R.drawable.card); //set it to the feminist pic (only one we have so far)
         illCard.setImageResource(getResources().getIdentifier(illuminatiCard.getCardName().toLowerCase(), "drawable", getActivity().getPackageName()));
@@ -77,23 +86,37 @@ public class PlayerBoardFragment extends Fragment {
         //this generates a random ID for the view and set it to it
         //the actual ID doesn't matter since we'll always use the getID() method
 
+        Display display = getActivity().getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+
 //        layout for center card
 //        RelativeLayout.LayoutParams rp = new RelativeLayout.LayoutParams(
 //                RelativeLayout.LayoutParams.WRAP_CONTENT,
 //                RelativeLayout.LayoutParams.WRAP_CONTENT);
-        RelativeLayout.LayoutParams rp = new RelativeLayout.LayoutParams(800,400);
+        RelativeLayout.LayoutParams rp = new RelativeLayout.LayoutParams(cardWidth,cardHeight);
+        rp.addRule(RelativeLayout.ALIGN_RIGHT, backGround.getId());
+        rp.addRule(RelativeLayout.ALIGN_BOTTOM, backGround.getId());
 
         // rp.addRule(RelativeLayout.CENTER_VERTICAL); //put card in center (buggy)
        // rp.addRule(RelativeLayout.CENTER_HORIZONTAL);
         illCard.setLayoutParams(rp); //picture for illuminati card
+        views.add(backGround);
         views.add(illCard);
         //ll.addView(illCard);
-        attach(illuminatiCard, illCard); //run sequence to make board
-        //ll.addView(illCard); //add card to relative layout
+        //ll.addView(illCard);
+        attach(illuminatiCard, illCard, new Point(0,0)); //run sequence to make board
+        RelativeLayout.LayoutParams bg = new RelativeLayout.LayoutParams((xPad+1)*cardWidth, (yPad+1)*cardHeight);
+        bg.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
+        bg.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
+        backGround.setLayoutParams(bg);
         for(ImageView iv : views)
         {
             ll.addView(iv);
         }
+        //ll.addView(backGround);
+        //ll.addView(illCard); //add card to relative layout
+
 
 
         //finish creating other views
@@ -127,14 +150,14 @@ public class PlayerBoardFragment extends Fragment {
     }
 
     NonSpecialCard givingCard, receivingCard;
-    private void attach(final NonSpecialCard c, ImageView cardImage)
+    private void attach(final NonSpecialCard c, ImageView cardImage, Point loc)
     {
         boolean[] connected = c.getIsConnected(); //get boolean for cards connected to card
         final NonSpecialCard[] connectedCards = c.getConnectedCards(); //get cards connected to card
         //set image to card's image, will implement later
         cardImage.setImageResource(getResources().getIdentifier(c.getCardName().toLowerCase().replace(" ", ""), "drawable", getActivity().getPackageName()));
         Log.d("cardName", c.getCardName().toLowerCase().replace(" ", ""));
-        cardImage.setId(View.generateViewId()); //probably don't need to do this
+        //cardImage.setId(View.generateViewId()); //probably don't need to do this
 //        cardImage.setScaleX(0.4f);
 //        cardImage.setScaleY(0.4f);
 //        cardImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -422,27 +445,30 @@ public class PlayerBoardFragment extends Fragment {
 //                RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
 //                        RelativeLayout.LayoutParams.WRAP_CONTENT,
 //                        RelativeLayout.LayoutParams.WRAP_CONTENT); //stock layout
-                RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(800,400);
+                RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(cardWidth,cardHeight);
 
-
-                RelativeLayout.LayoutParams op = (RelativeLayout.LayoutParams) cardImage.getLayoutParams();
+                //RelativeLayout.LayoutParams op = (RelativeLayout.LayoutParams) cardImage.getLayoutParams();
                 //depending on orientation and arrow position, add the card on a certain side
+                Point newLoc = new Point(loc.x, loc.y);
                 if((i + c.getOrientation()) % 4 == 0){
+                    newLoc.y = newLoc.y + 1;
                     lp.addRule(RelativeLayout.ABOVE, cardImage.getId());
                     lp.addRule(RelativeLayout.ALIGN_LEFT, cardImage.getId());
                     //newCardImage.setRotation(attachedCard.getOrientation()*90);
                 } else if((i + c.getOrientation()) % 4 == 1){
+                    newLoc.x = newLoc.x - 1;
                     lp.addRule(RelativeLayout.RIGHT_OF, cardImage.getId());
                     lp.addRule(RelativeLayout.ALIGN_BOTTOM, cardImage.getId());
                     //newCardImage.setRotation(attachedCard.getOrientation()*90 + 90);
                 } else if((i + c.getOrientation()) % 4 == 2){
+                    newLoc.y = newLoc.y - 1;
                     lp.addRule(RelativeLayout.BELOW, cardImage.getId());
                     lp.addRule(RelativeLayout.ALIGN_LEFT, cardImage.getId());
                     //newCardImage.setRotation(attachedCard.getOrientation()*90 + 180);
                 } else if((i + c.getOrientation()) % 4 == 3){
+                    newLoc.x = newLoc.x + 1;
                     lp.addRule(RelativeLayout.LEFT_OF, cardImage.getId());
                     lp.addRule(RelativeLayout.ALIGN_BOTTOM, cardImage.getId());
-                    //op.addRule(RelativeLayout.RIGHT_OF, newCardImage.getId());
                     //newCardImage.setRotation(attachedCard.getOrientation()*90 + 270);
                 } else {
                     Log.d("ERROR", "ORIENTATION WRONG");
@@ -453,13 +479,23 @@ public class PlayerBoardFragment extends Fragment {
                 //cardImage.setLayoutParams(op);
                 //views.add(cardImage);
                 newCardImage.setLayoutParams(lp);
+                //cardImage.setLayoutParams(op);
 
                 //add card to view
                 Log.d("SHOW THE REST OF", "TRUE");
                 views.add(newCardImage);
                 //ll.addView(newCardImage);
                 //recursively call the check
-                attach(attachedCard, newCardImage);
+                if(newLoc.y > (yPad))
+                {
+                    yPad = newLoc.y;
+                }
+                if(newLoc.x > (xPad))
+                {
+                    xPad = newLoc.x;
+                }
+                Log.d("POINT " + attachedCard.getCardName(), newLoc.x + "," + newLoc.y);
+                attach(attachedCard, newCardImage, newLoc);
             }
         }
     }
