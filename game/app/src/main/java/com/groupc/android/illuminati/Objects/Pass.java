@@ -5,4 +5,13 @@ package com.groupc.android.illuminati.Objects;
  */
 
 class Pass {
+    private final int passMoney = 2;
+
+    public Pass() {
+
+    }
+
+    public void collectPassMoney(PowerStructure powerStructure) {
+
+    }
 }

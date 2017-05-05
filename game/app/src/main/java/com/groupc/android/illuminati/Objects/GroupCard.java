@@ -6,8 +6,6 @@ package com.groupc.android.illuminati.Objects;
 import com.groupc.android.illuminati.Objects.Table.CardTypeEnum;
 import com.groupc.android.illuminati.Objects.Table.AlignmentEnum;
 
-import java.util.ArrayList;
-
 public class GroupCard extends NonSpecialCard {
     private GroupCard puppetMaster;
     private boolean puppetFlag;
@@ -49,16 +47,18 @@ public class GroupCard extends NonSpecialCard {
         return puppetFlag;
     }
 
-    public void setPuppetFlag(boolean puppetFlag) {
+    public boolean setPuppetFlag(boolean puppetFlag) {
         this.puppetFlag = puppetFlag;
+        return true;
     }
 
     public boolean isAttackable() {
         return isAttackable;
     }
 
-    public void setAttackable(boolean isAttackable) {
+    public boolean setAttackable(boolean isAttackable) {
         this.isAttackable = isAttackable;
+        return true;
     }
 
     public void removePuppet(NonSpecialCard nonSpecialCard) {

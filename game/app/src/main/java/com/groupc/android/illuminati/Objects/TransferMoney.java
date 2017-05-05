@@ -6,8 +6,8 @@ import com.groupc.android.illuminati.Objects.NonSpecialCard;
  * Created by micha on 4/14/2017.
  */
  public class TransferMoney{
-   NonSpecialCard sendingNonSpecialCard;
-   NonSpecialCard receivingNonSpecialCard;
+   private NonSpecialCard sendingNonSpecialCard;
+   private NonSpecialCard receivingNonSpecialCard;
 
    public TransferMoney() {
      sendingNonSpecialCard = chooseSendingNonSpecialCard();
@@ -27,8 +27,9 @@ import com.groupc.android.illuminati.Objects.NonSpecialCard;
       return receivingNonSpecialCard;
    }
 
-   private void transferMoney() {
+   private boolean transferMoney() {
      int moneyTransfer = sendingNonSpecialCard.spendMoney();
      receivingNonSpecialCard.setGroupTreasury(receivingNonSpecialCard.getGroupTreasury() + moneyTransfer);
+       return true;
    }
  }

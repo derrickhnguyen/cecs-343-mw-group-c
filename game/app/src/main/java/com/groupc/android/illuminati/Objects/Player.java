@@ -51,19 +51,19 @@ public class Player implements Serializable {
         return hand;
     }
 
-    public void addCardToHand(SpecialCard sc)
+    public void addCardToHand(SpecialCard specialCard)
     {
-        hand.add(sc);
+        hand.add(specialCard);
     }
 
-    public void removeCardFromHand(SpecialCard sc)
+    public void removeCardFromHand(SpecialCard specialCard)
     {
-        hand.remove(sc);
+        hand.remove(specialCard);
     }
 
-    public boolean handContains(SpecialCard sc)
+    public boolean handContains(SpecialCard specialCard)
     {
-        return hand.contains(sc);
+        return hand.contains(specialCard);
     }
 
     public boolean ownsSurvivalists() {
@@ -78,7 +78,7 @@ public class Player implements Serializable {
         actionsTaken++;
     }
 
-    public void resetAcitonsTaken() {
+    public void resetActionsTaken() {
         actionsTaken = 0;
     }
 

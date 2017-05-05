@@ -5,4 +5,11 @@ package com.groupc.android.illuminati.Objects;
  */
 
 class MoveAGroup {
+    public MoveAGroup() {
+
+    }
+
+    public boolean moveGroup(PowerStructure powerStructure, GroupCard groupCard) {
+        return true;
+    }
 }

@@ -5,4 +5,11 @@ package com.groupc.android.illuminati.Objects;
  */
 
 class DropAGroup {
+    public DropAGroup() {
+
+    }
+
+    public boolean dropGroup(GroupCard groupCard) {
+        return true;
+    }
 }

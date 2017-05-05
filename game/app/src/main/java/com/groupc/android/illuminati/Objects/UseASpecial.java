@@ -5,4 +5,21 @@ package com.groupc.android.illuminati.Objects;
  */
 
 class UseASpecial {
+    private SpecialCard specialCardToBeUsed;
+
+    public UseASpecial() {
+
+    }
+
+    public void setSpecialCardToBeUsed(SpecialCard specialCardToBeUsed) {
+
+    }
+
+    public void useSpecialCard(SpecialCard specialCard) {
+
+    }
+
+    public boolean stopSpecialCardUse() {
+        return false;
+    }
 }

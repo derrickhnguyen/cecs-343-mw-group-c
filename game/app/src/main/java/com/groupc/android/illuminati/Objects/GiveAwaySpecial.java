@@ -5,4 +5,13 @@ package com.groupc.android.illuminati.Objects;
  */
 
 class GiveAwaySpecial {
+    private SpecialCard specialCardToGiveAway;
+
+    public GiveAwaySpecial() {
+
+    }
+
+    public boolean giveAwaySpecial(Player receivingPlayer, SpecialCard specialCard) {
+        return true;
+    }
 }

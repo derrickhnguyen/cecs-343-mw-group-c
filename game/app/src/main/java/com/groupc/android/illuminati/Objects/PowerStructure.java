@@ -1,11 +1,6 @@
 package com.groupc.android.illuminati.Objects;
 
-import android.util.Log;
-
-import com.groupc.android.illuminati.MainScreen;
-
 import java.io.Serializable;
-import java.security.acl.Group;
 import java.util.ArrayList;
 
 /**
@@ -39,8 +34,6 @@ public class PowerStructure implements Serializable {
     }
 
     public void addToPowerStructure(NonSpecialCard parentCard, GroupCard defendingGroup, int puppetArrow) {
-        Log.d("parent", parentCard.getCardName());
-        Log.d("defending", defendingGroup.getCardName());
         //find(parentCard, defendingGroup).attachCard(defendingGroup, 0);
         parentCard.attachCard(defendingGroup, puppetArrow);
         //Log.d("CARDSDSDSDSD", MainScreen.getTable().getCurrentPlayer().getPowerStructure().getIlluminatiCard().getConnectedCards()[1].getCardName());
@@ -77,15 +70,15 @@ public class PowerStructure implements Serializable {
         return powerStructureCards;
     }
 
-    public GroupCard removeCard(GroupCard card) {
+    public GroupCard removeCard(GroupCard groupCard) {
         for(int i = 0; i < powerStructureCards.size(); i++){
             for(int j = 0; j < powerStructureCards.get(i).getConnectedCards().length; j++) {
-                if(powerStructureCards.get(i).getConnectedCards()[j] == card)
+                if(powerStructureCards.get(i).getConnectedCards()[j] == groupCard)
                     powerStructureCards.get(i).getConnectedCards()[j] = null;
                     powerStructureCards.get(i).getIsConnected()[j] = false;
             }
         }
-        powerStructureCards.remove(card);
-        return card;
+        powerStructureCards.remove(groupCard);
+        return groupCard;
     }
 }

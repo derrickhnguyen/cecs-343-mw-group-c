@@ -5,8 +5,8 @@ package com.groupc.android.illuminati.Objects;
  */
 
  public class PowerStructurePositionBonus{
-   Player defendingPlayer;
-   NonSpecialCard defendingGroup;
+   private Player defendingPlayer;
+   private NonSpecialCard defendingGroup;
 
    public PowerStructurePositionBonus(Player defendingPlayer, NonSpecialCard defendingGroup) {
      this.defendingPlayer = defendingPlayer;

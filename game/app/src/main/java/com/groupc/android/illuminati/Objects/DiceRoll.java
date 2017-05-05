@@ -27,7 +27,8 @@ public class DiceRoll {
         else return false;
     }
 
-    public void setDiceSum(int diceSum) {
+    public boolean setDiceSum(int diceSum) {
         this.diceSum = diceSum;
+        return true;
     }
 }

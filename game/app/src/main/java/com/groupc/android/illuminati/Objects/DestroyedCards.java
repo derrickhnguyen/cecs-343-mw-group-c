@@ -13,8 +13,9 @@ public class DestroyedCards {
     destroyedCards = new ArrayList<Card>();
   }
 
-  public void addDestroyedCard(Card card) {
+  public boolean addDestroyedCard(Card card) {
     destroyedCards.add(card);
+    return true;
   }
 
   public ArrayList<Card> getAllDestroyedCards() {

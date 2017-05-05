@@ -5,4 +5,13 @@ package com.groupc.android.illuminati.Objects;
  */
 
 class GiveAwayMoney {
+    private int moneyToGiveAway;
+
+    public GiveAwayMoney() {
+
+    }
+
+    public boolean giveAwayMoney(NonSpecialCard receivingNonSpecialCard, int amountOfMoney) {
+        return true;
+    }
 }

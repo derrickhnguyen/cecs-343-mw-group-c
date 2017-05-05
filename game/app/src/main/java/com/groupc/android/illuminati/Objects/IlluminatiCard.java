@@ -10,7 +10,7 @@ import com.groupc.android.illuminati.Objects.Table.SpecialAbilityEnum;
  */
 
 public class IlluminatiCard extends NonSpecialCard {
-    IlluminatiCardEnum illuminati;
+    IlluminatiCardEnum illuminatiEnum;
 
     public IlluminatiCard (
                                   String cardName,
@@ -20,10 +20,10 @@ public class IlluminatiCard extends NonSpecialCard {
                                   int resistance,
                                   int income,
                                   SpecialAbilityEnum specialAbility,
-                                  IlluminatiCardEnum illuminati
+                                  IlluminatiCardEnum illuminatiEnum
                                   ) {
         super(cardName, type, power, transferablePower, resistance, income, specialAbility);
-        this.illuminati = illuminati;
+        this.illuminatiEnum = illuminatiEnum;
     }
 
 
@@ -36,7 +36,7 @@ public class IlluminatiCard extends NonSpecialCard {
     }
 
     public String getName() {
-        return illuminati.getName();
+        return illuminatiEnum.getName();
     }
 
     public String getCardName() {
