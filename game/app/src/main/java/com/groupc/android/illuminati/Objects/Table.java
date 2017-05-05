@@ -119,7 +119,7 @@ public class Table {
     }
 
     public boolean newTurn() {
-        currentPlayer.resetAcitonsTaken();
+        currentPlayer.resetActionsTaken();
             currentPlayer = players.poll();
             //if(checkIfWon(currentPlayer))
             players.add(currentPlayer);
