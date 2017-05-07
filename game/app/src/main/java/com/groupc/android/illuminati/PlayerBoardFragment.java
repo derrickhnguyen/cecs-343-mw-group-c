@@ -256,7 +256,35 @@ public class PlayerBoardFragment extends Fragment {
                         bundle.putSerializable("whereToMove", c);
                         AlertDialog.Builder b = new AlertDialog.Builder(getContext());
                         b.setTitle("Choose which arrow to attach to");
-                        String[] types = {"Top", "Right", "Bottom", "Left"};
+                        int[] outArrows = c.getOutArrows();
+                        boolean[] isConnected = c.getIsConnected();
+                        ArrayList<Integer> openArrows = new ArrayList<Integer>();
+                        for(int i = 0; i < outArrows.length; i++)
+                        {
+                            if(!isConnected[outArrows[i]])
+                            {
+                                openArrows.add(outArrows[i]);
+                            }
+                        }
+                        final String[] types = new String[openArrows.size()];
+                        for(int i = 0; i < types.length; i++)
+                        {
+                            if(openArrows.get(i) == 0)
+                            {
+                                types[i] = "Top";
+                            } else if(openArrows.get(i) == 1)
+                            {
+                                types[i] = "Right";
+                            } else if(openArrows.get(i) == 2)
+                            {
+                                types[i] = "Bottom";
+                            } else if(openArrows.get(i) == 3)
+                            {
+                                types[i] = "Left";
+                            } else {
+                                //problem
+                            }
+                        }
                         b.setItems(types, new DialogInterface.OnClickListener() {
 
                             @Override
@@ -320,24 +348,53 @@ public class PlayerBoardFragment extends Fragment {
 
                         AlertDialog.Builder b = new AlertDialog.Builder(getContext());
                         b.setTitle("Choose which arrow to attach to");
-                        String[] types = {"Top", "Right", "Bottom", "Left"};
+                        int[] outArrows = c.getOutArrows();
+                        boolean[] isConnected = c.getIsConnected();
+                        ArrayList<Integer> openArrows = new ArrayList<Integer>();
+                        for(int i = 0; i < outArrows.length; i++)
+                        {
+                            if(!isConnected[outArrows[i]])
+                            {
+                                openArrows.add(outArrows[i]);
+                            }
+                        }
+                        final String[] types = new String[openArrows.size()];
+                        for(int i = 0; i < types.length; i++)
+                        {
+                            if(openArrows.get(i) == 0)
+                            {
+                                types[i] = "Top";
+                            } else if(openArrows.get(i) == 1)
+                            {
+                                types[i] = "Right";
+                            } else if(openArrows.get(i) == 2)
+                            {
+                                types[i] = "Bottom";
+                            } else if(openArrows.get(i) == 3)
+                            {
+                                types[i] = "Left";
+                            } else {
+                                //problem
+                            }
+                        }
                         b.setItems(types, new DialogInterface.OnClickListener() {
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
                                 dialog.dismiss();
-                                switch(which){
-                                    case 0:
+                                String choice = types[which];
+                                switch(choice){
+                                    case "Top":
                                         bundle.putInt("connectingArrow", 0);
                                         break;
-                                    case 1:
+                                    case "Right":
                                         bundle.putInt("connectingArrow", 1);
                                         break;
-                                    case 2:
+                                    case "Bottom":
                                         bundle.putInt("connectingArrow", 2);
                                         break;
-                                    case 3:
+                                    case "Left":
                                         bundle.putInt("connectingArrow", 3);
                                         break;
                                     default:
@@ -457,9 +514,12 @@ public class PlayerBoardFragment extends Fragment {
                     //newCardImage.setRotation(attachedCard.getOrientation()*90);
                 } else if((i + c.getOrientation()) % 4 == 1){
                     newLoc.x = newLoc.x - 1;
+                    newLoc.y = newLoc.y + 1;
+                    newCardImage.setRotation(attachedCard.getOrientation()*90 + 90);
+                    //lp = new RelativeLayout.LayoutParams(cardHeight, cardWidth);
                     lp.addRule(RelativeLayout.RIGHT_OF, cardImage.getId());
                     lp.addRule(RelativeLayout.ALIGN_BOTTOM, cardImage.getId());
-                    //newCardImage.setRotation(attachedCard.getOrientation()*90 + 90);
+
                 } else if((i + c.getOrientation()) % 4 == 2){
                     newLoc.y = newLoc.y - 1;
                     lp.addRule(RelativeLayout.BELOW, cardImage.getId());

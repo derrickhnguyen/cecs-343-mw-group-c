@@ -24,6 +24,8 @@ public class NonSpecialCard extends Card {
     //index 1: east
     //index 2: south
     //index 3: west
+    private int inArrow;
+    private int[] outArrows;
 
     public NonSpecialCard(  String cardName,
                             CardTypeEnum type,
@@ -46,6 +48,9 @@ public class NonSpecialCard extends Card {
         //0 = top, 1 = right, 2 = bottom, 3 = left
         isConnected = new boolean[4];
         orientation = 0;
+
+        inArrow = 0;
+        outArrows = new int[]{0,1,2};
     }
 
     public void collectIncome() {
@@ -171,4 +176,12 @@ public class NonSpecialCard extends Card {
         return true;
     }
 
+    public int[] getOutArrows() {
+        return outArrows;
+    }
+
+    public void setOutArrows(int[] ars)
+    {
+        ars = outArrows;
+    }
 }
