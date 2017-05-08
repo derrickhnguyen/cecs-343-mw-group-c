@@ -7,6 +7,8 @@ import android.app.ListFragment;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -176,14 +178,19 @@ public class MainScreen extends AppCompatActivity {
         playerProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle player = new Bundle();
-                player.putString("name", "My Player Name");
+                Intent launchIntent = getPackageManager().getLaunchIntentForPackage("com.frontend");
+                if (launchIntent != null) {
+                    startActivity(launchIntent);//null pointer check in case package name was not found
+                } else {
+                    Context context = getApplicationContext();
+                    CharSequence text = "M4G Messaging app is not installed \n" +
+                            "get it from \n" +
+                            "https://github.com/derrickhnguyen/CECS-478-Project.git";
+                    int duration = Toast.LENGTH_SHORT;
 
-                FragmentTransaction ft = fm.beginTransaction();
-                Fragment playerProfileFragment = new PlayerProfileFragment();
-                playerProfileFragment.setArguments(player);
-                ft.replace(R.id.contentframe, playerProfileFragment);
-                ft.commit();
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                }
             }
         });
 
