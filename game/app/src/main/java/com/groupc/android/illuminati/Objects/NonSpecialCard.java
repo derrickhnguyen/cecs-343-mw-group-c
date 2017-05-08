@@ -50,7 +50,7 @@ public class NonSpecialCard extends Card {
         orientation = 0;
 
         inArrow = 0;
-        outArrows = new int[]{0,1,2};
+        outArrows = new int[]{0,1,2,3};
     }
 
     public void collectIncome() {

@@ -63,7 +63,7 @@ import com.groupc.android.illuminati.Objects.Table.SpecialAbilityEnum;
         if(attack.getAttackType() == AttackEnum.CONTROL && (defendingGroup.getCardName().equals("Big Media") || defendingGroup.getCardName().equals("Empty Vee"))) return 5;
          case PLUSTHREEFORDIRECTCONTROLFORANYCRIMINALGROUP:
       for(int i = 0; i < 4; i++) {
-        if(attackingGroup.getConnectedCards()[i].getAlignment() == AlignmentEnum.CRIMINAL) return 4;
+        if(attackingGroup.getConnectedCards()[i]!= null && attackingGroup.getConnectedCards()[i].getAlignment() == AlignmentEnum.CRIMINAL) return 4;
       }
          case PLUSSIXONANYATTEMPTTODESTROYANYCOMMUNISTGROUP:
         if(attack.getAttackType() == AttackEnum.DESTROY && defendingGroup.getAlignment() == AlignmentEnum.COMMUNIST) return 6;
@@ -76,17 +76,17 @@ import com.groupc.android.illuminati.Objects.Table.SpecialAbilityEnum;
          case PLUSFIVEFORDIRECTCONTROLOFSFFANSPLUSTWOFORDIRECTCONTROLOFTREKKIES:
         int bonus = 0;
         for(int i = 0; i < 4; i++) {
-          if(attackingGroup.getConnectedCards()[i].getCardName().equals("S.F. Fans")) bonus += 5;
+          if(attackingGroup.getConnectedCards()[i]!= null && attackingGroup.getConnectedCards()[i].getCardName().equals("S.F. Fans")) bonus += 5;
         }
         for(int i = 0; i < 4; i++) {
-          if(attackingGroup.getConnectedCards()[i].getCardName().equals("Trekkies")) bonus += 2;
+          if(attackingGroup.getConnectedCards()[i]!= null && attackingGroup.getConnectedCards()[i].getCardName().equals("Trekkies")) bonus += 2;
         }
         return bonus;
          case PLUSTHREEFORDIRECTCONTROLOFCONVENIENCESTORES:
         if(attack.getAttackType() == AttackEnum.CONTROL && defendingGroup.getCardName().equals("Convenience Stores")) return 3;
          case PLUSTHREEFORDIRECTCONTROLOFTHEMORALMINORITY:
         for(int i = 0; i < 4; i++) {
-          if(attackingGroup.getConnectedCards()[i].getCardName().equals("Moral Minority")) return 3;
+          if(attackingGroup.getConnectedCards()[i]!= null && attackingGroup.getConnectedCards()[i].getCardName().equals("Moral Minority")) return 3;
         }
            default:
      }

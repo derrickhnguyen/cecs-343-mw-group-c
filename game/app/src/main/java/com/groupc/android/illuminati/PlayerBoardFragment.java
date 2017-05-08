@@ -7,8 +7,13 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Point;
+import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -16,6 +21,9 @@ import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationSet;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.RotateAnimation;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
@@ -81,7 +89,6 @@ public class PlayerBoardFragment extends Fragment {
         ImageView illCard = new ImageView(getActivity()); //create image for illuminati card
         //illCard.setImageResource(R.drawable.card); //set it to the feminist pic (only one we have so far)
         illCard.setImageResource(getResources().getIdentifier(illuminatiCard.getCardName().toLowerCase(), "drawable", getActivity().getPackageName()));
-
         illCard.setId(View.generateViewId()); //for the layout to work, each imageview needs an ID,
         //this generates a random ID for the view and set it to it
         //the actual ID doesn't matter since we'll always use the getID() method
@@ -106,7 +113,7 @@ public class PlayerBoardFragment extends Fragment {
         //ll.addView(illCard);
         //ll.addView(illCard);
         attach(illuminatiCard, illCard, new Point(0,0)); //run sequence to make board
-        RelativeLayout.LayoutParams bg = new RelativeLayout.LayoutParams((xPad+1)*cardWidth, (yPad+1)*cardHeight);
+        RelativeLayout.LayoutParams bg = new RelativeLayout.LayoutParams((xPad+2)/2*cardWidth, (yPad+2)/2*cardHeight);
         bg.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
         bg.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
         backGround.setLayoutParams(bg);
@@ -156,6 +163,7 @@ public class PlayerBoardFragment extends Fragment {
         final NonSpecialCard[] connectedCards = c.getConnectedCards(); //get cards connected to card
         //set image to card's image, will implement later
         cardImage.setImageResource(getResources().getIdentifier(c.getCardName().toLowerCase().replace(" ", ""), "drawable", getActivity().getPackageName()));
+
         Log.d("cardName", c.getCardName().toLowerCase().replace(" ", ""));
         //cardImage.setId(View.generateViewId()); //probably don't need to do this
 //        cardImage.setScaleX(0.4f);
@@ -497,36 +505,63 @@ public class PlayerBoardFragment extends Fragment {
 
                 ImageView newCardImage = new ImageView(getActivity()); //new image for card
                 newCardImage.setId(View.generateViewId());
-                newCardImage.setRotation(attachedCard.getOrientation()); //roate to match the orientation
+                newCardImage.setImageResource(getResources().getIdentifier(attachedCard.getCardName().toLowerCase().replace(" ", ""), "drawable", getActivity().getPackageName()));
+
+                //newCardImage.setRotation(attachedCard.getOrientation()); //roate to match the orientation
 
 //                RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
 //                        RelativeLayout.LayoutParams.WRAP_CONTENT,
 //                        RelativeLayout.LayoutParams.WRAP_CONTENT); //stock layout
-                RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(cardWidth,cardHeight);
+                RelativeLayout.LayoutParams lp = null;
 
                 //RelativeLayout.LayoutParams op = (RelativeLayout.LayoutParams) cardImage.getLayoutParams();
                 //depending on orientation and arrow position, add the card on a certain side
                 Point newLoc = new Point(loc.x, loc.y);
                 if((i + c.getOrientation()) % 4 == 0){
-                    newLoc.y = newLoc.y + 1;
+                    lp = new RelativeLayout.LayoutParams(cardWidth,cardHeight);
+                    newLoc.y = newLoc.y + 2;
                     lp.addRule(RelativeLayout.ABOVE, cardImage.getId());
                     lp.addRule(RelativeLayout.ALIGN_LEFT, cardImage.getId());
                     //newCardImage.setRotation(attachedCard.getOrientation()*90);
                 } else if((i + c.getOrientation()) % 4 == 1){
-                    newLoc.x = newLoc.x - 1;
-                    newLoc.y = newLoc.y + 1;
-                    newCardImage.setRotation(attachedCard.getOrientation()*90 + 90);
-                    //lp = new RelativeLayout.LayoutParams(cardHeight, cardWidth);
+                    lp = new RelativeLayout.LayoutParams(cardWidth, cardHeight);
+                    newLoc.x = newLoc.x - 2;
+                    //newLoc.y = newLoc.y + 1;
+//                    Matrix matrix = new Matrix();
+//                    newCardImage.setScaleType(ImageView.ScaleType.MATRIX);   //required
+//                    matrix.postRotate((float) 90, newCardImage.getDrawable().getBounds().height()/2, newCardImage.getDrawable().getBounds().height()/2);
+//                    newCardImage.setImageMatrix(matrix);
+                    //newCardImage.setAdjustViewBounds(true);
                     lp.addRule(RelativeLayout.RIGHT_OF, cardImage.getId());
-                    lp.addRule(RelativeLayout.ALIGN_BOTTOM, cardImage.getId());
+                    //lp.addRule(RelativeLayout.ALIGN_BOTTOM, cardImage.getId());
+                    lp.addRule(RelativeLayout.ALIGN_TOP, cardImage.getId());
+                    //newCardImage.setAdjustViewBounds(true);
+                    //newCardImage.setRotationX(newCardImage.getWidth()/2);
+                    //newCardImage.setRotationY(newCardImage.getHeight()/2);
+
+//                    newCardImage.setRotation(90);
+//                    newCardImage.setScaleType(ImageView.ScaleType);
+
+                    //newCardImage.setScaleX(2f);
+                    //newCardImage.setScaleY(2f);
+//
+
+
+
+                    //newCardImage.setRotation(attachedCard.getOrientation()*90 + 90);
+                    //lp = new RelativeLayout.LayoutParams(cardHeight, cardWidth);
+                    //lp.addRule(RelativeLayout.CENTER_IN_PARENT, cardImage.getId());
 
                 } else if((i + c.getOrientation()) % 4 == 2){
-                    newLoc.y = newLoc.y - 1;
+                    lp = new RelativeLayout.LayoutParams(cardWidth,cardHeight);
+                    newLoc.y = newLoc.y - 2;
                     lp.addRule(RelativeLayout.BELOW, cardImage.getId());
                     lp.addRule(RelativeLayout.ALIGN_LEFT, cardImage.getId());
+                    //lp.addRule(RelativeLayout.ALIGN_START, cardImage.getId());
                     //newCardImage.setRotation(attachedCard.getOrientation()*90 + 180);
                 } else if((i + c.getOrientation()) % 4 == 3){
-                    newLoc.x = newLoc.x + 1;
+                    lp = new RelativeLayout.LayoutParams(cardWidth,cardHeight);
+                    newLoc.x = newLoc.x + 2;
                     lp.addRule(RelativeLayout.LEFT_OF, cardImage.getId());
                     lp.addRule(RelativeLayout.ALIGN_BOTTOM, cardImage.getId());
                     //newCardImage.setRotation(attachedCard.getOrientation()*90 + 270);
